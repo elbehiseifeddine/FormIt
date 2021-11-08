@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
+    android:fitsSystemWindows="true"
     tools:context=".ui.view.SignInActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/Fullpage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/SignUpWith">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -27,13 +33,29 @@
         android:layout_marginTop="96dp"
         android:background="@drawable/button_roundstyle"
         android:backgroundTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/SignUpWith"
+        app:layout_constraintEnd_toEndOf="@+id/SignUpWith"
         app:layout_constraintHeight_percent=".8"
         app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
         app:layout_constraintVertical_bias="0.0" />
+
+
+    <TextView
+        android:id="@+id/tv_SignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_30sdp"
+        android:fontFamily="@font/poppins_bold"
+        android:paddingVertical="@dimen/_10sdp"
+        android:text="Sign In"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_22ssp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        tools:layout_editor_absoluteX="32dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailContainer"
@@ -59,20 +81,7 @@
             android:textSize="12dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/tv_ForgetPass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_30sdp"
-        android:fontFamily="@font/poppins_semibold"
-        android:paddingVertical="@dimen/_12sdp"
-        android:text="Forget Password?"
-        android:textAlignment="textEnd"
-        android:textColor="@color/ForgetPasswordBlueColor"
-        android:textSize="@dimen/_10sdp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/passwordContainer"
-        tools:layout_editor_absoluteX="32dp" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordContainer"
@@ -101,19 +110,34 @@
             android:textSize="12dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/btn_SignUp"
+    <TextView
+        android:id="@+id/tv_ForgetPass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_30sdp"
-        android:background="@drawable/button_stroke"
-        android:fontFamily="@font/poppins_bold"
-        android:text="Sign Up"
-
-        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_semibold"
+        android:paddingVertical="@dimen/_12sdp"
+        android:text="Forget Password?"
+        android:textAlignment="textEnd"
+        android:textColor="@color/ForgetPasswordBlueColor"
         android:textSize="@dimen/_10sdp"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        tools:layout_editor_absoluteX="-18dp" />
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/passwordContainer"
+        tools:layout_editor_absoluteX="32dp" />
+
+    <Button
+        android:id="@+id/btn_Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_30sdp"
+        android:background="@drawable/gradient_background_and_rounded"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ForgetPass"
+        tools:layout_editor_absoluteX="32dp" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -150,32 +174,20 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_Login"
+        android:id="@+id/btn_SignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_30sdp"
-        android:background="@drawable/gradient_background_and_rounded"
+        android:background="@drawable/button_stroke"
         android:fontFamily="@font/poppins_bold"
-        android:text="Login"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_10sdp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_ForgetPass"
-        tools:layout_editor_absoluteX="32dp" />
+        android:text="Sign Up"
 
-    <TextView
-        android:id="@+id/tv_SignIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_30sdp"
-        android:fontFamily="@font/poppins_bold"
-        android:paddingVertical="@dimen/_10sdp"
-        android:text="Sign In"
-        android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="@dimen/_22ssp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@+id/view"
-        tools:layout_editor_absoluteX="32dp" />
+        android:textSize="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="@id/linearLayout3"
+        tools:layout_editor_absoluteX="-18dp" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -184,7 +196,7 @@
         android:layout_marginHorizontal="@dimen/_30sdp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingVertical="@dimen/_16sdp"
+        android:paddingVertical="@dimen/_10sdp"
         app:layout_constraintTop_toBottomOf="@+id/btn_SignUp"
         tools:layout_editor_absoluteX="32dp">
 
@@ -212,8 +224,9 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/SignUpWith"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -247,4 +260,6 @@
             android:src="@drawable/github_logo" />
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
