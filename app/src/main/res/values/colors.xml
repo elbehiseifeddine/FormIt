@@ -14,4 +14,7 @@
     <color name="ForgetPasswordBlueColor">#3222BB</color>
     <color name="PurpleGrad">#647DEE</color>
     <color name="BlueGrad">#7F53AC</color>
+    <color name="textColor">#ECE5EC</color>
+    <color name="pinkColor">#FF003B</color>
+    <color name="tansparentColor">#00FFFFFF</color>
 </resources>

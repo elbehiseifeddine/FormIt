@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.formit.ui.view.SignInActivity
+import com.example.formit.ui.view.SignInUpActivity
 import kotlinx.android.synthetic.main.activity_formit.*
 
 class FormItActivity : AppCompatActivity() {
@@ -12,7 +13,7 @@ class FormItActivity : AppCompatActivity() {
         setContentView(R.layout.activity_formit)
 
         Welcome_SignIn.setOnClickListener {
-            Intent(this,SignInActivity::class.java).also {
+            Intent(this,SignInUpActivity::class.java).also {
                 startActivity(it)
                 finish()
             }
