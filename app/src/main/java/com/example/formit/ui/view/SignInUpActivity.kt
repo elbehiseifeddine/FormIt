@@ -1,5 +1,6 @@
 package com.example.formit.ui.view
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
@@ -52,7 +53,11 @@ class SignInUpActivity : AppCompatActivity() {
             logIn.setTextColor(resources.getColor(R.color.textColor,null))
         }
         btn_SingIn.setOnClickListener {
-            clickLogin()
+            Intent(this, HomeActivity::class.java).also {
+                startActivity(it)
+                finish()
+            }
+            //clickLogin()
         }
         btn_SignUp.setOnClickListener {
             clickSignUp()

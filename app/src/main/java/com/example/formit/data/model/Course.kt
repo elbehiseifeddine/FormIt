@@ -4,12 +4,11 @@ import java.io.Serializable
 import java.util.*
 
 data class Course(
-    val id_course: Int,
     val courseName: String,
     val description: String,
     val mentor: String,
     val price: Int,
-    val duration: String,
+    val duration: Int,
     val Prerequisites: String,
-    val startDate: Date,
+    val startDate: String,
 ) : Serializable
