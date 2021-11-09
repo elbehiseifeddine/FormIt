@@ -4,8 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/Theme.AppCompat.NoActionBar"
     tools:context=".ui.view.HomeActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/reusable_toolbar"/>
     <TextView
         android:id="@+id/second_fragment"
         android:layout_width="wrap_content"
