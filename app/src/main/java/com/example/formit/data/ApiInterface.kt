@@ -5,6 +5,7 @@ import com.example.formit.data.model.User
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Query
 import java.util.HashMap
@@ -12,10 +13,10 @@ import java.util.HashMap
 interface ApiInterface {
 
     @POST("/login")
-    fun executeLogin(@Query("map")map: HashMap<String, String>): Call<Student>
+    fun executeLogin(@Body map: HashMap<String, String>): Call<Student>
 
     @POST("/signup")
-    fun executeSignUp(@Query("map")map: HashMap<String, String>): Call<Void>
+    fun executeSignUp(@Body map: HashMap<String, String>): Call<Void>
 
     companion object {
 

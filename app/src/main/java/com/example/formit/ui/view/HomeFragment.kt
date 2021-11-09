@@ -38,8 +38,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         val adapter= CoursesAdapter(coursesList)
 
+        rv_events.adapter=adapter
         rv_courses.adapter=adapter
         rv_courses.layoutManager =LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL ,false)
+        rv_events.layoutManager =LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL ,false)
     }
 
 

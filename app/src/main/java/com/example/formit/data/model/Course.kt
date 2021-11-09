@@ -9,6 +9,6 @@ data class Course(
     val mentor: String,
     val price: Int,
     val duration: Int,
-    val Prerequisites: String,
+    val prerequisites: String,
     val startDate: String,
 ) : Serializable

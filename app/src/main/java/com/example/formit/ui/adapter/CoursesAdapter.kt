@@ -26,6 +26,19 @@ class CoursesAdapter(var courses: List<Course>) :
             tv_Hours.text=courses[position].duration.toString()+" Hours"
             tv_MentorName.text=courses[position].mentor
         }
+
+        holder.itemView.setOnClickListener{
+            val intent = Intent(holder.itemView.context, DescriptionActivity::class.java).also {
+                it.putExtra("NAME", courses[position].courseName)
+                it.putExtra("PRICE", courses[position].price.toString() +" dt")
+                it.putExtra("DURATION", courses[position].duration.toString()+" Hours")
+                it.putExtra("MENTOR", courses[position].mentor)
+                it.putExtra("DESCRIPTION", courses[position].description)
+                it.putExtra("PREREQUISITES", courses[position].prerequisites)
+                it.putExtra("STARTDATE", courses[position].startDate)
+            }
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
