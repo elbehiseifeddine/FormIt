@@ -53,11 +53,8 @@ class SignInUpActivity : AppCompatActivity() {
             logIn.setTextColor(resources.getColor(R.color.textColor,null))
         }
         btn_SingIn.setOnClickListener {
-            Intent(this, HomeActivity::class.java).also {
-                startActivity(it)
-                finish()
-            }
-            //clickLogin()
+
+            clickLogin()
         }
         btn_SignUp.setOnClickListener {
             clickSignUp()
@@ -70,30 +67,34 @@ class SignInUpActivity : AppCompatActivity() {
         val emailVerif = SignInEmailValidate()
         val passVerif = SignInPassValidate()
         if (emailVerif && passVerif) {
-            val apiInterface = ApiInterface.create()
-
-            val map = HashMap<String, String>()
-
-            map.put("email",ti_SignInEmail.text.toString())
-            map.put("password",ti_SignInPassword.text.toString())
-            apiInterface.executeLogin(map).enqueue(object : Callback<Student> {
-
-                override fun onResponse(call: Call<Student>, response: Response<Student>) {
-
-                    if (response.code()== 200){
-                        print(response.body())
-                        Toast.makeText(this@SignInUpActivity,"SignIn successfully",Toast.LENGTH_SHORT).show()
-                    }else{
-                        Toast.makeText(this@SignInUpActivity,"you clicked on add Content",Toast.LENGTH_SHORT).show()
-                    }
-
-                }
-
-                override fun onFailure(call: Call<Student>, t: Throwable) {
-                    Toast.makeText(this@SignInUpActivity,"something wrong",Toast.LENGTH_SHORT).show()
-                }
-
-            })
+            Intent(this, HomeActivity::class.java).also {
+                startActivity(it)
+                finish()
+            }
+//            val apiInterface = ApiInterface.create()
+//
+//            val map = HashMap<String, String>()
+//
+//            map.put("email",ti_SignInEmail.text.toString())
+//            map.put("password",ti_SignInPassword.text.toString())
+//            apiInterface.executeLogin(map).enqueue(object : Callback<Student> {
+//
+//                override fun onResponse(call: Call<Student>, response: Response<Student>) {
+//
+//                    if (response.code()== 200){
+//                        print(response.body())
+//                        Toast.makeText(this@SignInUpActivity,"SignIn successfully",Toast.LENGTH_SHORT).show()
+//                    }else{
+//                        Toast.makeText(this@SignInUpActivity,"you clicked on add Content",Toast.LENGTH_SHORT).show()
+//                    }
+//
+//                }
+//
+//                override fun onFailure(call: Call<Student>, t: Throwable) {
+//                    Toast.makeText(this@SignInUpActivity,"something wrong",Toast.LENGTH_SHORT).show()
+//                }
+//
+//            })
         }
     }
 
@@ -145,26 +146,26 @@ class SignInUpActivity : AppCompatActivity() {
         val confirmPassVerif = SignUpConfirmPassValidate()
         if (emailVerif && passVerif && confirmPassVerif) {
 
-            val apiInterface = ApiInterface.create()
-            val map = HashMap<String, String>()
-
-            map.put("email",ti_signUpPassword.text.toString())
-            map.put("password",ti_signUpEmail.text.toString())
-            apiInterface.executeSignUp(map).enqueue(object : Callback<Void> {
-
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    if(response.code()== 200){
-                        Toast.makeText(this@SignInUpActivity,"SignUp successfully",Toast.LENGTH_SHORT).show()
-                    } else if (response.code()== 400){
-                        Toast.makeText(this@SignInUpActivity,"Already Registred",Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Toast.makeText(this@SignInUpActivity,"something wrong",Toast.LENGTH_SHORT).show()
-                }
-
-            })
+//            val apiInterface = ApiInterface.create()
+//            val map = HashMap<String, String>()
+//
+//            map.put("email",ti_signUpPassword.text.toString())
+//            map.put("password",ti_signUpEmail.text.toString())
+//            apiInterface.executeSignUp(map).enqueue(object : Callback<Void> {
+//
+//                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+//                    if(response.code()== 200){
+//                        Toast.makeText(this@SignInUpActivity,"SignUp successfully",Toast.LENGTH_SHORT).show()
+//                    } else if (response.code()== 400){
+//                        Toast.makeText(this@SignInUpActivity,"Already Registred",Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<Void>, t: Throwable) {
+//                    Toast.makeText(this@SignInUpActivity,"something wrong",Toast.LENGTH_SHORT).show()
+//                }
+//
+//            })
         }
     }
 
