@@ -1,5 +1,6 @@
 package com.example.formit.data.model
 
+import androidx.annotation.DrawableRes
 import java.io.Serializable
 import java.util.*
 
@@ -11,6 +12,7 @@ data class Student (
     val password: String,
     val sexe: String,
     val birthdate: Date,
-    val profilePic: String,
+    @DrawableRes
+    val profilePic: Int,
     val achievements: String,
 ): Serializable
