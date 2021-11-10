@@ -97,34 +97,74 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-            <TextView
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_bold"
-                android:text="Courses"
-                android:paddingStart="20dp"
-                android:textColor="#2E363E"
-                android:textSize="@dimen/_12ssp"
-                android:textStyle="bold"
-                android:layout_marginVertical="@dimen/_10sdp"
-                />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:paddingStart="20dp"
+                    android:text="Courses"
+                    android:textColor="#2E363E"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_CourseSeeAll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:paddingEnd="20dp"
+                    android:text="See all"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#87C2FF"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_courses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"/>
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_bold"
-                android:text="Events"
-                android:paddingStart="20dp"
-                android:textColor="#2E363E"
-                android:textSize="@dimen/_12ssp"
-                android:textStyle="bold"
-                android:layout_marginVertical="@dimen/_10sdp"
-                />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Events"
+                    android:paddingStart="20dp"
+                    android:textColor="#2E363E"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_EventSeeAll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="See all"
+                    android:textAlignment="viewEnd"
+                    android:paddingEnd="20dp"
+                    android:textColor="#87C2FF"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    />
+
+            </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_events"
                 android:layout_width="match_parent"

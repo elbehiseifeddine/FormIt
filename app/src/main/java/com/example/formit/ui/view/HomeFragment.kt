@@ -1,5 +1,6 @@
 package com.example.formit.ui.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.formit.R
 import com.example.formit.data.model.Course
 import com.example.formit.ui.adapter.CoursesAdapter
+import com.example.formit.ui.adapter.HomeCouseAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -36,7 +38,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 "Dali ben chikha",150,50,"Android studio with all the sdks installed","12/5/2022")
         )
 
-        val adapter= CoursesAdapter(coursesList)
+        val adapter= HomeCouseAdapter(coursesList)
+
+        tv_CourseSeeAll.setOnClickListener{
+            Intent(activity, CoursesActivity::class.java).also {
+                startActivity(it)
+            }
+        }
 
         rv_events.adapter=adapter
         rv_courses.adapter=adapter

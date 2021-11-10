@@ -37,7 +37,7 @@ class SignInUpActivity : AppCompatActivity() {
         singUp.setOnClickListener {
             singUp.background = resources.getDrawable(R.drawable.gradient_background_and_rounded,null)
             singUp.paint.shader = null
-            singUp.setTextColor(resources.getColor(R.color.textColor,null))
+            singUp.setTextColor(resources.getColor(R.color.white,null))
             logIn.background = null
             singUpLayout.visibility = View.VISIBLE
             logInLayout.visibility = View.GONE
@@ -50,11 +50,14 @@ class SignInUpActivity : AppCompatActivity() {
             logIn.background = resources.getDrawable(R.drawable.gradient_background_and_rounded,null)
             singUpLayout.visibility = View.GONE
             logInLayout.visibility = View.VISIBLE
-            logIn.setTextColor(resources.getColor(R.color.textColor,null))
+            logIn.setTextColor(resources.getColor(R.color.white,null))
         }
         btn_SingIn.setOnClickListener {
-
-            clickLogin()
+            Intent(this, HomeActivity::class.java).also {
+                startActivity(it)
+                finish()
+            }
+            //clickLogin()
         }
         btn_SignUp.setOnClickListener {
             clickSignUp()
@@ -67,10 +70,10 @@ class SignInUpActivity : AppCompatActivity() {
         val emailVerif = SignInEmailValidate()
         val passVerif = SignInPassValidate()
         if (emailVerif && passVerif) {
-            Intent(this, HomeActivity::class.java).also {
-                startActivity(it)
-                finish()
-            }
+//            Intent(this, HomeActivity::class.java).also {
+//                startActivity(it)
+//                finish()
+//            }
 //            val apiInterface = ApiInterface.create()
 //
 //            val map = HashMap<String, String>()

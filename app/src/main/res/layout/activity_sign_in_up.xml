@@ -64,7 +64,7 @@
                     android:paddingBottom="5dp"
                     android:text="Log in"
                     android:textAlignment="center"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold|normal" />
 
@@ -132,6 +132,7 @@
                     android:layout_marginRight="5dp"
                     app:helperTextTextColor="@color/red"
                     app:hintEnabled="false"
+                    app:counterEnabled="true"
                     app:layout_constraintTop_toBottomOf="@+id/emailContainer"
                     app:passwordToggleEnabled="true"
                     tools:layout_editor_absoluteX="32dp">
@@ -172,7 +173,7 @@
                     android:gravity="center"
                     android:text="log in"
                     android:textAllCaps="false"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/white"
                     android:textSize="17sp" />
             </LinearLayout>
 
@@ -279,7 +280,7 @@
                     android:gravity="center"
                     android:text="Sign Up"
                     android:textAllCaps="false"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/white"
                     android:textSize="17sp" />
             </LinearLayout>
 
