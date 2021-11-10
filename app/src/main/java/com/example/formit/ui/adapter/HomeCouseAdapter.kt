@@ -4,30 +4,27 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.formit.R
 import com.example.formit.data.model.Course
 import com.example.formit.ui.view.DescriptionActivity
 import kotlinx.android.synthetic.main.item_course.view.*
 
-class CoursesAdapter(var courses: List<Course>) :
-    RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder>() {
-    inner class CoursesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+class HomeCouseAdapter (var courses: List<Course>) :
+    RecyclerView.Adapter<HomeCouseAdapter.HomeCoursesViewHolder>() {
+    inner class HomeCoursesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoursesViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeCoursesViewHolder {
         val view= LayoutInflater.from(parent.context).inflate(R.layout.item_course, parent, false)
-        return CoursesViewHolder(view)
+        return HomeCoursesViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CoursesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeCoursesViewHolder, position: Int) {
         holder.itemView.apply {
             tv_CourseName.text=courses[position].courseName
             tv_Cost.text=courses[position].price.toString() +" dt"
             tv_Hours.text=courses[position].duration.toString()+" Hours"
             tv_MentorName.text=courses[position].mentor
-
         }
 
         holder.itemView.setOnClickListener{
@@ -45,6 +42,9 @@ class CoursesAdapter(var courses: List<Course>) :
     }
 
     override fun getItemCount(): Int {
+        if(courses.size>2){
+            return 3
+        }
         return courses.size
     }
 }

@@ -64,7 +64,7 @@
                     android:paddingBottom="5dp"
                     android:text="Log in"
                     android:textAlignment="center"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold|normal" />
 
@@ -173,7 +173,7 @@
                     android:gravity="center"
                     android:text="log in"
                     android:textAllCaps="false"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/white"
                     android:textSize="17sp" />
             </LinearLayout>
 
@@ -280,7 +280,7 @@
                     android:gravity="center"
                     android:text="Sign Up"
                     android:textAllCaps="false"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/white"
                     android:textSize="17sp" />
             </LinearLayout>
 

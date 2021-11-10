@@ -12,6 +12,7 @@ import com.example.formit.R
 import com.example.formit.data.model.Buble_Message
 import com.example.formit.ui.adapter.BubleMessageAdapter
 import kotlinx.android.synthetic.main.fragment_messages.*
+import kotlinx.android.synthetic.main.reusable_toolbar.*
 
 
 class MessagesFragment: Fragment() {
@@ -27,7 +28,7 @@ class MessagesFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        btn_reus_back.visibility=View.INVISIBLE
         var BubleList = mutableListOf(
             Buble_Message(R.drawable.test1,"ahmed"),
             Buble_Message(R.drawable.test2,"Seif"),
