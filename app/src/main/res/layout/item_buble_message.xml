@@ -11,7 +11,7 @@
 
         <include
             android:id="@+id/buble"
-            layout="@layout/bulle_messages" />
+            layout="@layout/item_bulle_messages_connected" />
         <TextView
             android:id="@+id/usernemaBubleDiscussion"
             android:layout_width="wrap_content"
