@@ -6,5 +6,6 @@ data class Buble_Message(
 
     @DrawableRes
     val profilePic: Int,
-    val userName:String
+    val userName:String,
+    val userConnected : Boolean
 )

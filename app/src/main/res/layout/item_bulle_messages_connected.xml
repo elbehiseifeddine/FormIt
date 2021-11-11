@@ -57,6 +57,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/userConnected"
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:elevation="@dimen/_10sdp"
