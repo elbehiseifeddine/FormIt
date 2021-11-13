@@ -1,6 +1,7 @@
 package com.example.formit.ui.view
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
@@ -18,11 +19,29 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-
+const val PREF_NAME = "LOGIN_PREF"
+const val LOGIN = "LOGIN"
+const val PASSWORD = "PASSWORD"
+const val IS_REMEMBRED = "IS_REMEMBRED"
 class SignInUpActivity : AppCompatActivity() {
+
+    //TODO 1 "Declare a var of SharedPreferences"
+    lateinit var mSharedPref: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in_up)
+
+        //TODO 2 "Initialize the var of SharedPreferences"
+        mSharedPref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+
+        //TODO 3 "Test in the SharedPreferences if there's data"
+        if (mSharedPref.getBoolean(IS_REMEMBRED, false)){
+            Intent(this, HomeActivity::class.java).also {
+                startActivity(it)
+                finish()
+            }
+        }
 
         val shader = LinearGradient(
             0f,
@@ -53,6 +72,17 @@ class SignInUpActivity : AppCompatActivity() {
             logIn.setTextColor(resources.getColor(R.color.white,null))
         }
         btn_SingIn.setOnClickListener {
+            if (cbRememberMe.isChecked){
+                //TODO 4 "Edit the SharedPreferences by putting all the data"
+                mSharedPref.edit().apply{
+                    putBoolean(IS_REMEMBRED, true)
+                    putString(LOGIN, ti_SignInEmail.text.toString())
+                    putString(PASSWORD, ti_SignInPassword.text.toString())
+                }.apply()
+
+            }else{
+                mSharedPref.edit().clear().apply()
+            }
             Intent(this, HomeActivity::class.java).also {
                 startActivity(it)
                 finish()
@@ -70,6 +100,18 @@ class SignInUpActivity : AppCompatActivity() {
         val emailVerif = SignInEmailValidate()
         val passVerif = SignInPassValidate()
         if (emailVerif && passVerif) {
+
+            if (cbRememberMe.isChecked){
+                //TODO 4 "Edit the SharedPreferences by putting all the data"
+                mSharedPref.edit().apply{
+                    putBoolean(IS_REMEMBRED, true)
+                    putString(LOGIN, ti_SignInEmail.text.toString())
+                    putString(PASSWORD, ti_SignInPassword.text.toString())
+                }.apply()
+
+            }else{
+                mSharedPref.edit().clear().apply()
+            }
 //            Intent(this, HomeActivity::class.java).also {
 //                startActivity(it)
 //                finish()
