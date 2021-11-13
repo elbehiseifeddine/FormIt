@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/Profile_fragment"
     tools:context=".ui.view.HomeActivity">
-
+<include
+    layout="@layout/reusable_toolbar"/>
     <TextView
         android:id="@+id/fifth_fragment"
         android:layout_width="wrap_content"
