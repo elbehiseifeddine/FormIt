@@ -12,15 +12,15 @@ import java.util.HashMap
 
 interface ApiInterface {
 
-    @POST("/login")
-    fun executeLogin(@Body map: HashMap<String, String>): Call<Student>
+    @POST("/users/login")
+    fun login(@Body map : HashMap<String, String> ): Call<User>
 
-    @POST("/signup")
-    fun executeSignUp(@Body map: HashMap<String, String>): Call<Void>
+    @POST("/users/signup")
+    fun signup(@Body map : HashMap<String, String> ): Call<User>
 
     companion object {
 
-        var BASE_URL = "http://localhost:3000"
+        var BASE_URL = "http://192.168.1.33:5000"
 
         fun create() : ApiInterface {
 
