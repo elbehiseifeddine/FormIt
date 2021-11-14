@@ -9,10 +9,11 @@ import com.example.formit.R
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
+    lateinit var mSharedPref: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        lateinit var mSharedPref: SharedPreferences
+
         val home_Fragment= HomeFragment()
         val messages_Fragment= MessagesFragment()
         val bookmark_Fragment= BookmarkFragment()
@@ -20,7 +21,6 @@ class HomeActivity : AppCompatActivity() {
         val profile_Fragment= ProfileFragment()
         mSharedPref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         setCurrentFragment(home_Fragment)
-        mSharedPref.edit().clear().apply()
         bottomNavigationView.setOnItemSelectedListener() {
             when(it.itemId) {
                 R.id.mihome->setCurrentFragment(home_Fragment)

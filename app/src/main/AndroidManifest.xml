@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.FormIt">
-        <activity android:name=".ui.view.CoursesActivity"></activity>
+        <activity android:name=".ui.view.CoursesActivity" />
         <activity android:name=".ui.view.DescriptionActivity" />
         <activity android:name=".ui.view.SignInUpActivity" />
         <activity android:name=".ui.view.HomeActivity" />
