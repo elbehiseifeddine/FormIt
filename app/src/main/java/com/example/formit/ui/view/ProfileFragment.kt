@@ -7,7 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.formit.R
+import com.example.formit.data.model.Course
+import com.example.formit.ui.adapter.HomeCouseAdapter
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.tv_CourseSeeAll
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -41,6 +47,62 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
         }
         btn_reus_back.visibility=View.GONE
+
+
+
+
+
+
+        var coursesList = mutableListOf(
+            Course(
+                "Android Course",
+                "You will learn how to manipulate and create an android app using kotlin",
+                "Seifeddine El Behi",
+                150,
+                50,
+                "Android studio with all the sdks installed",
+                "12/5/2022"
+            ),
+            Course(
+                "Ios Course",
+                "You will learn how to manipulate and create an Ios app using swift",
+                "Ahmed Ben Dahmen",
+                150,
+                50,
+                "Android studio with all the sdks installed",
+                "12/5/2022"
+            ),
+            Course(
+                ".Net Core Course",
+                "You will learn how to manipulate and create a backend  using c#",
+                "Dali ben chikha",
+                150,
+                50,
+                "Android studio with all the sdks installed",
+                "12/5/2022"
+            )
+        )
+
+        val adapter = HomeCouseAdapter(coursesList)
+
+        Profile_CourseSeeAll.setOnClickListener {
+            Intent(activity, CoursesActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        Profile_EventsSeeAll.setOnClickListener {
+            Intent(activity, CoursesActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        Profile_Participated_events.adapter = adapter
+        Profile_Enrolled_courses.adapter = adapter
+        Profile_Enrolled_courses.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        Profile_Participated_events.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
 

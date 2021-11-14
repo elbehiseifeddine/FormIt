@@ -42,8 +42,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val profile_Fragment = ProfileFragment()
-        var bottomnavigation: BottomNavigationView
         var coursesList = mutableListOf(
             Course(
                 "Android Course",
@@ -89,41 +87,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         rv_events.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-        //Pop up menu for user from his profile picture
 
-       /* profile_pic.setOnClickListener {
-
-
-
-            val popupmenu = PopupMenu(context, it)
-            popupmenu.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.CheckProfile -> {
-                        activity?.supportFragmentManager?.beginTransaction()
-                            ?.replace(R.id.fl_Fragment, profile_Fragment)?.commit()
-                        activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)!!.selectedItemId =
-                            R.id.miprofile
-
-                    }
-
-                    R.id.Logout -> {//TODO 5 "Clear the SharedPreferences file and destroy the activity"
-                        activity?.getSharedPreferences(PREF_NAME, AppCompatActivity.MODE_PRIVATE)
-                            ?.edit()
-                            ?.clear()?.apply()
-                        Intent(context, SignInUpActivity::class.java).also {
-                            startActivity(it)
-                            activity?.finish()
-                        }
-                    }
-
-                    else -> false
-                }
-
-                true
-            }
-            popupmenu.inflate(R.menu.popup_menu)
-            popupmenu.show()
-        }*/
 
     }
 }
