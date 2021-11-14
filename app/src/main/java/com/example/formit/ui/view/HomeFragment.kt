@@ -1,7 +1,9 @@
 package com.example.formit.ui.view
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -24,7 +26,7 @@ import kotlinx.android.synthetic.main.custom_popup.*
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-
+    lateinit var mSharedPref: SharedPreferences
 
 
     override fun onCreateView(
@@ -33,14 +35,22 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         savedInstanceState: Bundle?
     ): View? {
 
+
         var rootView: View = inflater.inflate(R.layout.fragment_home, container, false)
 
+        mSharedPref = rootView.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        if(mSharedPref.getBoolean(FIRST_VISIT,true)){
+
+        }else{
+            WelcomeText.text="Welcome Back"
+        }
 
         return rootView
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
 
         var coursesList = mutableListOf(
             Course(

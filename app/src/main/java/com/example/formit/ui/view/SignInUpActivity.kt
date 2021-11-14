@@ -24,6 +24,8 @@ import java.util.*
 const val PREF_NAME = "LOGIN_PREF"
 const val LOGIN = "LOGIN"
 const val PASSWORD = "PASSWORD"
+const val ID= "ID"
+const val FIRST_VISIT= "FIRST_VISIT"
 const val IS_REMEMBRED = "IS_REMEMBRED"
 class SignInUpActivity : AppCompatActivity() {
 
@@ -40,6 +42,7 @@ class SignInUpActivity : AppCompatActivity() {
         //TODO 3 "Test in the SharedPreferences if there's data"
         if (mSharedPref.getBoolean(IS_REMEMBRED, false)){
             Intent(this, HomeActivity::class.java).also {
+
                 startActivity(it)
                 finish()
             }
@@ -107,17 +110,7 @@ class SignInUpActivity : AppCompatActivity() {
         val passVerif = SignInPassValidate()
         if (emailVerif && passVerif) {
 
-//            if (cbRememberMe.isChecked){
-//                //TODO 4 "Edit the SharedPreferences by putting all the data"
-//                mSharedPref.edit().apply{
-//                    putBoolean(IS_REMEMBRED, true)
-//                    putString(LOGIN, ti_SignInEmail.text.toString())
-//                    putString(PASSWORD, ti_SignInPassword.text.toString())
-//                }.apply()
-//
-//            }else{
-//                mSharedPref.edit().clear().apply()
-//            }
+
 
 
             val apiInterface = ApiInterface.create()
@@ -131,12 +124,25 @@ class SignInUpActivity : AppCompatActivity() {
                 ) {
                     val user = response.body()
                     if (user != null) {
+                        if (cbRememberMe.isChecked){
+                            //TODO 4 "Edit the SharedPreferences by putting all the data"
+                            mSharedPref.edit().apply{
+                                putBoolean(IS_REMEMBRED, true)
+                                putBoolean(FIRST_VISIT, true)
+                                putString(LOGIN, user.login)
+                                putString(PASSWORD, user.password)
+                                putString(ID, user.id)
+                            }.apply()
 
+                        }else{
+                            mSharedPref.edit().clear().apply()
+                        }
                         val intent = Intent(this@SignInUpActivity, HomeActivity::class.java)
                         startActivity(intent)
                         finish()
 
                     } else {
+                        mSharedPref.edit().clear().apply()
                         Log.e("Username or Password wrong","true")
                         Toast.makeText(this@SignInUpActivity, "Username or Password wrong !!", Toast.LENGTH_SHORT)
                             .show()
@@ -144,6 +150,7 @@ class SignInUpActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<User>, t: Throwable) {
+                    Log.e("aaaaaaaaaaaaaaaaaaaaaaaa","true")
                     Toast.makeText(this@SignInUpActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
                 }
             })
