@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.formit.R
 import com.example.formit.data.ApiInterface
 import com.example.formit.data.model.Student
+import com.example.formit.data.model.User
 import kotlinx.android.synthetic.main.activity_sign_in_up.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -72,25 +74,29 @@ class SignInUpActivity : AppCompatActivity() {
             logIn.setTextColor(resources.getColor(R.color.white,null))
         }
         btn_SingIn.setOnClickListener {
-            if (cbRememberMe.isChecked){
-                //TODO 4 "Edit the SharedPreferences by putting all the data"
-                mSharedPref.edit().apply{
-                    putBoolean(IS_REMEMBRED, true)
-                    putString(LOGIN, ti_SignInEmail.text.toString())
-                    putString(PASSWORD, ti_SignInPassword.text.toString())
-                }.apply()
 
-            }else{
-                mSharedPref.edit().clear().apply()
-            }
-            Intent(this, HomeActivity::class.java).also {
-                startActivity(it)
-                finish()
-            }
-            //clickLogin()
+
+//            if (cbRememberMe.isChecked){
+//                //TODO 4 "Edit the SharedPreferences by putting all the data"
+//                mSharedPref.edit().apply{
+//                    putBoolean(IS_REMEMBRED, true)
+//                    putString(LOGIN, ti_SignInEmail.text.toString())
+//                    putString(PASSWORD, ti_SignInPassword.text.toString())
+//                }.apply()
+//
+//            }else{
+//                mSharedPref.edit().clear().apply()
+//            }
+//            Intent(this, HomeActivity::class.java).also {
+//                startActivity(it)
+//                finish()
+//            }
+            clickLogin()
         }
         btn_SignUp.setOnClickListener {
+            print("test5555")
             clickSignUp()
+
         }
 
 
@@ -101,22 +107,46 @@ class SignInUpActivity : AppCompatActivity() {
         val passVerif = SignInPassValidate()
         if (emailVerif && passVerif) {
 
-            if (cbRememberMe.isChecked){
-                //TODO 4 "Edit the SharedPreferences by putting all the data"
-                mSharedPref.edit().apply{
-                    putBoolean(IS_REMEMBRED, true)
-                    putString(LOGIN, ti_SignInEmail.text.toString())
-                    putString(PASSWORD, ti_SignInPassword.text.toString())
-                }.apply()
-
-            }else{
-                mSharedPref.edit().clear().apply()
-            }
-//            Intent(this, HomeActivity::class.java).also {
-//                startActivity(it)
-//                finish()
+//            if (cbRememberMe.isChecked){
+//                //TODO 4 "Edit the SharedPreferences by putting all the data"
+//                mSharedPref.edit().apply{
+//                    putBoolean(IS_REMEMBRED, true)
+//                    putString(LOGIN, ti_SignInEmail.text.toString())
+//                    putString(PASSWORD, ti_SignInPassword.text.toString())
+//                }.apply()
+//
+//            }else{
+//                mSharedPref.edit().clear().apply()
 //            }
-//            val apiInterface = ApiInterface.create()
+
+
+            val apiInterface = ApiInterface.create()
+            val map: HashMap<String, String> = HashMap()
+            map["login"] = ti_SignInEmail.text.toString()
+            map["password"] = ti_SignInPassword.text.toString()
+            apiInterface.login(map).enqueue(object : Callback<User> {
+                override fun onResponse(
+                    call: Call<User>, response:
+                    Response<User>
+                ) {
+                    val user = response.body()
+                    if (user != null) {
+
+                        val intent = Intent(this@SignInUpActivity, HomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+
+                    } else {
+                        Log.e("Username or Password wrong","true")
+                        Toast.makeText(this@SignInUpActivity, "Username or Password wrong !!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    Toast.makeText(this@SignInUpActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
+                }
+            })
 //
 //            val map = HashMap<String, String>()
 //
@@ -191,26 +221,33 @@ class SignInUpActivity : AppCompatActivity() {
         val confirmPassVerif = SignUpConfirmPassValidate()
         if (emailVerif && passVerif && confirmPassVerif) {
 
-//            val apiInterface = ApiInterface.create()
-//            val map = HashMap<String, String>()
-//
-//            map.put("email",ti_signUpPassword.text.toString())
-//            map.put("password",ti_signUpEmail.text.toString())
-//            apiInterface.executeSignUp(map).enqueue(object : Callback<Void> {
-//
-//                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-//                    if(response.code()== 200){
-//                        Toast.makeText(this@SignInUpActivity,"SignUp successfully",Toast.LENGTH_SHORT).show()
-//                    } else if (response.code()== 400){
-//                        Toast.makeText(this@SignInUpActivity,"Already Registred",Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<Void>, t: Throwable) {
-//                    Toast.makeText(this@SignInUpActivity,"something wrong",Toast.LENGTH_SHORT).show()
-//                }
-//
-//            })
+            val apiInterface = ApiInterface.create()
+            val map: HashMap<String, String> = HashMap()
+            map["login"] = ti_signUpEmail.text.toString()
+            map["password"] = ti_signUpPassword.text.toString()
+            apiInterface.signup(map).enqueue(object : Callback<User> {
+                override fun onResponse(
+                    call: Call<User>, response:
+                    Response<User>
+                ) {
+                    val user = response.body()
+                    if (user != null) {
+
+                        val intent = Intent(this@SignInUpActivity, HomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+
+                    } else {
+                        Log.e("Username or Password wrong","true")
+                        Toast.makeText(this@SignInUpActivity, "Username or Password wrong !!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    Toast.makeText(this@SignInUpActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
     }
 
