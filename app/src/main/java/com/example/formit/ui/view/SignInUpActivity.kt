@@ -239,7 +239,20 @@ class SignInUpActivity : AppCompatActivity() {
                 ) {
                     val user = response.body()
                     if (user != null) {
+                        if (cbRememberMe.isChecked){
+                            mSharedPref.edit().clear().apply()
+                            //TODO 4 "Edit the SharedPreferences by putting all the data"
+                            mSharedPref.edit().apply{
+                                putBoolean(IS_REMEMBRED, true)
+                                putBoolean(FIRST_VISIT, true)
+                                putString(LOGIN, user.login)
+                                putString(PASSWORD, user.password)
+                                putString(ID, user.id)
+                            }.apply()
 
+                        }else{
+                            mSharedPref.edit().clear().apply()
+                        }
                         val intent = Intent(this@SignInUpActivity, HomeActivity::class.java)
                         startActivity(intent)
                         finish()
@@ -314,4 +327,5 @@ class SignInUpActivity : AppCompatActivity() {
         }
         return true
     }
+companion object
 }
