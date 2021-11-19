@@ -4,12 +4,10 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.formit.R
 import com.example.formit.data.model.Course
-import com.example.formit.ui.view.DescriptionActivity
+import com.example.formit.ui.view.activitys.DescriptionActivity
 import kotlinx.android.synthetic.main.item_course.view.*
 
 class CoursesAdapter(var courses: List<Course>) :

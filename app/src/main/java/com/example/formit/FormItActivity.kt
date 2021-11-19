@@ -4,7 +4,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.formit.ui.view.*
+import com.example.formit.ui.view.activitys.HomeActivity
+import com.example.formit.ui.view.activitys.IS_REMEMBRED
+import com.example.formit.ui.view.activitys.PREF_NAME
+import com.example.formit.ui.view.activitys.SignInUpActivity
 import kotlinx.android.synthetic.main.activity_formit.*
 
 class FormItActivity : AppCompatActivity() {
@@ -27,7 +30,7 @@ class FormItActivity : AppCompatActivity() {
         }
 
         Welcome_SignIn.setOnClickListener {
-            Intent(this,SignInUpActivity::class.java).also {
+            Intent(this, SignInUpActivity::class.java).also {
                 startActivity(it)
                 finish()
             }

@@ -1,4 +1,4 @@
-package com.example.formit.ui.view
+package com.example.formit.ui.view.activitys
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View

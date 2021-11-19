@@ -1,11 +1,11 @@
-package com.example.formit.ui.view
+package com.example.formit.ui.view.activitys
 
-import android.animation.ObjectAnimator
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.formit.R
+import com.example.formit.ui.view.fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
