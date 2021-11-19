@@ -48,31 +48,37 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         var coursesList = mutableListOf(
             Course(
+                "1",
                 "Android Course",
                 "You will learn how to manipulate and create an android app using kotlin",
                 "Seifeddine El Behi",
                 150,
                 50,
                 "Android studio with all the sdks installed",
-                "12/5/2022"
+                "12/5/2022",
+                "11/10/2022"
             ),
             Course(
+                "2",
                 "Ios Course",
                 "You will learn how to manipulate and create an Ios app using swift",
                 "Ahmed Ben Dahmen",
                 150,
                 50,
                 "Android studio with all the sdks installed",
-                "12/5/2022"
+                "12/5/2022",
+                "11/10/2022"
             ),
             Course(
+                "3",
                 ".Net Core Course",
                 "You will learn how to manipulate and create a backend  using c#",
                 "Dali ben chikha",
                 150,
                 50,
                 "Android studio with all the sdks installed",
-                "12/5/2022"
+                "18/5/2022",
+                "12/10/2022",
             )
         )
 
