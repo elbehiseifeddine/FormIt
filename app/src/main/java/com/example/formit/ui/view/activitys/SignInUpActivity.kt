@@ -21,7 +21,7 @@ import retrofit2.Response
 import java.util.*
 
 const val PREF_NAME = "LOGIN_PREF"
-const val LOGIN = "LOGIN"
+const val EMAIL = "EMAIL"
 const val PASSWORD = "PASSWORD"
 const val ID= "ID"
 const val FIRST_VISIT= "FIRST_VISIT"
@@ -76,27 +76,9 @@ class SignInUpActivity : AppCompatActivity() {
             logIn.setTextColor(resources.getColor(R.color.white,null))
         }
         btn_SingIn.setOnClickListener {
-
-
-//            if (cbRememberMe.isChecked){
-//                //TODO 4 "Edit the SharedPreferences by putting all the data"
-//                mSharedPref.edit().apply{
-//                    putBoolean(IS_REMEMBRED, true)
-//                    putString(LOGIN, ti_SignInEmail.text.toString())
-//                    putString(PASSWORD, ti_SignInPassword.text.toString())
-//                }.apply()
-//
-//            }else{
-//                mSharedPref.edit().clear().apply()
-//            }
-//            Intent(this, HomeActivity::class.java).also {
-//                startActivity(it)
-//                finish()
-//            }
             clickLogin()
         }
         btn_SignUp.setOnClickListener {
-            print("test5555")
             clickSignUp()
 
         }
@@ -108,13 +90,9 @@ class SignInUpActivity : AppCompatActivity() {
         val emailVerif = SignInEmailValidate()
         val passVerif = SignInPassValidate()
         if (emailVerif && passVerif) {
-
-
-
-
             val apiInterface = ApiInterface.create()
             val map: HashMap<String, String> = HashMap()
-            map["login"] = ti_SignInEmail.text.toString()
+            map["email"] = ti_SignInEmail.text.toString()
             map["password"] = ti_SignInPassword.text.toString()
             apiInterface.login(map).enqueue(object : Callback<User> {
                 override fun onResponse(
@@ -128,7 +106,7 @@ class SignInUpActivity : AppCompatActivity() {
                             mSharedPref.edit().apply{
                                 putBoolean(IS_REMEMBRED, true)
                                 putBoolean(FIRST_VISIT, true)
-                                putString(LOGIN, user.login)
+                                putString(EMAIL, user.email)
                                 putString(PASSWORD, user.password)
                                 putString(ID, user.id)
                             }.apply()
@@ -153,29 +131,6 @@ class SignInUpActivity : AppCompatActivity() {
                     Toast.makeText(this@SignInUpActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
                 }
             })
-//
-//            val map = HashMap<String, String>()
-//
-//            map.put("email",ti_SignInEmail.text.toString())
-//            map.put("password",ti_SignInPassword.text.toString())
-//            apiInterface.executeLogin(map).enqueue(object : Callback<Student> {
-//
-//                override fun onResponse(call: Call<Student>, response: Response<Student>) {
-//
-//                    if (response.code()== 200){
-//                        print(response.body())
-//                        Toast.makeText(this@SignInUpActivity,"SignIn successfully",Toast.LENGTH_SHORT).show()
-//                    }else{
-//                        Toast.makeText(this@SignInUpActivity,"you clicked on add Content",Toast.LENGTH_SHORT).show()
-//                    }
-//
-//                }
-//
-//                override fun onFailure(call: Call<Student>, t: Throwable) {
-//                    Toast.makeText(this@SignInUpActivity,"something wrong",Toast.LENGTH_SHORT).show()
-//                }
-//
-//            })
         }
     }
 
@@ -229,7 +184,7 @@ class SignInUpActivity : AppCompatActivity() {
 
             val apiInterface = ApiInterface.create()
             val map: HashMap<String, String> = HashMap()
-            map["login"] = ti_signUpEmail.text.toString()
+            map["email"] = ti_signUpEmail.text.toString()
             map["password"] = ti_signUpPassword.text.toString()
             apiInterface.signup(map).enqueue(object : Callback<User> {
                 override fun onResponse(
@@ -244,7 +199,7 @@ class SignInUpActivity : AppCompatActivity() {
                             mSharedPref.edit().apply{
                                 putBoolean(IS_REMEMBRED, true)
                                 putBoolean(FIRST_VISIT, true)
-                                putString(LOGIN, user.login)
+                                putString(EMAIL, user.email)
                                 putString(PASSWORD, user.password)
                                 putString(ID, user.id)
                             }.apply()
