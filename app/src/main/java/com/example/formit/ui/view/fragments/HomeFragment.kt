@@ -1,56 +1,49 @@
-package com.example.formit.ui.view
+package com.example.formit.ui.view.fragments
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.formit.R
 import com.example.formit.data.model.Course
 import com.example.formit.ui.adapter.HomeCouseAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.tv_CourseSeeAll
-import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.android.synthetic.main.reusable_toolbar.*
+import com.example.formit.R
+import com.example.formit.ui.view.activitys.CoursesActivity
+import com.example.formit.ui.view.activitys.FIRST_VISIT
+import com.example.formit.ui.view.activitys.PREF_NAME
 
-class ProfileFragment : Fragment(R.layout.fragment_profile) {
+
+class HomeFragment : Fragment(R.layout.fragment_home) {
+
+    lateinit var mSharedPref: SharedPreferences
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var rootView : View = inflater.inflate(R.layout.fragment_profile, container, false)
 
 
+        var rootView: View = inflater.inflate(R.layout.fragment_home, container, false)
+
+        mSharedPref = rootView.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        if(mSharedPref.getBoolean(FIRST_VISIT,true)){
+
+        }else{
+            WelcomeText.text="Welcome Back"
+        }
 
         return rootView
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        toolbar_title.text="Profile"
-
-        button_Right.setBackgroundResource(R.drawable.ic_logout)
-
-        button_Right.setOnClickListener{
-            activity?.getSharedPreferences(PREF_NAME, AppCompatActivity.MODE_PRIVATE)
-                ?.edit()
-                ?.clear()?.apply()
-            Intent(context, SignInUpActivity::class.java).also {
-                startActivity(it)
-                activity?.finish()
-            }
-        }
-        btn_reus_back.visibility=View.GONE
-
-
-
-
 
 
         var coursesList = mutableListOf(
@@ -85,25 +78,22 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         val adapter = HomeCouseAdapter(coursesList)
 
-        Profile_CourseSeeAll.setOnClickListener {
+        tv_CourseSeeAll.setOnClickListener {
             Intent(activity, CoursesActivity::class.java).also {
                 startActivity(it)
             }
         }
 
-        Profile_EventsSeeAll.setOnClickListener {
-            Intent(activity, CoursesActivity::class.java).also {
-                startActivity(it)
-            }
-        }
+        rv_events.adapter = adapter
+        rv_courses.adapter = adapter
+        rv_courses.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rv_events.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-        Profile_Participated_events.adapter = adapter
-        Profile_Enrolled_courses.adapter = adapter
-        Profile_Enrolled_courses.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        Profile_Participated_events.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+
     }
-
-
 }
+
+

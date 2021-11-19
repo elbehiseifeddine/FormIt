@@ -1,4 +1,4 @@
-package com.example.formit.ui.view
+package com.example.formit.ui.view.activitys
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.formit.R
 import com.example.formit.data.ApiInterface
-import com.example.formit.data.model.Student
 import com.example.formit.data.model.User
 import kotlinx.android.synthetic.main.activity_sign_in_up.*
 import retrofit2.Call

@@ -1,4 +1,4 @@
-package com.example.formit.ui.view
+package com.example.formit.ui.view.activitys
 
 import android.content.Intent
 import android.graphics.Color
@@ -9,61 +9,59 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import com.example.formit.R
-import kotlinx.android.synthetic.main.activity_sign_in.*
-import kotlinx.android.synthetic.main.activity_sign_in.btn_SignUp
-import kotlinx.android.synthetic.main.activity_sign_in.emailContainer
-import kotlinx.android.synthetic.main.activity_sign_in.passwordContainer
-import kotlinx.android.synthetic.main.activity_sign_in.ti_Email
-import kotlinx.android.synthetic.main.activity_sign_in.ti_Password
+import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.activity_sign_up.btn_SignUp
+import kotlinx.android.synthetic.main.activity_sign_up.emailContainer
+import kotlinx.android.synthetic.main.activity_sign_up.passwordContainer
+import kotlinx.android.synthetic.main.activity_sign_up.ti_Email
+import kotlinx.android.synthetic.main.activity_sign_up.ti_Password
 
-class SignInActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        setContentView(R.layout.activity_sign_up)
 
         val shader = LinearGradient(
             0f,
             0f,
             0f,
-            tv_SignIn.textSize,
+            tv_SignUp.textSize,
             Color.parseColor("#647DEE"),
             Color.parseColor("#7F53AC"),
             Shader.TileMode.CLAMP
         )
-        tv_SignIn.paint.shader = shader
-        btn_SignUp.paint.shader = shader
-
-        btn_SignUp.setOnClickListener {
-            Intent(this, SignUpActivity::class.java).also {
-                startActivity(it)
-                finish()
-            }
-        }
+        tv_SignUp.paint.shader = shader
+        btn_Login.paint.shader = shader
 
         btn_Login.setOnClickListener {
-            Intent(this,HomeActivity::class.java).also {
+            Intent(this, SignInActivity::class.java).also {
                 startActivity(it)
                 finish()
             }
-            //clickLogin()
         }
+
+        btn_SignUp.setOnClickListener {
+            clickSignUp()
+        }
+
+
     }
 
-    private fun clickLogin() {
+    private fun clickSignUp() {
         val emailVerif = EmailValidate()
         val passVerif = PassValidate()
-        if (emailVerif && passVerif) {
-
+        val confirmPassVerif = ConfirmPassValidate()
+        if (emailVerif && passVerif && confirmPassVerif) {
+            Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun EmailValidate(): Boolean {
         val emailText = ti_Email.text.toString()
-        if(emailText.isEmpty()){
+        if (emailText.isEmpty()) {
             emailContainer.helperText = "Required"
             return false
-        }
-        else if (!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
             emailContainer.helperText = "Email address invalide"
             return false
         } else {
@@ -74,14 +72,14 @@ class SignInActivity : AppCompatActivity() {
 
     private fun PassValidate(): Boolean {
         val passwordText = ti_Password.text.toString()
-        if(passwordText.isEmpty()){
+        if (passwordText.isEmpty()) {
             passwordContainer.helperText = "Required"
             return false
-        }
-        else if (passwordText.length < 6) {
+        } else if (passwordText.length < 6) {
             passwordContainer.helperText = "Minimum 8 Character Password"
             return false
-        }else if (passwordText.length > 16) {
+        }
+        else if (passwordText.length > 16) {
             passwordContainer.helperText = "Maximum 16 Character Password"
             return false
         } else if (!passwordText.matches(".*[A-Z].*".toRegex())) {
@@ -95,6 +93,22 @@ class SignInActivity : AppCompatActivity() {
             return false
         } else {
             passwordContainer.helperText = ""
+        }
+        return true
+    }
+
+    private fun ConfirmPassValidate(): Boolean {
+        val confirmPasswordText = ti_ConfirmPassword.text.toString()
+        val passwordText = ti_Password.text.toString()
+        if (confirmPasswordText.isEmpty()) {
+            confirmPasswordContainer.helperText = "Required"
+            return false
+        }
+        else if (confirmPasswordText != passwordText) {
+            confirmPasswordContainer.helperText = "Passwords does not match"
+            return false
+        } else {
+            confirmPasswordContainer.helperText = ""
         }
         return true
     }

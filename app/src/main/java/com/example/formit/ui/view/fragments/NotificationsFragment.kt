@@ -1,4 +1,4 @@
-package com.example.formit.ui.view
+package com.example.formit.ui.view.fragments
 
 import androidx.fragment.app.Fragment
 import com.example.formit.R

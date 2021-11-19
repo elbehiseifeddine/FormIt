@@ -1,4 +1,4 @@
-package com.example.formit.ui.view
+package com.example.formit.ui.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

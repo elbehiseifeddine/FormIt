@@ -1,4 +1,4 @@
-package com.example.formit.ui.view
+package com.example.formit.ui.view.activitys
 
 import android.os.Bundle
 import android.view.Menu

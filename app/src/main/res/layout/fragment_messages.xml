@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.AppCompat.NoActionBar"
-    tools:context=".ui.view.HomeActivity"
+    tools:context=".ui.view.activitys.HomeActivity"
     android:orientation="vertical">
     <include
         android:id="@+id/toolbar"
