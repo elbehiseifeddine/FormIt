@@ -10,7 +10,7 @@ import com.example.formit.data.model.Course
 import com.example.formit.ui.view.activitys.DescriptionActivity
 import kotlinx.android.synthetic.main.item_course.view.*
 
-class HomeCouseAdapter (var courses: List<Course>) :
+class HomeCouseAdapter (var courses: MutableList<Course>) :
     RecyclerView.Adapter<HomeCouseAdapter.HomeCoursesViewHolder>() {
     inner class HomeCoursesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -36,9 +36,11 @@ class HomeCouseAdapter (var courses: List<Course>) :
                 it.putExtra("DESCRIPTION", courses[position].description)
                 it.putExtra("PREREQUISITES", courses[position].prerequisites)
                 it.putExtra("STARTDATE", courses[position].startDate)
+                it.putExtra("PLACES", courses[position].places)
             }
             holder.itemView.context.startActivity(intent)
         }
+
     }
 
     override fun getItemCount(): Int {

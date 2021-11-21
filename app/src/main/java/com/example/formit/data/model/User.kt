@@ -12,6 +12,7 @@ data class User (
     @SerializedName("bookmarked") val bookmarked : List<Course>,
     @SerializedName("achievements") val achievements : Int,
     @SerializedName("notification") val notification : List<Notification>,
+    @SerializedName("participated") val participated : List<Course>,
     @SerializedName("confirmed") val confirmed : Boolean,
     @SerializedName("baned") val baned : Boolean,
     )

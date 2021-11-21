@@ -1,6 +1,8 @@
 package com.example.formit.ui.view.fragments
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.formit.R
 import com.example.formit.data.model.Course
 import com.example.formit.ui.adapter.HomeCouseAdapter
-import com.example.formit.ui.view.activitys.CoursesActivity
-import com.example.formit.ui.view.activitys.PREF_NAME
-import com.example.formit.ui.view.activitys.SignInUpActivity
+import com.example.formit.ui.view.activitys.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
-
+    lateinit var mSharedPref: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,11 +49,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
         btn_reus_back.visibility=View.GONE
 
-
-
-
-
-
+        mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         var coursesList = mutableListOf(
             Course(
                 "1",
@@ -61,10 +57,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 "You will learn how to manipulate and create an android app using kotlin",
                 "Seifeddine El Behi",
                 150,
+                20,
                 50,
                 "Android studio with all the sdks installed",
                 "12/5/2022",
-                "11/10/2022"
             ),
             Course(
                 "2",
@@ -72,10 +68,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 "You will learn how to manipulate and create an Ios app using swift",
                 "Ahmed Ben Dahmen",
                 150,
-                50,
+                80,
+                40,
                 "Android studio with all the sdks installed",
                 "12/5/2022",
-                "11/10/2022"
             ),
             Course(
                 "3",
@@ -84,9 +80,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 "Dali ben chikha",
                 150,
                 50,
+                20,
                 "Android studio with all the sdks installed",
                 "18/5/2022",
-                "12/10/2022",
             )
         )
 
@@ -103,6 +99,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 startActivity(it)
             }
         }
+
+        ProfileSettings.setOnClickListener{
+            Intent(activity, SettingsActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        tv_ProfileFullName.setText(mSharedPref.getString(FIRSTNAME,"").toString()+" "+mSharedPref.getString(
+            LASTNAME,"").toString())
+        tv_ProfileEmail.setText(mSharedPref.getString(EMAIL,"").toString())
+
+
 
         Profile_Participated_events.adapter = adapter
         Profile_Enrolled_courses.adapter = adapter
