@@ -6,12 +6,12 @@ import java.util.*
 
 data class Course(
     @SerializedName("_id") val id : String,
-    @SerializedName("_courseName") val courseName: String,
-    @SerializedName("_description") val description: String,
-    @SerializedName("_mentor") val mentor: String,
-    @SerializedName("_price") val price: Int,
-    @SerializedName("_duration") val duration: Int,
-    @SerializedName("_prerequisites") val prerequisites: String,
-    @SerializedName("_startDate") val startDate: String,
-    @SerializedName("_creationDate") val creationDate: String,
+    @SerializedName("courseName") val courseName: String,
+    @SerializedName("description") val description: String,
+    @SerializedName("mentor") val mentor: String,
+    @SerializedName("price") val price: Int,
+    @SerializedName("places") val places: Int,
+    @SerializedName("duration") val duration: Int,
+    @SerializedName("prerequisites") val prerequisites: String,
+    @SerializedName("startDate") val startDate: String,
 ) : Serializable

@@ -37,6 +37,7 @@ class CoursesAdapter(var courses: List<Course>) :
                 it.putExtra("DESCRIPTION", courses[position].description)
                 it.putExtra("PREREQUISITES", courses[position].prerequisites)
                 it.putExtra("STARTDATE", courses[position].startDate)
+                it.putExtra("PLACES", courses[position].places).toString() +" places"
             }
             holder.itemView.context.startActivity(intent)
         }

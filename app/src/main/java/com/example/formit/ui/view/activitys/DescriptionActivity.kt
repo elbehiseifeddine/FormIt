@@ -1,5 +1,6 @@
 package com.example.formit.ui.view.activitys
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 
@@ -29,6 +30,15 @@ class DescriptionActivity : AppCompatActivity() {
         tv_Price.text=intent.getStringExtra("PRICE")
         tv_Prerequisites.text=intent.getStringExtra("PREREQUISITES")
         tv_Description.text=intent.getStringExtra("DESCRIPTION")
+        tv_Places.text=intent.getStringExtra("PLACES")
+
+        btn_Participate.setOnClickListener {
+            Intent(this, PaimentMethodeActivity::class.java).also {
+
+                startActivity(it)
+                finish()
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

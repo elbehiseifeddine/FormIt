@@ -22,10 +22,10 @@ class CoursesActivity : AppCompatActivity() {
                 "You will learn how to manipulate and create an android app using kotlin",
                 "Seifeddine El Behi",
                 150,
+                20,
                 50,
                 "Android studio with all the sdks installed",
                 "12/5/2022",
-                "11/10/2022"
             ),
             Course(
                 "2",
@@ -33,10 +33,10 @@ class CoursesActivity : AppCompatActivity() {
                 "You will learn how to manipulate and create an Ios app using swift",
                 "Ahmed Ben Dahmen",
                 150,
-                50,
+                80,
+                40,
                 "Android studio with all the sdks installed",
                 "12/5/2022",
-                "11/10/2022"
             ),
             Course(
                 "3",
@@ -45,9 +45,9 @@ class CoursesActivity : AppCompatActivity() {
                 "Dali ben chikha",
                 150,
                 50,
+                20,
                 "Android studio with all the sdks installed",
                 "18/5/2022",
-                "12/10/2022",
             )
         )
 

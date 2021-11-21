@@ -28,24 +28,24 @@
                 android:layout_gravity="center">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
                     android:background="@drawable/btn_circular"
                     android:backgroundTint="@color/white"
                     android:elevation="@dimen/_10sdp"
-                    app:cardCornerRadius="40dp"
+                    app:cardCornerRadius="100dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="95dp"
-                        android:layout_height="95dp"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
                         android:layout_gravity="center"
                         android:background="@color/white"
                         android:backgroundTint="@color/white"
-                        app:cardCornerRadius="40dp"
+                        app:cardCornerRadius="80dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -115,6 +115,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
+                android:id="@+id/tv_ProfileFullName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -126,6 +127,7 @@
                 android:gravity="center"/>
 
             <TextView
+                android:id="@+id/tv_ProfileEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ahmed.bendahmen@esprit.tn"
