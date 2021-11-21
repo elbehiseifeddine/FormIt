@@ -24,6 +24,8 @@ const val PREF_NAME = "LOGIN_PREF"
 const val EMAIL = "EMAIL"
 const val PASSWORD = "PASSWORD"
 const val ID= "ID"
+const val FIRSTNAME= "FIRSTNAME"
+const val LASTNAME= "LASTNAME"
 const val FIRST_VISIT= "FIRST_VISIT"
 const val IS_REMEMBRED = "IS_REMEMBRED"
 class SignInUpActivity : AppCompatActivity() {
@@ -107,6 +109,8 @@ class SignInUpActivity : AppCompatActivity() {
                                 putBoolean(IS_REMEMBRED, true)
                                 putBoolean(FIRST_VISIT, true)
                                 putString(EMAIL, user.email)
+                                putString(FIRSTNAME, user.firstname)
+                                putString(LASTNAME, user.lastname)
                                 putString(PASSWORD, user.password)
                                 putString(ID, user.id)
                             }.apply()
@@ -200,6 +204,8 @@ class SignInUpActivity : AppCompatActivity() {
                                 putBoolean(IS_REMEMBRED, true)
                                 putBoolean(FIRST_VISIT, true)
                                 putString(EMAIL, user.email)
+                                putString(FIRSTNAME, user.firstname)
+                                putString(LASTNAME, user.lastname)
                                 putString(PASSWORD, user.password)
                                 putString(ID, user.id)
                             }.apply()
