@@ -1,5 +1,4 @@
 package com.example.formit.data
-
 import com.example.formit.data.model.Course
 import com.example.formit.data.model.User
 import retrofit2.Call
