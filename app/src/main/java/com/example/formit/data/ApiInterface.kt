@@ -5,6 +5,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 import java.util.*
 
@@ -13,12 +14,15 @@ interface ApiInterface {
     @POST("/users/login")
     fun login(@Body map : HashMap<String, String> ): Call<User>
 
+    @GET("/users/")
+    fun getAllUsers(): Call<MutableList<User>>
+
     @POST("/users/signup")
     fun signup(@Body map : HashMap<String, String> ): Call<User>
 
     companion object {
 
-        var BASE_URL = "http://192.168.43.252:5000"
+        var BASE_URL = "http://192.168.1.15:5000"
 
         fun create() : ApiInterface {
 
