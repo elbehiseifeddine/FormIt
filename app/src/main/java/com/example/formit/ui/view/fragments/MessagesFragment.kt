@@ -13,6 +13,7 @@ import com.example.formit.data.model.Course_Discussion
 import com.example.formit.ui.adapter.BubleMessageAdapter
 import com.example.formit.ui.adapter.CoacheDiscussionAdapter
 import com.example.formit.ui.adapter.CourseDiscussionAdapter
+import com.example.formit.ui.view.activitys.EMAIL
 import kotlinx.android.synthetic.main.fragment_messages.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
 
@@ -30,6 +31,7 @@ class MessagesFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val email = requireArguments().getString(EMAIL,"NULL")
         btn_reus_back.visibility=View.INVISIBLE
         var BubleList = mutableListOf(
             Buble_Message(R.drawable.test1,"ahmed",true),
@@ -85,9 +87,20 @@ class MessagesFragment: Fragment() {
                 1,
             )
         )
-        val adapterCoache =CoacheDiscussionAdapter(CoacheDiscussion)
+        val adapterCoache =CoacheDiscussionAdapter(CoacheDiscussion,email)
         CoachesDiscussionRecycleView.adapter = adapterCoache
         CoachesDiscussionRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
 
+    }
+
+
+    companion object {
+        @JvmStatic
+        fun newInstance(email: String) = MessagesFragment().apply {
+            arguments = Bundle().apply {
+                putString(EMAIL, email)
+
+            }
+        }
     }
 }

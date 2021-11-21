@@ -13,18 +13,21 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        mSharedPref = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
 
         val home_Fragment= HomeFragment()
-        val messages_Fragment= MessagesFragment()
+        val messages_Fragment= MessagesFragment.newInstance(mSharedPref.getString(EMAIL,"").toString())
         val bookmark_Fragment= BookmarkFragment()
         val notification_Fragment= NotificationsFragment()
         val profile_Fragment= ProfileFragment()
-        mSharedPref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         setCurrentFragment(home_Fragment)
         bottomNavigationView.setOnItemSelectedListener() {
             when(it.itemId) {
                 R.id.mihome->setCurrentFragment(home_Fragment)
-                R.id.mimessages->setCurrentFragment(messages_Fragment)
+                R.id.mimessages-> {
+
+                    setCurrentFragment(messages_Fragment)
+                }
                 R.id.mibookmark->setCurrentFragment(bookmark_Fragment)
                 R.id.minotification->
                 {
