@@ -1,7 +1,6 @@
 package com.example.formit.ui.view.activitys
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,7 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.formit.R
-import com.example.formit.data.ApiInterface
+import com.example.formit.data.repository.ApiInterface
 import com.example.formit.data.model.User
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_sign_in_up.*
@@ -41,6 +40,8 @@ class EditProfileActivity : AppCompatActivity() {
             map["email"] = ti_EditEmail.text.toString()
             map["firstname"] = ti_EditFirstName.text.toString()
             map["lastname"] = ti_EditLastName.text.toString()
+            map["address"] = ti_EditAddress.text.toString()
+            map["telnumber"] = ti_EditPhoneNumber.text.toString()
             apiInterface.UpdateCurrentUser(mSharedPref.getString(ID,""),map).enqueue(object : Callback<User> {
                 override fun onResponse(
                     call: Call<User>, response:
@@ -52,6 +53,8 @@ class EditProfileActivity : AppCompatActivity() {
                             putString(EMAIL, user.email)
                             putString(FIRSTNAME, user.firstname)
                             putString(LASTNAME, user.lastname)
+//                            putString(ADDRESS, user.address)
+//                            putInt(TELNUMBER, user.telnumber)
                         }.apply()
                         finish()
 
@@ -69,9 +72,11 @@ class EditProfileActivity : AppCompatActivity() {
             })
         }
         ti_EditEmail.setText(mSharedPref.getString(EMAIL,"").toString())
-        ti_EditFirstName.setText(mSharedPref.getString(FIRSTNAME,"").toString())
-        ti_EditLastName.setText(mSharedPref.getString(LASTNAME,"").toString())
-        tv_FullName.setText(mSharedPref.getString(FIRSTNAME,"").toString()+" "+mSharedPref.getString(LASTNAME,"").toString())
+        ti_EditFirstName.setText(mSharedPref.getString(FIRSTNAME,"").toString().capitalize())
+        ti_EditLastName.setText(mSharedPref.getString(LASTNAME,"").toString().capitalize())
+        ti_EditAddress.setText(mSharedPref.getString(ADDRESS,"").toString().capitalize())
+        ti_EditPhoneNumber.setText(mSharedPref.getInt(PHONENUMBER,0).toString())
+        tv_FullName.setText(mSharedPref.getString(FIRSTNAME,"").toString().capitalize()+" "+mSharedPref.getString(LASTNAME,"").toString().capitalize())
 
     }
 }
