@@ -1,4 +1,4 @@
-package com.example.formit.data
+package com.example.formit.data.repository
 import com.example.formit.data.model.Course
 import com.example.formit.data.model.User
 import retrofit2.Call
@@ -29,7 +29,7 @@ interface ApiInterface {
 
     companion object {
 
-        var BASE_URL = "http://192.168.1.33:5000"
+        var BASE_URL = "http://192.168.43.252:5000"
 
         fun create() : ApiInterface {
 

@@ -15,4 +15,6 @@ data class User (
     @SerializedName("participated") val participated : List<Course>,
     @SerializedName("confirmed") val confirmed : Boolean,
     @SerializedName("baned") val baned : Boolean,
+    @SerializedName("address") val address : String,
+    @SerializedName("phonenumber") val phonenumber : Int,
     )

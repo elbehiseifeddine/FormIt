@@ -171,7 +171,79 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Phone Number"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/EditPhoneNumberContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:helperTextTextColor="@color/red"
+                    app:hintEnabled="false"
+                    tools:layout_editor_absoluteX="32dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ti_EditPhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTint="@color/hintColor"
+                        android:fontFamily="@font/poppins_medium"
+                        android:inputType="text"
+                        android:text="Phone Number"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="14dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Address"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/EditAddressContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:helperTextTextColor="@color/red"
+                    app:hintEnabled="false"
+                    tools:layout_editor_absoluteX="32dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ti_EditAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTint="@color/hintColor"
+                        android:fontFamily="@font/poppins_medium"
+                        android:inputType="text"
+                        android:text="Address"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="14dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
                 <Button
                     android:id="@+id/btn_Update"
                     android:layout_width="match_parent"

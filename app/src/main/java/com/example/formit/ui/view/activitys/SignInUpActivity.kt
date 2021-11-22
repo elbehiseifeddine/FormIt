@@ -12,7 +12,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.formit.R
-import com.example.formit.data.ApiInterface
+import com.example.formit.data.repository.ApiInterface
 import com.example.formit.data.model.User
 import kotlinx.android.synthetic.main.activity_sign_in_up.*
 import retrofit2.Call
@@ -26,6 +26,8 @@ const val PASSWORD = "PASSWORD"
 const val ID= "ID"
 const val FIRSTNAME= "FIRSTNAME"
 const val LASTNAME= "LASTNAME"
+const val ADDRESS= "ADDRESS"
+const val PHONENUMBER= "PHONENUMBER"
 const val FIRST_VISIT= "FIRST_VISIT"
 const val IS_REMEMBRED = "IS_REMEMBRED"
 class SignInUpActivity : AppCompatActivity() {
@@ -112,6 +114,8 @@ class SignInUpActivity : AppCompatActivity() {
                                 putString(FIRSTNAME, user.firstname)
                                 putString(LASTNAME, user.lastname)
                                 putString(PASSWORD, user.password)
+                                putInt(PHONENUMBER, user.phonenumber)
+                                putString(ADDRESS, user.address)
                                 putString(ID, user.id)
                             }.apply()
 
@@ -206,6 +210,8 @@ class SignInUpActivity : AppCompatActivity() {
                                 putString(EMAIL, user.email)
                                 putString(FIRSTNAME, user.firstname)
                                 putString(LASTNAME, user.lastname)
+                                putInt(PHONENUMBER, user.phonenumber)
+                                putString(ADDRESS, user.address)
                                 putString(PASSWORD, user.password)
                                 putString(ID, user.id)
                             }.apply()
