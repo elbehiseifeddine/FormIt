@@ -15,7 +15,7 @@
         android:theme="@style/Theme.FormIt"
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.view.chat.chatActivity" />
-        <activity android:name=".ui.view.activitys.PaimentMethodeActivity"></activity>
+        <activity android:name=".ui.view.activitys.PaimentMethodeActivity" />
         <activity android:name=".ui.view.activitys.EditProfileActivity" />
         <activity android:name=".ui.view.activitys.SettingsActivity" />
         <activity android:name=".ui.view.activitys.CoursesActivity" />

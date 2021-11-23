@@ -7,8 +7,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.formit.R
 import com.example.formit.data.model.Course
@@ -24,6 +26,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
+
         var rootView : View = inflater.inflate(R.layout.fragment_profile, container, false)
 
 
@@ -33,18 +38,38 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var frg: Fragment? = null
+        frg = activity?.supportFragmentManager?.findFragmentById(R.id.fl_Fragment)
+        val ft: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
+        if (frg != null) {
+            ft.detach(frg)
 
+            ft.attach(frg)
+            ft.commit()
+        }
         toolbar_title.text="Profile"
 
         button_Right.setBackgroundResource(R.drawable.ic_logout)
 
         button_Right.setOnClickListener{
-            activity?.getSharedPreferences(PREF_NAME, AppCompatActivity.MODE_PRIVATE)
-                ?.edit()
-                ?.clear()?.apply()
-            Intent(context, SignInUpActivity::class.java).also {
-                startActivity(it)
-                activity?.finish()
+
+            val builder = AlertDialog.Builder(it.context)
+            builder.setTitle(getString(R.string.logoutTitle))
+            builder.setMessage(R.string.logoutMessage)
+            builder.setPositiveButton("Yes"){ dialogInterface, which ->
+                activity?.getSharedPreferences(PREF_NAME, AppCompatActivity.MODE_PRIVATE)
+                    ?.edit()
+                    ?.clear()?.apply()
+                Intent(context, SignInUpActivity::class.java).also {
+                    startActivity(it)
+                    activity?.finish()
+
+            builder.setNegativeButton("No"){dialogInterface, which ->
+                dialogInterface.dismiss()
+            }
+            builder.create().show()
+        }
+
             }
         }
         btn_reus_back.visibility=View.GONE
@@ -106,8 +131,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
         }
 
-        tv_ProfileFullName.setText(mSharedPref.getString(FIRSTNAME,"").toString()+" "+mSharedPref.getString(
-            LASTNAME,"").toString())
+        tv_ProfileFullName.setText(mSharedPref.getString(FIRSTNAME,"").toString()+" "+mSharedPref.getString(LASTNAME,"").toString())
         tv_ProfileEmail.setText(mSharedPref.getString(EMAIL,"").toString())
 
 

@@ -23,7 +23,6 @@ import retrofit2.Response
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    lateinit var mSharedPref: SharedPreferences
 
 
     override fun onCreateView(
@@ -35,12 +34,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         var rootView: View = inflater.inflate(R.layout.fragment_home, container, false)
 
-        mSharedPref = rootView.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        if(mSharedPref.getBoolean(FIRST_VISIT,true)){
 
-        }else{
-            WelcomeText.text="Welcome Back"
-        }
 
         return rootView
 

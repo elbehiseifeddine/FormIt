@@ -2,23 +2,27 @@ package com.example.formit.ui.view.activitys
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.formit.R
 import com.example.formit.data.repository.ApiInterface
 import com.example.formit.data.model.User
+import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_sign_in_up.*
 import kotlinx.android.synthetic.main.description_toolbar.*
 import kotlinx.android.synthetic.main.description_toolbar.toolbar_title
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.HashMap
+import java.util.*
 
 class EditProfileActivity : AppCompatActivity() {
     lateinit var mSharedPref: SharedPreferences
@@ -33,6 +37,22 @@ class EditProfileActivity : AppCompatActivity() {
         btn_reus_back.setOnClickListener {
             finish()
         }
+
+        val birthDatePicker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Select start date")
+            .build()
+        birthDatePicker.addOnPositiveButtonClickListener {
+            ti_EditBirthdate.setText(birthDatePicker.headerText.toString())
+        }
+
+        ti_EditBirthdate.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus){
+                birthDatePicker.show(supportFragmentManager, "START_DATE")
+            }else{
+                birthDatePicker.dismiss()
+            }
+        }
+
         btn_Update.setOnClickListener {
 
             val apiInterface = ApiInterface.create()
@@ -40,6 +60,7 @@ class EditProfileActivity : AppCompatActivity() {
             map["email"] = ti_EditEmail.text.toString()
             map["firstname"] = ti_EditFirstName.text.toString()
             map["lastname"] = ti_EditLastName.text.toString()
+            map["birthdate"] = ti_EditBirthdate.text.toString()
             map["address"] = ti_EditAddress.text.toString()
             map["telnumber"] = ti_EditPhoneNumber.text.toString()
             apiInterface.UpdateCurrentUser(mSharedPref.getString(ID,""),map).enqueue(object : Callback<User> {
@@ -53,9 +74,13 @@ class EditProfileActivity : AppCompatActivity() {
                             putString(EMAIL, user.email)
                             putString(FIRSTNAME, user.firstname)
                             putString(LASTNAME, user.lastname)
-//                            putString(ADDRESS, user.address)
-//                            putInt(TELNUMBER, user.telnumber)
+                            putString(ADDRESS, user.address)
+                            putString(BIRTHDATE, user.birthdate)
+                            putInt(PHONENUMBER, user.phonenumber)
                         }.apply()
+
+
+
                         finish()
 
                     } else {
