@@ -6,13 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.view.activitys.HomeActivity">
 
-    <TextView
-        android:id="@+id/third_fragment"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_courses"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bookmarks Fragment"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

@@ -75,43 +75,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         btn_reus_back.visibility=View.GONE
 
         mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        var coursesList = mutableListOf(
-            Course(
-                "1",
-                "Android Course",
-                "You will learn how to manipulate and create an android app using kotlin",
-                "Seifeddine El Behi",
-                150,
-                20,
-                50,
-                "Android studio with all the sdks installed",
-                "12/5/2022",
-            ),
-            Course(
-                "2",
-                "Ios Course",
-                "You will learn how to manipulate and create an Ios app using swift",
-                "Ahmed Ben Dahmen",
-                150,
-                80,
-                40,
-                "Android studio with all the sdks installed",
-                "12/5/2022",
-            ),
-            Course(
-                "3",
-                ".Net Core Course",
-                "You will learn how to manipulate and create a backend  using c#",
-                "Dali ben chikha",
-                150,
-                50,
-                20,
-                "Android studio with all the sdks installed",
-                "18/5/2022",
-            )
-        )
 
-        val adapter = HomeCouseAdapter(coursesList)
+//        val adapter = HomeCouseAdapter(coursesList)
 
         Profile_CourseSeeAll.setOnClickListener {
             Intent(activity, CoursesActivity::class.java).also {
@@ -136,12 +101,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
 
 
-        Profile_Participated_events.adapter = adapter
-        Profile_Enrolled_courses.adapter = adapter
-        Profile_Enrolled_courses.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        Profile_Participated_events.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//        Profile_Participated_events.adapter = adapter
+//        Profile_Enrolled_courses.adapter = adapter
+//        Profile_Enrolled_courses.layoutManager =
+//            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//        Profile_Participated_events.layoutManager =
+//            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
 

@@ -1,55 +1,47 @@
 package com.example.formit.ui.view.activitys
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.formit.R
 import com.example.formit.data.model.Course
+import com.example.formit.data.repository.ApiInterface
 import com.example.formit.ui.adapter.CoursesAdapter
 import kotlinx.android.synthetic.main.activity_courses.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CoursesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_courses)
 
-        var coursesList= mutableListOf(
-            Course(
-                "1",
-                "Android Course",
-                "You will learn how to manipulate and create an android app using kotlin",
-                "Seifeddine El Behi",
-                150,
-                20,
-                50,
-                "Android studio with all the sdks installed",
-                "12/5/2022",
-            ),
-            Course(
-                "2",
-                "Ios Course",
-                "You will learn how to manipulate and create an Ios app using swift",
-                "Ahmed Ben Dahmen",
-                150,
-                80,
-                40,
-                "Android studio with all the sdks installed",
-                "12/5/2022",
-            ),
-            Course(
-                "3",
-                ".Net Core Course",
-                "You will learn how to manipulate and create a backend  using c#",
-                "Dali ben chikha",
-                150,
-                50,
-                20,
-                "Android studio with all the sdks installed",
-                "18/5/2022",
-            )
-        )
+        val apiInterface = ApiInterface.create()
+        apiInterface.getAllCourses().enqueue(object : Callback<MutableList<Course>> {
+            override fun onResponse(
+                call: Call<MutableList<Course>>, response:
+                Response<MutableList<Course>>
+            ) {
+                val courses = response.body()
+                if (courses != null) {
+                    Log.e("coursesaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",courses.toString())
+                    val adapter= CoursesAdapter(courses,false)
+                    rv_Cour.adapter=adapter
+                    rv_Cour.layoutManager =
+                        LinearLayoutManager(this@CoursesActivity, LinearLayoutManager.VERTICAL, false)
+
+                } else {
+                    Log.e("Username or Password wrong","true")
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
+                Log.e("aaaaaaaaaaaaaaaaaaaaaaaa","true")
+            }
+        })
 
         toolbar_title.text="Courses"
         button_Right.visibility=View.INVISIBLE
@@ -57,11 +49,7 @@ class CoursesActivity : AppCompatActivity() {
         btn_reus_back.setOnClickListener {
             finish()
         }
-        val adapter= CoursesAdapter(coursesList)
 
-        rv_Cour.adapter=adapter
-
-        rv_Cour.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL ,false)
     }
+
 }

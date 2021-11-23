@@ -303,5 +303,10 @@ class SignInUpActivity : AppCompatActivity() {
         }
         return true
     }
+
+    fun View.setAllEnabled(enabled: Boolean) {
+        isEnabled = enabled
+        if (this is ViewGroup) children.forEach { child -> child.setAllEnabled(enabled) }
+    }
 companion object
 }

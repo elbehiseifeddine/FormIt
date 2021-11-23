@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.formit.R
-import com.example.formit.data.repository.ApiInterface
 import com.example.formit.data.model.User
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.example.formit.data.repository.ApiInterface
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_sign_in_up.*
 import kotlinx.android.synthetic.main.description_toolbar.*
@@ -102,6 +102,5 @@ class EditProfileActivity : AppCompatActivity() {
         ti_EditAddress.setText(mSharedPref.getString(ADDRESS,"").toString().capitalize())
         ti_EditPhoneNumber.setText(mSharedPref.getInt(PHONENUMBER,0).toString())
         tv_FullName.setText(mSharedPref.getString(FIRSTNAME,"").toString().capitalize()+" "+mSharedPref.getString(LASTNAME,"").toString().capitalize())
-
     }
 }

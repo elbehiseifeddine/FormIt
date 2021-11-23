@@ -2,5 +2,8 @@
     <string name="app_name">FormIt</string>
     <string name="logoutTitle">Logout</string>
     <string name="logoutMessage">Are you sure you want to logout ?</string>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 90396aa... bookmarked works !!!!!
 </resources>

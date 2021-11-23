@@ -14,4 +14,6 @@ data class Course(
     @SerializedName("duration") val duration: Int,
     @SerializedName("prerequisites") val prerequisites: String,
     @SerializedName("startDate") val startDate: String,
+    @SerializedName("usersbookmarked") val usersbookmarked: Array<String>,
+    @SerializedName("participatedMembers") val participatedMembers: Array<String>,
 ) : Serializable
