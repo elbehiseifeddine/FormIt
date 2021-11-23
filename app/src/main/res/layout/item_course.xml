@@ -111,6 +111,7 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/btn_bookmark"
                         android:layout_width="@dimen/_24sdp"
                         android:layout_height="@dimen/_24sdp"
                         android:src="@drawable/ic_bookmark_empty"

@@ -24,12 +24,19 @@ interface ApiInterface {
     @GET("/courses")
     fun getAllCourses(): Call<MutableList<Course>>
 
+    @GET("/courses/getCoursesBookmarked/{idUser}")
+    fun getCoursesBookmarked(@Path("idUser") id: String?): Call<MutableList<Course>>
+
     @PATCH("/users/update/{id}")
     fun UpdateCurrentUser(@Path("id") id: String?, @Body map : HashMap<String, String>): Call<User>
 
+    @PATCH("/users/addBookmark/{id}/{idCourse}")
+    fun AddBookmark(@Path("id") id: String?,@Path("idCourse") idCourse: String?): Call<User>
+
     companion object {
 
-        var BASE_URL = "http://192.168.43.217:5000"
+
+        var BASE_URL = "http://192.168.1.33:5000"
 
         fun create() : ApiInterface {
 
