@@ -1,6 +1,7 @@
 package com.example.formit.data.model
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class User (
     @SerializedName("_id") val id : String,
@@ -9,6 +10,7 @@ data class User (
     @SerializedName("picture") val picture : String,
     @SerializedName("firstname") val firstname : String,
     @SerializedName("lastname") val lastname : String,
+    @SerializedName("birthdate") val birthdate : String,
     @SerializedName("bookmarked") val bookmarked : List<Course>,
     @SerializedName("achievements") val achievements : Int,
     @SerializedName("notification") val notification : List<Notification>,

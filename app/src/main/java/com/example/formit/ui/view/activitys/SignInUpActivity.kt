@@ -9,8 +9,10 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import com.example.formit.R
 import com.example.formit.data.repository.ApiInterface
 import com.example.formit.data.model.User
@@ -27,8 +29,8 @@ const val ID= "ID"
 const val FIRSTNAME= "FIRSTNAME"
 const val LASTNAME= "LASTNAME"
 const val ADDRESS= "ADDRESS"
+const val BIRTHDATE= "BIRTHDATE"
 const val PHONENUMBER= "PHONENUMBER"
-const val FIRST_VISIT= "FIRST_VISIT"
 const val IS_REMEMBRED = "IS_REMEMBRED"
 class SignInUpActivity : AppCompatActivity() {
 
@@ -80,15 +82,22 @@ class SignInUpActivity : AppCompatActivity() {
             logIn.setTextColor(resources.getColor(R.color.white,null))
         }
         btn_SingIn.setOnClickListener {
+            it.setAllEnabled(true)
             clickLogin()
         }
         btn_SignUp.setOnClickListener {
+            it.setAllEnabled(true)
             clickSignUp()
 
         }
 
 
     }
+    fun View.setAllEnabled(enabled: Boolean) {
+        isEnabled = enabled
+        if (this is ViewGroup) children.forEach { child -> child.setAllEnabled(enabled) }
+    }
+
 
     private fun clickLogin() {
         val emailVerif = SignInEmailValidate()
@@ -98,6 +107,7 @@ class SignInUpActivity : AppCompatActivity() {
             val map: HashMap<String, String> = HashMap()
             map["email"] = ti_SignInEmail.text.toString()
             map["password"] = ti_SignInPassword.text.toString()
+            Log.e("requette : ", map.toString())
             apiInterface.login(map).enqueue(object : Callback<User> {
                 override fun onResponse(
                     call: Call<User>, response:
@@ -105,11 +115,11 @@ class SignInUpActivity : AppCompatActivity() {
                 ) {
                     val user = response.body()
                     if (user != null) {
+                        Log.e("user : ",user.toString())
                         if (cbRememberMe.isChecked){
                             //TODO 4 "Edit the SharedPreferences by putting all the data"
                             mSharedPref.edit().apply{
                                 putBoolean(IS_REMEMBRED, true)
-                                putBoolean(FIRST_VISIT, true)
                                 putString(EMAIL, user.email)
                                 putString(FIRSTNAME, user.firstname)
                                 putString(LASTNAME, user.lastname)
@@ -206,11 +216,11 @@ class SignInUpActivity : AppCompatActivity() {
                             //TODO 4 "Edit the SharedPreferences by putting all the data"
                             mSharedPref.edit().apply{
                                 putBoolean(IS_REMEMBRED, true)
-                                putBoolean(FIRST_VISIT, true)
                                 putString(EMAIL, user.email)
                                 putString(FIRSTNAME, user.firstname)
                                 putString(LASTNAME, user.lastname)
                                 putInt(PHONENUMBER, user.phonenumber)
+                                putString(BIRTHDATE, user.birthdate)
                                 putString(ADDRESS, user.address)
                                 putString(PASSWORD, user.password)
                                 putString(ID, user.id)
