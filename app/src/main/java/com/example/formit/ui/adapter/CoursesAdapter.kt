@@ -66,10 +66,18 @@ class CoursesAdapter(var courses: MutableList<Course>, var bookmarked: Boolean) 
                         })
 
                 }
-
+                var test : Boolean
+                test = false
+                for (n in courses[position].participatedMembers) {
+                    if (n.toString() == mSharedPref.getString(ID, "")) {
+                        test = true
+                    }
+                }
+                Log.e("placesssssssssssssssssssssssssssssss",courses[position].places.toString())
                 setOnClickListener {
                     val intent =
                         Intent(holder.itemView.context, DescriptionActivity::class.java).also {
+                            it.putExtra("ID", courses[position].id)
                             it.putExtra("NAME", courses[position].courseName)
                             it.putExtra("PRICE", courses[position].price.toString() + " dt")
                             it.putExtra(
@@ -80,7 +88,8 @@ class CoursesAdapter(var courses: MutableList<Course>, var bookmarked: Boolean) 
                             it.putExtra("DESCRIPTION", courses[position].description)
                             it.putExtra("PREREQUISITES", courses[position].prerequisites)
                             it.putExtra("STARTDATE", courses[position].startDate)
-                            it.putExtra("PLACES", courses[position].places)
+                            it.putExtra("PLACES", courses[position].places.toString()+" Places")
+                            it.putExtra("PARTICIPATED", test)
                         }
                     holder.itemView.context.startActivity(intent)
                 }
@@ -135,6 +144,7 @@ class CoursesAdapter(var courses: MutableList<Course>, var bookmarked: Boolean) 
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DescriptionActivity::class.java).also {
+                it.putExtra("ID", courses[position].id)
                 it.putExtra("NAME", courses[position].courseName)
                 it.putExtra("PRICE", courses[position].price.toString() + " dt")
                 it.putExtra("DURATION", courses[position].duration.toString() + " Hours")
@@ -142,7 +152,7 @@ class CoursesAdapter(var courses: MutableList<Course>, var bookmarked: Boolean) 
                 it.putExtra("DESCRIPTION", courses[position].description)
                 it.putExtra("PREREQUISITES", courses[position].prerequisites)
                 it.putExtra("STARTDATE", courses[position].startDate)
-                it.putExtra("PLACES", courses[position].places)
+                it.putExtra("PLACES", courses[position].places.toString() + " Places")
             }
             holder.itemView.context.startActivity(intent)
         }

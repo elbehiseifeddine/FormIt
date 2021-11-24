@@ -1,4 +1,6 @@
 package com.example.formit.ui.view.activitys
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,12 +17,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CoursesActivity : AppCompatActivity() {
+    lateinit var mSharedPref: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_courses)
-
+        mSharedPref = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         val apiInterface = ApiInterface.create()
-        apiInterface.getAllCourses().enqueue(object : Callback<MutableList<Course>> {
+        apiInterface.getCoursesNotParticipated(mSharedPref.getString(ID, "")).enqueue(object : Callback<MutableList<Course>> {
             override fun onResponse(
                 call: Call<MutableList<Course>>, response:
                 Response<MutableList<Course>>
