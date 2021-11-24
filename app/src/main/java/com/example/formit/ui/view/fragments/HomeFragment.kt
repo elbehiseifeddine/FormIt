@@ -39,11 +39,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         return rootView
 
     }
-
+    lateinit var mSharedPref: SharedPreferences
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         val apiInterface = ApiInterface.create()
-        apiInterface.getAllCourses().enqueue(object : Callback<MutableList<Course>> {
+        apiInterface.getCoursesNotParticipated(mSharedPref.getString(ID, "")).enqueue(object : Callback<MutableList<Course>> {
             override fun onResponse(
                 call: Call<MutableList<Course>>, response:
                 Response<MutableList<Course>>
@@ -51,7 +51,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 val courses = response.body()
                 if (courses != null) {
                     Log.e("courses",courses.toString())
-                    val adapter = HomeCouseAdapter(courses)
+                    val adapter = HomeCouseAdapter(courses,false)
                     rv_courses.adapter = adapter
                     rv_events.adapter = adapter
                     rv_courses.layoutManager =

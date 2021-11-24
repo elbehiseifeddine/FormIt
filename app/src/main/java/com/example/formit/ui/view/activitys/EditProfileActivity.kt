@@ -38,20 +38,20 @@ class EditProfileActivity : AppCompatActivity() {
             finish()
         }
 
-        val birthDatePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText("Select start date")
-            .build()
-        birthDatePicker.addOnPositiveButtonClickListener {
-            ti_EditBirthdate.setText(birthDatePicker.headerText.toString())
-        }
-
-        ti_EditBirthdate.setOnFocusChangeListener { view, hasFocus ->
-            if (hasFocus){
-                birthDatePicker.show(supportFragmentManager, "START_DATE")
-            }else{
-                birthDatePicker.dismiss()
-            }
-        }
+//        val birthDatePicker = MaterialDatePicker.Builder.datePicker()
+//            .setTitleText("Select start date")
+//            .build()
+//        birthDatePicker.addOnPositiveButtonClickListener {
+//            ti_EditBirthdate.setText(birthDatePicker.headerText.toString())
+//        }
+//
+//        ti_EditBirthdate.setOnFocusChangeListener { view, hasFocus ->
+//            if (hasFocus){
+//                birthDatePicker.show(supportFragmentManager, "START_DATE")
+//            }else{
+//                birthDatePicker.dismiss()
+//            }
+//        }
 
         btn_Update.setOnClickListener {
 
@@ -60,27 +60,22 @@ class EditProfileActivity : AppCompatActivity() {
             map["email"] = ti_EditEmail.text.toString()
             map["firstname"] = ti_EditFirstName.text.toString()
             map["lastname"] = ti_EditLastName.text.toString()
-            map["birthdate"] = ti_EditBirthdate.text.toString()
             map["address"] = ti_EditAddress.text.toString()
             map["telnumber"] = ti_EditPhoneNumber.text.toString()
-            apiInterface.UpdateCurrentUser(mSharedPref.getString(ID,""),map).enqueue(object : Callback<User> {
+            apiInterface.UpdateCurrentUser(mSharedPref.getString(ID,"") as String,map).enqueue(object : Callback<String> {
                 override fun onResponse(
-                    call: Call<User>, response:
-                    Response<User>
+                    call: Call<String>, response:
+                    Response<String>
                 ) {
                     val user = response.body()
-                    if (user != null) {
+                    if (user =="Update Succeded") {
                         mSharedPref.edit().apply{
-                            putString(EMAIL, user.email)
-                            putString(FIRSTNAME, user.firstname)
-                            putString(LASTNAME, user.lastname)
-                            putString(ADDRESS, user.address)
-                            putString(BIRTHDATE, user.birthdate)
-                            putInt(PHONENUMBER, user.phonenumber)
+                            putString(EMAIL, ti_EditEmail.text.toString())
+                            putString(FIRSTNAME, ti_EditFirstName.text.toString())
+                            putString(LASTNAME, ti_EditLastName.text.toString())
+                            putString(ADDRESS, ti_EditAddress.text.toString())
+                            putInt(PHONENUMBER, ti_EditPhoneNumber.text.toString().toInt())
                         }.apply()
-
-
-
                         finish()
 
                     } else {
@@ -89,8 +84,7 @@ class EditProfileActivity : AppCompatActivity() {
                             .show()
                     }
                 }
-
-                override fun onFailure(call: Call<User>, t: Throwable) {
+                override fun onFailure(call: Call<String>, t: Throwable) {
                     Log.e("aaaaaaaaaaaaaaaaaaaaaaaa","true")
                     Toast.makeText(this@EditProfileActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
                 }

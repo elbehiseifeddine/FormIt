@@ -82,22 +82,15 @@ class SignInUpActivity : AppCompatActivity() {
             logIn.setTextColor(resources.getColor(R.color.white,null))
         }
         btn_SingIn.setOnClickListener {
-            it.setAllEnabled(true)
             clickLogin()
         }
         btn_SignUp.setOnClickListener {
-            it.setAllEnabled(true)
             clickSignUp()
 
         }
 
 
     }
-    fun View.setAllEnabled(enabled: Boolean) {
-        isEnabled = enabled
-        if (this is ViewGroup) children.forEach { child -> child.setAllEnabled(enabled) }
-    }
-
 
     private fun clickLogin() {
         val emailVerif = SignInEmailValidate()
@@ -107,7 +100,6 @@ class SignInUpActivity : AppCompatActivity() {
             val map: HashMap<String, String> = HashMap()
             map["email"] = ti_SignInEmail.text.toString()
             map["password"] = ti_SignInPassword.text.toString()
-            Log.e("requette : ", map.toString())
             apiInterface.login(map).enqueue(object : Callback<User> {
                 override fun onResponse(
                     call: Call<User>, response:
@@ -124,8 +116,8 @@ class SignInUpActivity : AppCompatActivity() {
                                 putString(FIRSTNAME, user.firstname)
                                 putString(LASTNAME, user.lastname)
                                 putString(PASSWORD, user.password)
-                                putInt(PHONENUMBER, user.phonenumber)
-                                putString(ADDRESS, user.address)
+//                                putInt(PHONENUMBER, user.phonenumber)
+//                                putString(ADDRESS, user.address)
                                 putString(ID, user.id)
                             }.apply()
 
@@ -302,11 +294,6 @@ class SignInUpActivity : AppCompatActivity() {
             confirmPasswordContainer.helperText = ""
         }
         return true
-    }
-
-    fun View.setAllEnabled(enabled: Boolean) {
-        isEnabled = enabled
-        if (this is ViewGroup) children.forEach { child -> child.setAllEnabled(enabled) }
     }
 companion object
 }
