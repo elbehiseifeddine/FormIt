@@ -182,7 +182,7 @@
                     android:layout_marginHorizontal="@dimen/_3sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/poppins"
-                    android:text="Phone Number"
+                    android:text="BirthDate"
                     android:textColor="@color/grey"
                     android:textSize="14sp" />
 
@@ -201,7 +201,7 @@
                         android:drawableTint="@color/hintColor"
                         android:fontFamily="@font/poppins_medium"
                         android:inputType="text"
-                        android:text="Phone Number"
+                        android:text="BirthDate"
                         android:textColorHint="@color/hintColor"
                         android:textSize="14dp" />
 
