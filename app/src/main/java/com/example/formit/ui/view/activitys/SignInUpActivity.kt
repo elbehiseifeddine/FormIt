@@ -10,6 +10,7 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
@@ -96,17 +97,29 @@ class SignInUpActivity : AppCompatActivity() {
         val emailVerif = SignInEmailValidate()
         val passVerif = SignInPassValidate()
         if (emailVerif && passVerif) {
+            progBarSignIn.visibility = View.VISIBLE
+            btn_SingIn.visibility = View.GONE
+
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
             val apiInterface = ApiInterface.create()
             val map: HashMap<String, String> = HashMap()
             map["email"] = ti_SignInEmail.text.toString()
             map["password"] = ti_SignInPassword.text.toString()
+            Log.e("user",map.toString())
             apiInterface.login(map).enqueue(object : Callback<User> {
                 override fun onResponse(
                     call: Call<User>, response:
                     Response<User>
                 ) {
+                    Log.e("user from onResponse",map.toString())
                     val user = response.body()
                     if (user != null) {
+                        progBarSignIn.visibility = View.GONE
+                        btn_SingIn.visibility = View.VISIBLE
+                        window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         Log.e("user : ",user.toString())
                         if (cbRememberMe.isChecked){
                             //TODO 4 "Edit the SharedPreferences by putting all the data"
@@ -116,8 +129,8 @@ class SignInUpActivity : AppCompatActivity() {
                                 putString(FIRSTNAME, user.firstname)
                                 putString(LASTNAME, user.lastname)
                                 putString(PASSWORD, user.password)
-//                                putInt(PHONENUMBER, user.phonenumber)
-//                                putString(ADDRESS, user.address)
+                                putInt(PHONENUMBER, user.phonenumber)
+                                putString(ADDRESS, user.address)
                                 putString(ID, user.id)
                             }.apply()
 
@@ -129,6 +142,9 @@ class SignInUpActivity : AppCompatActivity() {
                         finish()
 
                     } else {
+                        progBarSignIn.visibility = View.GONE
+                        btn_SingIn.visibility = View.VISIBLE
+                        window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         mSharedPref.edit().clear().apply()
                         Log.e("Username or Password wrong","true")
                         Toast.makeText(this@SignInUpActivity, "Username or Password wrong !!", Toast.LENGTH_SHORT)
@@ -139,6 +155,9 @@ class SignInUpActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<User>, t: Throwable) {
                     Log.e("aaaaaaaaaaaaaaaaaaaaaaaa","true")
                     Toast.makeText(this@SignInUpActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
+                    progBarSignIn.visibility = View.GONE
+                    btn_SingIn.visibility = View.VISIBLE
+                    window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                 }
             })
         }
@@ -191,7 +210,13 @@ class SignInUpActivity : AppCompatActivity() {
         val passVerif = SignUpPassValidate()
         val confirmPassVerif = SignUpConfirmPassValidate()
         if (emailVerif && passVerif && confirmPassVerif) {
+            progBarSignUp.visibility = View.VISIBLE
+            btn_SignUp.visibility = View.GONE
 
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
             val apiInterface = ApiInterface.create()
             val map: HashMap<String, String> = HashMap()
             map["email"] = ti_signUpEmail.text.toString()
@@ -203,6 +228,9 @@ class SignInUpActivity : AppCompatActivity() {
                 ) {
                     val user = response.body()
                     if (user != null) {
+                        progBarSignUp.visibility = View.GONE
+                        btn_SignUp.visibility = View.VISIBLE
+                        window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         if (cbRememberMe.isChecked){
                             mSharedPref.edit().clear().apply()
                             //TODO 4 "Edit the SharedPreferences by putting all the data"
@@ -226,6 +254,9 @@ class SignInUpActivity : AppCompatActivity() {
                         finish()
 
                     } else {
+                        progBarSignUp.visibility = View.GONE
+                        btn_SignUp.visibility = View.VISIBLE
+                        window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         Log.e("Username or Password wrong","true")
                         Toast.makeText(this@SignInUpActivity, "Username or Password wrong !!", Toast.LENGTH_SHORT)
                             .show()
@@ -234,6 +265,9 @@ class SignInUpActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<User>, t: Throwable) {
                     Toast.makeText(this@SignInUpActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
+                    progBarSignUp.visibility = View.GONE
+                    btn_SignUp.visibility = View.VISIBLE
+                    window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                 }
             })
         }

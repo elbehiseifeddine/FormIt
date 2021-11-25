@@ -201,7 +201,7 @@
                         android:drawableTint="@color/hintColor"
                         android:fontFamily="@font/poppins_medium"
                         android:inputType="text"
-                        android:text="BirthDate"
+                        android:hint="BirthDate"
                         android:textColorHint="@color/hintColor"
                         android:textSize="14dp" />
 
@@ -236,7 +236,7 @@
                         android:layout_height="wrap_content"
                         android:drawableTint="@color/hintColor"
                         android:fontFamily="@font/poppins_medium"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:text="Phone Number"
                         android:textColorHint="@color/hintColor"
                         android:textSize="14dp" />
