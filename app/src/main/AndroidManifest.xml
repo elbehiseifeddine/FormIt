@@ -13,10 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FormIt"
+
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.view.chat.chatActivity" />
+        <activity android:name=".ui.view.chat.chatActivity"
+            android:screenOrientation="fullSensor"/>
         <activity android:name=".ui.view.activitys.PaimentMethodeActivity" />
-        <activity android:name=".ui.view.activitys.EditProfileActivity" />
+        <activity android:name=".ui.view.activitys.EditProfileActivity"
+            android:theme="@style/Theme.FormItMaterialComponents"/>
         <activity android:name=".ui.view.activitys.SettingsActivity" />
         <activity android:name=".ui.view.activitys.CoursesActivity" />
         <activity android:name=".ui.view.activitys.DescriptionActivity" />

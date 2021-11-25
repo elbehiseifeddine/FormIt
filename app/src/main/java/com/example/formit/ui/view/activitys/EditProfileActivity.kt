@@ -7,17 +7,11 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.example.formit.R
-import com.example.formit.data.model.User
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.example.formit.data.repository.ApiInterface
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_edit_profile.*
-import kotlinx.android.synthetic.main.activity_sign_in_up.*
-import kotlinx.android.synthetic.main.description_toolbar.*
-import kotlinx.android.synthetic.main.description_toolbar.toolbar_title
-import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,7 +20,7 @@ import java.util.*
 
 class EditProfileActivity : AppCompatActivity() {
     lateinit var mSharedPref: SharedPreferences
-
+    lateinit var EditBirthdate: TextInputEditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
@@ -34,24 +28,26 @@ class EditProfileActivity : AppCompatActivity() {
         toolbar_title.text="Edit Profile"
         button_Right.visibility= View.GONE
 
+        EditBirthdate = findViewById(R.id.ti_EditBirthdate)
+
         btn_reus_back.setOnClickListener {
             finish()
         }
 
-//        val birthDatePicker = MaterialDatePicker.Builder.datePicker()
-//            .setTitleText("Select start date")
-//            .build()
-//        birthDatePicker.addOnPositiveButtonClickListener {
-//            ti_EditBirthdate.setText(birthDatePicker.headerText.toString())
-//        }
-//
-//        ti_EditBirthdate.setOnFocusChangeListener { view, hasFocus ->
-//            if (hasFocus){
-//                birthDatePicker.show(supportFragmentManager, "START_DATE")
-//            }else{
-//                birthDatePicker.dismiss()
-//            }
-//        }
+        val birthDatePicker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Select start date")
+            .build()
+        birthDatePicker.addOnPositiveButtonClickListener {
+            EditBirthdate.setText(birthDatePicker.headerText.toString())
+        }
+
+        EditBirthdate.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus){
+                birthDatePicker.show(supportFragmentManager, "START_DATE")
+            }else{
+                birthDatePicker.dismiss()
+            }
+        }
 
         btn_Update.setOnClickListener {
 
@@ -60,9 +56,10 @@ class EditProfileActivity : AppCompatActivity() {
             map["email"] = ti_EditEmail.text.toString()
             map["firstname"] = ti_EditFirstName.text.toString()
             map["lastname"] = ti_EditLastName.text.toString()
+            map["birthdate"] = EditBirthdate.text.toString()
             map["address"] = ti_EditAddress.text.toString()
             map["telnumber"] = ti_EditPhoneNumber.text.toString()
-            apiInterface.UpdateCurrentUser(mSharedPref.getString(ID,"") as String,map).enqueue(object : Callback<String> {
+            apiInterface.UpdateCurrentUser(mSharedPref.getString(ID,"").toString(),map).enqueue(object : Callback<String> {
                 override fun onResponse(
                     call: Call<String>, response:
                     Response<String>
@@ -74,6 +71,7 @@ class EditProfileActivity : AppCompatActivity() {
                             putString(FIRSTNAME, ti_EditFirstName.text.toString())
                             putString(LASTNAME, ti_EditLastName.text.toString())
                             putString(ADDRESS, ti_EditAddress.text.toString())
+                            putString(BIRTHDATE, EditBirthdate.text.toString())
                             putInt(PHONENUMBER, ti_EditPhoneNumber.text.toString().toInt())
                         }.apply()
                         finish()
@@ -94,6 +92,7 @@ class EditProfileActivity : AppCompatActivity() {
         ti_EditFirstName.setText(mSharedPref.getString(FIRSTNAME,"").toString().capitalize())
         ti_EditLastName.setText(mSharedPref.getString(LASTNAME,"").toString().capitalize())
         ti_EditAddress.setText(mSharedPref.getString(ADDRESS,"").toString().capitalize())
+        EditBirthdate.setText(mSharedPref.getString(BIRTHDATE,"").toString())
         ti_EditPhoneNumber.setText(mSharedPref.getInt(PHONENUMBER,0).toString())
         tv_FullName.setText(mSharedPref.getString(FIRSTNAME,"").toString().capitalize()+" "+mSharedPref.getString(LASTNAME,"").toString().capitalize())
     }
