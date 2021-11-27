@@ -83,7 +83,7 @@ class EditProfileActivity : AppCompatActivity() {
                     }
                 }
                 override fun onFailure(call: Call<String>, t: Throwable) {
-                    Log.e("aaaaaaaaaaaaaaaaaaaaaaaa","true")
+                    Log.e("aaaaaaaaaaaaaaaaaaaaaaaa",t.message.toString()+"")
                     Toast.makeText(this@EditProfileActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
                 }
             })
