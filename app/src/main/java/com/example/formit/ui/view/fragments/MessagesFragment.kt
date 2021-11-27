@@ -35,12 +35,13 @@ class MessagesFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         return inflater.inflate(R.layout.fragment_messages, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+
         val email = requireArguments().getString(EMAIL,"NULL")
         btn_reus_back.visibility=View.INVISIBLE
         var BubleList = mutableListOf(
