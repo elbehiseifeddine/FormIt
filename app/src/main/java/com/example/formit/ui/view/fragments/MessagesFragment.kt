@@ -35,6 +35,7 @@ class MessagesFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         return inflater.inflate(R.layout.fragment_messages, container, false)
     }
 

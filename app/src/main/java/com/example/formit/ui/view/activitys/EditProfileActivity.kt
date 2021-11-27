@@ -83,8 +83,11 @@ class EditProfileActivity : AppCompatActivity() {
                             .show()
                     }
                 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 11ea940b21f4d564a2ecedce5849092f7c6b52f8
                 override fun onFailure(call: Call<User>, t: Throwable) {
                     Log.e("aaaaaaaaaaaaaaaaaaaaaaaa","true")
                     Toast.makeText(this@EditProfileActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
