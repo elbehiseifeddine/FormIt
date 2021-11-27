@@ -1,4 +1,5 @@
 package com.example.formit.data.repository
+import com.example.formit.data.model.Conversation
 import com.example.formit.data.model.Course
 import com.example.formit.data.model.User
 import retrofit2.Call
@@ -34,7 +35,7 @@ interface ApiInterface {
     fun getCoursesNotParticipated(@Path("idUser") id: String?): Call<MutableList<Course>>
 
     @PATCH("/users/update/{id}")
-    fun UpdateCurrentUser(@Path("id") id: String?, @Body map : HashMap<String, String>): Call<String>
+    fun UpdateCurrentUser(@Path("id") id: String?, @Body map : HashMap<String, String>): Call<User>
 
     @PATCH("/users/addBookmark/{id}/{idCourse}")
     fun AddBookmark(@Path("id") id: String?,@Path("idCourse") idCourse: String?): Call<User>
@@ -42,10 +43,13 @@ interface ApiInterface {
     @PATCH("/users/addParticipation/{id}/{idCourse}")
     fun AddParticipation(@Path("id") id: String?,@Path("idCourse") idCourse: String?): Call<String>
 
+    @GET("/conversations/getOwnConversations/{id}")
+    fun getOwnConversations(@Path("id") id: String?): Call<MutableList<Conversation>>
+
     companion object {
 
 
-        var BASE_URL = "http://172.17.12.1:5000"
+        var BASE_URL = "http://192.168.1.15:5000"
 
         fun create() : ApiInterface {
 

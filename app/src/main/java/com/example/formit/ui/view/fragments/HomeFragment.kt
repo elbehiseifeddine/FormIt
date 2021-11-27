@@ -23,7 +23,7 @@ import retrofit2.Response
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-
+    val apiInterface = ApiInterface.create()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +42,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     lateinit var mSharedPref: SharedPreferences
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val apiInterface = ApiInterface.create()
+
+        getCoursesNotParticipated()
+
+
+        tv_CourseSeeAll.setOnClickListener {
+            Intent(activity, CoursesActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+
+
+    }
+
+    private fun getCoursesNotParticipated(){
         apiInterface.getCoursesNotParticipated(mSharedPref.getString(ID, "")).enqueue(object : Callback<MutableList<Course>> {
             override fun onResponse(
                 call: Call<MutableList<Course>>, response:
@@ -68,16 +82,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         })
 
+    }
 
+    override fun onResume() {
 
-        tv_CourseSeeAll.setOnClickListener {
-            Intent(activity, CoursesActivity::class.java).also {
-                startActivity(it)
-            }
-        }
-
-
-
+        getCoursesNotParticipated()
+        super.onResume()
     }
 }
 
