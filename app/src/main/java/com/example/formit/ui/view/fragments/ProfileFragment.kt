@@ -44,15 +44,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var frg: Fragment? = null
-        frg = activity?.supportFragmentManager?.findFragmentById(R.id.fl_Fragment)
-        val ft: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
-        if (frg != null) {
-            ft.detach(frg)
-
-            ft.attach(frg)
-            ft.commit()
-        }
         toolbar_title.text = "Profile"
 
         button_Right.setBackgroundResource(R.drawable.ic_logout)
@@ -145,5 +136,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 //            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
+    override fun onResume() {
+        tv_ProfileFullName.setText(
+            mSharedPref.getString(FIRSTNAME, "").toString() + " " + mSharedPref.getString(LASTNAME,"")
+        )
+        tv_ProfileEmail.setText(mSharedPref.getString(EMAIL, "").toString())
+
+
+        super.onResume()
+    }
 
 }

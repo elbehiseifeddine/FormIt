@@ -1,31 +1,41 @@
 package com.example.formit.ui.view.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.formit.R
-import com.example.formit.data.model.Buble_Message
-import com.example.formit.data.model.Coache_Discussion
-import com.example.formit.data.model.Course_Discussion
+import com.example.formit.data.model.*
+import com.example.formit.data.repository.ApiInterface
 import com.example.formit.ui.adapter.BubleMessageAdapter
 import com.example.formit.ui.adapter.CoacheDiscussionAdapter
 import com.example.formit.ui.adapter.CourseDiscussionAdapter
+import com.example.formit.ui.adapter.HomeCouseAdapter
 import com.example.formit.ui.view.activitys.EMAIL
+import com.example.formit.ui.view.activitys.ID
+import com.example.formit.ui.view.activitys.PREF_NAME
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_messages.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class MessagesFragment: Fragment() {
-
-
+    val apiInterface = ApiInterface.create()
+    lateinit var mSharedPref: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         return inflater.inflate(R.layout.fragment_messages, container, false)
     }
 
@@ -43,7 +53,28 @@ class MessagesFragment: Fragment() {
         bubleMessageRecycleView.adapter = adapterBuble
         bubleMessageRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
 
+        apiInterface.getOwnConversations(mSharedPref.getString(ID, "")).enqueue(object :
+            Callback<MutableList<Conversation>> {
+            override fun onResponse(
+                call: Call<MutableList<Conversation>>, response:
+                Response<MutableList<Conversation>>
+            ) {
+                val conversations = response.body()
+                if (conversations != null) {
+                    Log.e("conversations",conversations.toString())
+                    val adapterCourse =CourseDiscussionAdapter(conversations)
+                    CoursesDiscussionRecycleView.adapter = adapterCourse
+                    CoursesDiscussionRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
 
+                } else {
+                    Log.e("Error from conversation course","true")
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<Conversation>>, t: Throwable) {
+                Log.e("failure conversation course","true")
+            }
+        })
         var CourseDiscussion = mutableListOf(
             Course_Discussion(
                 R.drawable.welcome_pic,
