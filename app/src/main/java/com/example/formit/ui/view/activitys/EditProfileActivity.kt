@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.formit.R
+import com.example.formit.data.model.User
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.example.formit.data.repository.ApiInterface
 import com.google.android.material.textfield.TextInputEditText
@@ -59,13 +60,13 @@ class EditProfileActivity : AppCompatActivity() {
             map["birthdate"] = EditBirthdate.text.toString()
             map["address"] = ti_EditAddress.text.toString()
             map["telnumber"] = ti_EditPhoneNumber.text.toString()
-            apiInterface.UpdateCurrentUser(mSharedPref.getString(ID,"").toString(),map).enqueue(object : Callback<String> {
+            apiInterface.UpdateCurrentUser(mSharedPref.getString(ID,"").toString(),map).enqueue(object : Callback<User> {
                 override fun onResponse(
-                    call: Call<String>, response:
-                    Response<String>
+                    call: Call<User>, response:
+                    Response<User>
                 ) {
                     val user = response.body()
-                    if (user =="Update Succeded") {
+                    if (user !=null) {
                         mSharedPref.edit().apply{
                             putString(EMAIL, ti_EditEmail.text.toString())
                             putString(FIRSTNAME, ti_EditFirstName.text.toString())
@@ -82,7 +83,7 @@ class EditProfileActivity : AppCompatActivity() {
                             .show()
                     }
                 }
-                override fun onFailure(call: Call<String>, t: Throwable) {
+                override fun onFailure(call: Call<User>, t: Throwable) {
                     Log.e("aaaaaaaaaaaaaaaaaaaaaaaa","true")
                     Toast.makeText(this@EditProfileActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
                 }
