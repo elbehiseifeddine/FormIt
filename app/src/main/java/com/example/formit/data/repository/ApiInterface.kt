@@ -20,6 +20,9 @@ interface ApiInterface {
     @GET("/users/")
     fun getAllUsers(): Call<MutableList<User>>
 
+    @GET("/users/{id}")
+    fun getUserById(@Path("id") id: String?): Call<User>
+
     @POST("/users/signup")
     fun signup(@Body map : HashMap<String, String> ): Call<User>
 
@@ -48,7 +51,7 @@ interface ApiInterface {
     fun getOwnConversations(@Path("id") id: String?): Call<MutableList<Conversation>>
 
     @GET("/messages/getChatMessages/{id}")
-    fun getConversationMessages(@Path("id") id: String?): Call<List<Message>>
+    fun getConversationMessages(@Path("id") id: String?): Call<MutableList<Message>>
 
     @GET("/messages/sendMessage/{idConversation}/{idUser}/{message}")
     fun sendMessages(@Path("idConversation") idConversation: String?,@Path("idUser") idUser: String?,@Path("message") message :String? ): Call<Message>

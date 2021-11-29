@@ -24,6 +24,7 @@ import com.example.formit.ui.view.activitys.ID
 import com.example.formit.ui.view.activitys.PREF_NAME
 import kotlinx.android.synthetic.main.activity_sign_in_up.*
 import kotlinx.android.synthetic.main.fragment_messages.*
+import kotlinx.android.synthetic.main.reusable_toolbar.*
 import okhttp3.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -40,6 +41,7 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
     lateinit var mSharedPref: SharedPreferences
     private var name: String? = null
     private var idUser: String? = null
+    private var CourseName: String? = null
     private var idConversation: String? = null
     private var webSocket: WebSocket? = null
     private val SERVER_PATH = "ws://192.168.1.15:3000"
@@ -50,15 +52,25 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
     private val IMAGE_REQUEST_ID = 1
     private var messageAdapter: MessageAdapter? = null
 
-    private var listJson :List<JSONObject> = ArrayList<JSONObject>()
-    private var list :List<Message>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         mSharedPref = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
         name = intent.getStringExtra("name")
         idUser = intent.getStringExtra("idUser")
+        CourseName = intent.getStringExtra("CourseName")
+
         idConversation = intent.getStringExtra("idConversation")
+
+        toolbar_title.text = CourseName
+
+        button_Right.visibility=View.GONE
+        btn_reus_back.visibility=View.VISIBLE
+
+        btn_reus_back.setOnClickListener{
+            finish()
+        }
         initiateSocketConnection()
     }
 
@@ -136,11 +148,9 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
                         }
 
                         override fun onFailure(call: Call<Message>, t: Throwable) {
-                            Log.e("failure message chat Activity","true")
+                            Log.e("failure message send chat Activity","true")
                         }
                     })
-                    //val jsonObject = JSONObject(text)
-                    //Log.e("jsonObject",jsonObject.toString())
 
 
                 } catch (e: JSONException) {
@@ -155,19 +165,14 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
         sendBtn = findViewById(R.id.sendBtn)
         pickImgBtn = findViewById(R.id.pickImgBtn)
         recyclerView = findViewById(R.id.recyclerView)
-        Log.e("-", "-------------------------------------------")
         Log.e("-", "---------------retrieve message---------------")
         Log.e("-", "-------------------------------------------")
 
         retrieveMessage()
         messageEdit!!.addTextChangedListener(this)
         sendBtn?.setOnClickListener(View.OnClickListener { v: View? ->
-            val jsonObject = JSONObject()
             try {
-                jsonObject.put("name", name)
-                jsonObject.put("message", messageEdit?.getText().toString())
-                //webSocket!!.send(jsonObject.toString())
-                //jsonObject.put("isSent", true)
+
                 val map: HashMap<String, String> = HashMap()
                 map["message"] = messageEdit?.getText().toString()
                 apiInterface.sendMessages(idConversation,idUser,messageEdit?.getText().toString()).enqueue(object :
@@ -176,12 +181,11 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
                         call: Call<Message>, response:
                         retrofit2.Response<Message>
                     ) {
-                        Log.e("----------------call request ",call.request().toString())
-                        Log.e("----------------call  ",call.toString())
+                        Log.e("++++++++++++++++++++++call request ",call.request().toString())
                         val messages = response.body()
                         if (messages != null) {
 
-                            Log.e("message from send message",messages.toString())
+                            Log.e("+++++++++++++++++++++++message from send message",messages.toString())
                             messageAdapter?.addItem(messages)
 
                             messageAdapter?.getItemCount()?.minus(1)?.let {
@@ -191,15 +195,14 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
                             }
                             webSocket!!.send(messages.toString())
                         } else {
-                            Log.e("Error from message chat Activity","true")
+                            Log.e(" Error from message chat Activity","true")
                         }
                     }
 
                     override fun onFailure(call: Call<Message>, t: Throwable) {
-                        Log.e("failure message chat Activity","true")
+                        Log.e("failure message sending chat Activity","true")
                     }
                 })
-                //messageAdapter?.addItem(jsonObject)
 
                 resetMessageEdit()
             } catch (e: JSONException) {
@@ -219,31 +222,27 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
 
 
     private fun retrieveMessage(){
-Log.e("conversation id ",idConversation.toString())
+       Log.e("--------------------conversation id ",idConversation.toString())
         apiInterface.getConversationMessages(idConversation.toString()).enqueue(object :
-            Callback<List<Message>> {
+            Callback<MutableList<Message>> {
             override fun onResponse(
-                call: Call<List<Message>>, response:
-                retrofit2.Response<List<Message>>
+                call: Call<MutableList<Message>>, response:
+                retrofit2.Response<MutableList<Message>>
             ) {
                 val messages = response.body()
                 if (messages != null) {
+                    Log.e("---------------------------Messages",messages.toString())
 
-
-
-
-                    Log.e("Messages",messages.toString())
-
-                    messageAdapter = MessageAdapter(layoutInflater,messages,mSharedPref.getString(ID, "").toString(),mSharedPref.getString(FIRSTNAME, "").toString())
+                    messageAdapter = MessageAdapter(layoutInflater,messages as List<Message>,mSharedPref.getString(ID, "").toString(),mSharedPref.getString(FIRSTNAME, "").toString())
                     recyclerView!!.setAdapter(messageAdapter)
                     recyclerView!!.setLayoutManager(LinearLayoutManager(this@ChatActivity))
                 } else {
-                    Log.e("Error from message chat Activity","true")
+                    Log.e("------------Error from message chat Activity","true")
                 }
             }
 
-            override fun onFailure(call: Call<List<Message>>, t: Throwable) {
-                Log.e("failure message chat Activity","true")
+            override fun onFailure(call: Call<MutableList<Message>>, t: Throwable) {
+                Log.e("------------failure message chat Activity","true")
             }
         })
 

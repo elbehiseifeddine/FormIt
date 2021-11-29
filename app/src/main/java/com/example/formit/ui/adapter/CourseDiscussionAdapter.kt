@@ -61,6 +61,7 @@ class CourseDiscussionAdapter(var CourseDiscussion : MutableList<Conversation>, 
             val intent = Intent(holder.itemView.context, ChatActivity::class.java)
                 .apply{
                     putExtra("name", name)
+                    putExtra("CourseName", CourseDiscussion[position].course.courseName)
                     putExtra("idUser", idUser)
                     putExtra("idConversation", CourseDiscussion[position].id)
                 }

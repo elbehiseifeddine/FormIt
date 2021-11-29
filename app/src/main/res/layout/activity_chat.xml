@@ -4,14 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.chat.chatActivity">
+    tools:context=".ui.view.chat.ChatActivity">
 
 
+    <include
+        layout="@layout/reusable_toolbar"
+        android:id="@+id/toolbar"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerView"
-        android:layout_above="@id/messageEdit"/>
+        android:layout_above="@id/messageEdit"
+        android:layout_below="@id/toolbar"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -41,7 +45,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_image_black_24dp"
+        android:src="@drawable/ic_send_message"
         android:padding="8dp"
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@id/messageEdit"
