@@ -1,8 +1,15 @@
 package com.example.formit.ui.adapter;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.formit.R;
+import com.example.formit.data.model.Message;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONException;
@@ -27,67 +36,63 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private static final int TYPE_IMAGE_SENT = 2;
     private static final int TYPE_IMAGE_RECEIVED = 3;
 
-    private LayoutInflater inflater;
-    private List<JSONObject> messages = new ArrayList<>();
 
-    public MessageAdapter (LayoutInflater inflater) {
+    private LayoutInflater inflater;
+    private List<Message> list;
+    private String IdUser;
+    String name ;
+    //private List<JSONObject> messages = new ArrayList<>();
+
+    public MessageAdapter (LayoutInflater inflater, List<Message> list,String idUser,String name) {
         this.inflater = inflater;
+        this.list=list;
+        this.name=name;
+        IdUser=idUser;
     }
 
     private class SentMessageHolder extends RecyclerView.ViewHolder {
 
         TextView messageTxt;
+        ImageView image;
 
         public SentMessageHolder(@NonNull View itemView) {
             super(itemView);
 
+            image = itemView.findViewById(R.id.MessageSendUserPic);
             messageTxt = itemView.findViewById(R.id.sentTxt);
         }
     }
 
-    private class SentImageHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView;
-
-        public SentImageHolder(@NonNull View itemView) {
-            super(itemView);
-
-            imageView = itemView.findViewById(R.id.imageView);
-        }
-    }
 
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
 
-        TextView nameTxt, messageTxt;
+        TextView messageTxt;
+        ImageView image;
 
         public ReceivedMessageHolder(@NonNull View itemView) {
             super(itemView);
 
-            nameTxt = itemView.findViewById(R.id.nameTxtMessage);
+            image = itemView.findViewById(R.id.MessageRecieveUserPic);
             messageTxt = itemView.findViewById(R.id.receivedTxt);
         }
     }
 
-    private class ReceivedImageHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView;
-        TextView nameTxt;
-
-        public ReceivedImageHolder(@NonNull View itemView) {
-            super(itemView);
-
-            imageView = itemView.findViewById(R.id.imageView);
-            nameTxt = itemView.findViewById(R.id.nameTxt);
-
-        }
-    }
 
     @Override
     public int getItemViewType(int position) {
 
-        JSONObject message = messages.get(position);
+        //JSONObject message = messages.get(position);
 
-        try {
+        Message msg = list.get(position);
+        Log.e("message "+position,msg.toString());
+        if (msg.getAuthor().getId().equals(IdUser))
+            return TYPE_MESSAGE_SENT;
+
+        if (!msg.getAuthor().getId().equals(IdUser))
+            return TYPE_MESSAGE_RECEIVED;
+        /*try {
             if (message.getBoolean("isSent")) {
 
                 if (message.has("message"))
@@ -105,7 +110,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return -1;
     }
@@ -125,15 +130,6 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 view = inflater.inflate(R.layout.item_received_message, parent, false);
                 return new ReceivedMessageHolder(view);
 
-            case TYPE_IMAGE_SENT:
-
-                view = inflater.inflate(R.layout.item_sent_image, parent, false);
-                return new SentImageHolder(view);
-
-            case TYPE_IMAGE_RECEIVED:
-
-                view = inflater.inflate(R.layout.item_received_photo, parent, false);
-                return new ReceivedImageHolder(view);
 
         }
 
@@ -143,63 +139,86 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        JSONObject message = messages.get(position);
 
-        try {
-            if (message.getBoolean("isSent")) {
+        Message msg = list.get(position);
+        Log.e("msg auther",msg.getAuthor().getId());
+        Log.e("user id",IdUser);
+        if (msg.getAuthor().getId().equals(IdUser)) {
 
-                if (message.has("message")) {
+            if (!msg.getMessage().isEmpty()) {
+                //String img = msg.getAuthor().getPicture();
+                //String uri = "@drawable/"+img+"";
+                //int imageResource = Resources.getSystem().getIdentifier(img, "drawable", Application.getPackageName);
 
-                    SentMessageHolder messageHolder = (SentMessageHolder) holder;
-                    messageHolder.messageTxt.setText(message.getString("message"));
-
-                } else {
-
-                    SentImageHolder imageHolder = (SentImageHolder) holder;
-                    Bitmap bitmap = getBitmapFromString(message.getString("image"));
-
-                    imageHolder.imageView.setImageBitmap(bitmap);
-
+                //Drawable res = Resources.getSystem().getDrawable(imageResource,null);
+                SentMessageHolder messageHolder = (SentMessageHolder) holder;
+                if (msg.getAuthor().getFirstname().equals("aaaa")){
+                    messageHolder.image.setImageResource(R.drawable.test1);
+                }else
+                {
+                    messageHolder.image.setImageResource(R.drawable.backpack);
                 }
 
-            } else {
-
-                if (message.has("message")) {
-
-                    ReceivedMessageHolder messageHolder = (ReceivedMessageHolder) holder;
-                    messageHolder.nameTxt.setText(message.getString("name"));
-                    messageHolder.messageTxt.setText(message.getString("message"));
-
-                } else {
-
-                    ReceivedImageHolder imageHolder = (ReceivedImageHolder) holder;
-                    imageHolder.nameTxt.setText(message.getString("name"));
-
-                    Bitmap bitmap = getBitmapFromString(message.getString("image"));
-                    imageHolder.imageView.setImageBitmap(bitmap);
-
-                }
+                messageHolder.messageTxt.setText(msg.getMessage());
 
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+        } else {
+
+            if (!msg.getMessage().isEmpty()) {
+
+               /*String img = msg.getAuthor().getPicture();
+                String uri = "@drawable/"+img+"";
+                int imageResource = Resources.getSystem().getIdentifier(img, "drawable", new Application().getPackageName());
+
+                Drawable res = Resources.getSystem().getDrawable(imageResource,null);*/
+                ReceivedMessageHolder messageHolder = (ReceivedMessageHolder) holder;
+
+                if (msg.getAuthor().getFirstname().equals("Seifeddine")){
+                    messageHolder.image.setImageResource(R.drawable.test1);
+                }else
+                {
+                    messageHolder.image.setImageResource(R.drawable.backpack);
+                }
+                messageHolder.messageTxt.setText(msg.getMessage());
+
+            }
         }
+            /*JSONObject message = messages.get(position);
 
-    }
 
-    private Bitmap getBitmapFromString(String image) {
+                if (message.getBoolean("isSent")) {
 
-        byte[] bytes = Base64.decode(image, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    if (message.has("message")) {
+
+                        SentMessageHolder messageHolder = (SentMessageHolder) holder;
+                        messageHolder.messageTxt.setText(message.getString("message"));
+
+                    }
+
+                } else {
+
+                    if (message.has("message")) {
+
+                        ReceivedMessageHolder messageHolder = (ReceivedMessageHolder) holder;
+                        messageHolder.nameTxt.setText(message.getString("name"));
+                        messageHolder.messageTxt.setText(message.getString("message"));
+
+                    }
+
+                }*/
+
+
     }
 
     @Override
     public int getItemCount() {
-        return messages.size();
+        return list.size();
     }
 
-    public void addItem (JSONObject jsonObject) {
-        messages.add(jsonObject);
+    public void addItem (Message msg)  {
+
+        list.add(msg);
         notifyDataSetChanged();
     }
 

@@ -17,6 +17,7 @@ import com.example.formit.ui.adapter.CoacheDiscussionAdapter
 import com.example.formit.ui.adapter.CourseDiscussionAdapter
 import com.example.formit.ui.adapter.HomeCouseAdapter
 import com.example.formit.ui.view.activitys.EMAIL
+import com.example.formit.ui.view.activitys.FIRSTNAME
 import com.example.formit.ui.view.activitys.ID
 import com.example.formit.ui.view.activitys.PREF_NAME
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -35,7 +36,6 @@ class MessagesFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         return inflater.inflate(R.layout.fragment_messages, container, false)
     }
 
@@ -54,55 +54,9 @@ class MessagesFragment: Fragment() {
         val adapterBuble =BubleMessageAdapter(BubleList)
         bubleMessageRecycleView.adapter = adapterBuble
         bubleMessageRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        Log.e("id user", mSharedPref.getString(ID, "").toString())
 
-        apiInterface.getOwnConversations(mSharedPref.getString(ID, "")).enqueue(object :
-            Callback<MutableList<Conversation>> {
-            override fun onResponse(
-                call: Call<MutableList<Conversation>>, response:
-                Response<MutableList<Conversation>>
-            ) {
-                val conversations = response.body()
-                if (conversations != null) {
-                    Log.e("conversations",conversations.toString())
-                    val adapterCourse =CourseDiscussionAdapter(conversations)
-                    CoursesDiscussionRecycleView.adapter = adapterCourse
-                    CoursesDiscussionRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-
-                } else {
-                    Log.e("Error from conversation course","true")
-                }
-            }
-
-            override fun onFailure(call: Call<MutableList<Conversation>>, t: Throwable) {
-                Log.e("failure conversation course","true")
-            }
-        })
-        var CourseDiscussion = mutableListOf(
-            Course_Discussion(
-                R.drawable.welcome_pic,
-                "Android Course",
-                "Welcome All of you ...",
-                "1 hour",
-                9,
-                R.drawable.test1,
-                R.drawable.test2,
-                R.drawable.test3
-            ),
-            Course_Discussion(
-                R.drawable.test2,
-                "Ios Course",
-                "So what new ...",
-                "1 hour",
-                1,
-                R.drawable.male_student,
-                R.drawable.welcome_pic,
-                R.drawable.test3
-            )
-        )
-        val adapterCourse =CourseDiscussionAdapter(CourseDiscussion)
-        CoursesDiscussionRecycleView.adapter = adapterCourse
-        CoursesDiscussionRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-
+        this.loadOwnConversation()
 
         var CoacheDiscussion = mutableListOf(
             Coache_Discussion(
@@ -126,6 +80,41 @@ class MessagesFragment: Fragment() {
 
     }
 
+    fun loadOwnConversation(){
+        Log.e("User connected",mSharedPref.getString(ID, "").toString())
+        apiInterface.getOwnConversations(mSharedPref.getString(ID, "")).enqueue(object :
+            Callback<MutableList<Conversation>> {
+            override fun onResponse(
+                call: Call<MutableList<Conversation>>, response:
+                Response<MutableList<Conversation>>
+            ) {
+                val conversations = response.body()
+                if (conversations != null) {
+                    Log.e("conversations",conversations.toString())
+                    val adapterCourse =CourseDiscussionAdapter(conversations,
+                        mSharedPref.getString(ID, "").toString(),
+                        mSharedPref.getString(FIRSTNAME, "").toString())
+
+                    CoursesDiscussionRecycleView.adapter = adapterCourse
+                    CoursesDiscussionRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+
+                } else {
+                    Log.e("Error from conversation course","true")
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<Conversation>>, t: Throwable) {
+                Log.e("failure conversation course","true")
+            }
+        })
+
+    }
+
+    override fun onResume() {
+
+        this.loadOwnConversation()
+        super.onResume()
+    }
 
     companion object {
         @JvmStatic
