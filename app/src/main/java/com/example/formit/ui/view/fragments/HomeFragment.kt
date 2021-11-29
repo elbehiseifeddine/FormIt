@@ -45,7 +45,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         getCoursesNotParticipated()
 
-
         tv_CourseSeeAll.setOnClickListener {
             Intent(activity, CoursesActivity::class.java).also {
                 startActivity(it)
