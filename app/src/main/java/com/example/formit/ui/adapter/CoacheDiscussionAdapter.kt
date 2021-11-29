@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.example.formit.R
-import com.example.formit.ui.view.chat.chatActivity
+import com.example.formit.ui.view.chat.ChatActivity
 import com.example.formit.data.model.Coache_Discussion
 import kotlinx.android.synthetic.main.item_coache_discussion.view.*
 
@@ -39,7 +39,7 @@ class CoacheDiscussionAdapter(var CoachesDiscussion : MutableList<Coache_Discuss
             }
         }
         holder.itemView.setOnClickListener{
-            val intent = Intent(holder.itemView.context, chatActivity::class.java)
+            val intent = Intent(holder.itemView.context, ChatActivity::class.java)
                 .apply{
                     putExtra("name", email)
                 }

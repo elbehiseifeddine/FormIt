@@ -1,17 +1,19 @@
 package com.example.formit.ui.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.marginBottom
 import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.example.formit.R
 import com.example.formit.data.model.Conversation
-import com.example.formit.data.model.Course_Discussion
+import com.example.formit.ui.view.chat.ChatActivity
 import kotlinx.android.synthetic.main.item_course_discussion.view.*
 
-class CourseDiscussionAdapter(var CourseDiscussion : MutableList<Conversation>) :  RecyclerView.Adapter<CourseDiscussionAdapter.CourseDiscussionViewHolder>() {
+
+class CourseDiscussionAdapter(var CourseDiscussion : MutableList<Conversation>, var idUser:String, var name:String) :
+    RecyclerView.Adapter<CourseDiscussionAdapter.CourseDiscussionViewHolder>() {
     inner class CourseDiscussionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseDiscussionViewHolder {
@@ -21,14 +23,32 @@ class CourseDiscussionAdapter(var CourseDiscussion : MutableList<Conversation>) 
 
     override fun onBindViewHolder(holder: CourseDiscussionViewHolder, position: Int) {
         holder.itemView.apply {
-           /* CourseDiscussionPic.setImageResource(CourseDiscussion[position].course.)
-            CourseDiscussionName.text=CourseDiscussion[position].CourseDiscussionName
-            CourseDiscussionLastMessage.text=CourseDiscussion[position].CourseDiscussionLastMessage
-            CourseDiscussionTime.text=CourseDiscussion[position].CourseDiscussionTime
-            CourseDiscussionImage1.setImageResource(CourseDiscussion[position].CourseDiscussionFirstPic)
-            CourseDiscussionImage2.setImageResource(CourseDiscussion[position].CourseDiscussionSecondPic)
-            CourseDiscussionImage3.setImageResource(CourseDiscussion[position].CourseDiscussionThirdPic)
-            CourseDiscussionUnreaded.text=CourseDiscussion[position].CourseDiscussionUnreaded.toString()*/
+
+            var image = CourseDiscussion[position].course.image
+
+
+            val uri = "@drawable/$image" // where myresource (without the extension) is the file
+
+
+            val imageResource = resources.getIdentifier(uri, null, context.packageName)
+
+            val res = resources.getDrawable(imageResource,null)
+            CourseDiscussionPic.setImageDrawable(res)
+            //CourseDiscussionPic.setImageResource(R.drawable)
+            CourseDiscussionName.text=CourseDiscussion[position].course.courseName
+            if (!CourseDiscussion[position].message.isEmpty()){
+                CourseDiscussionLastMessage.text=CourseDiscussion[position].message[CourseDiscussion[position].message.size-1].message
+                CourseDiscussionTime.text=CourseDiscussion[position].message[CourseDiscussion[position].message.size-1].createdAt.toString()
+
+            }else {
+                CourseDiscussionLastMessage.text=""
+                CourseDiscussionTime.text=""
+
+            }
+            CourseDiscussionImage1.setImageResource(R.drawable.test1)
+            CourseDiscussionImage2.setImageResource(R.drawable.test2)
+            CourseDiscussionImage3.setImageResource(R.drawable.test3)
+            CourseDiscussionUnreaded.text="9"
             if (position==CourseDiscussion.size-1){
                 SeparatorCourseDiscussion.visibility=View.GONE
             }
@@ -36,6 +56,15 @@ class CourseDiscussionAdapter(var CourseDiscussion : MutableList<Conversation>) 
                 item_Course_Discussion.marginTop.countLeadingZeroBits()
             }
 
+        }
+        holder.itemView.setOnClickListener{
+            val intent = Intent(holder.itemView.context, ChatActivity::class.java)
+                .apply{
+                    putExtra("name", name)
+                    putExtra("idUser", idUser)
+                    putExtra("idConversation", CourseDiscussion[position].id)
+                }
+            holder.itemView.context.startActivity(intent)
         }
     }
 

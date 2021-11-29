@@ -1,6 +1,7 @@
 package com.example.formit.data.repository
 import com.example.formit.data.model.Conversation
 import com.example.formit.data.model.Course
+import com.example.formit.data.model.Message
 import com.example.formit.data.model.User
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -45,6 +46,16 @@ interface ApiInterface {
 
     @GET("/conversations/getOwnConversations/{id}")
     fun getOwnConversations(@Path("id") id: String?): Call<MutableList<Conversation>>
+
+    @GET("/messages/getChatMessages/{id}")
+    fun getConversationMessages(@Path("id") id: String?): Call<List<Message>>
+
+    @GET("/messages/sendMessage/{idConversation}/{idUser}/{message}")
+    fun sendMessages(@Path("idConversation") idConversation: String?,@Path("idUser") idUser: String?,@Path("message") message :String? ): Call<Message>
+
+
+    @GET("/messages/getMessageById/{id}")
+    fun getMessageById(@Path("id") id: String?): Call<Message>
 
     companion object {
 
