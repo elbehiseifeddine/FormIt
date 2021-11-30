@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.formit.R
 import com.example.formit.data.model.Event
 import com.example.formit.ui.view.activitys.DescriptionActivity
+import com.example.formit.ui.view.activitys.DescriptionEventActivity
 import com.example.formit.ui.view.activitys.ID
 import com.example.formit.ui.view.activitys.PREF_NAME
 import kotlinx.android.synthetic.main.item_event.view.*
@@ -21,7 +22,7 @@ class HomeEventAdapter (var events: MutableList<Event>, var bookmarked: Boolean)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeEventsViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_course_big, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false)
         return HomeEventsViewHolder(view)
     }
 
@@ -43,13 +44,13 @@ class HomeEventAdapter (var events: MutableList<Event>, var bookmarked: Boolean)
             Log.e("placesssssssssssssssssssssssssssssss", events[position].places.toString())
             setOnClickListener {
                 val intent =
-                    Intent(holder.itemView.context, DescriptionActivity::class.java).also {
+                    Intent(holder.itemView.context, DescriptionEventActivity::class.java).also {
                         it.putExtra("ID", events[position].id)
                         it.putExtra("NAME", events[position].eventName)
-                        it.putExtra("Location", events[position].location.toString() + " dt")
+                        it.putExtra("LOCATION", events[position].location.toString() + " dt")
                         it.putExtra(
                             "DURATION",
-                            events[position].duration.toString() + " Hours"
+                            events[position].duration.toString()
                         )
                         it.putExtra("DESCRIPTION", events[position].description)
                         it.putExtra("STARTDATE", events[position].startDate)

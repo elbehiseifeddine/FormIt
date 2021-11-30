@@ -53,6 +53,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 startActivity(it)
             }
         }
+        tv_EventSeeAll.setOnClickListener {
+            Intent(activity, EventsActivity::class.java).also {
+                startActivity(it)
+            }
+        }
 
 
     }

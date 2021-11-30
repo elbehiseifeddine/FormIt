@@ -16,9 +16,11 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.formit.R
 import com.example.formit.data.model.Course
+import com.example.formit.data.model.Event
 import com.example.formit.data.repository.ApiInterface
 import com.example.formit.ui.adapter.CoursesAdapter
 import com.example.formit.ui.adapter.HomeCouseAdapter
+import com.example.formit.ui.adapter.HomeEventAdapter
 import com.example.formit.ui.view.activitys.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
@@ -96,6 +98,29 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
 
             override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
+                Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
+            }
+        })
+
+        apiInterface.getEventsParticipated(mSharedPref.getString(ID, "")).enqueue(object :
+            Callback<MutableList<Event>> {
+            override fun onResponse(
+                call: Call<MutableList<Event>>, response:
+                Response<MutableList<Event>>
+            ) {
+                val events = response.body()
+                if (events != null) {
+                    Log.e("coursessssssssssssssssssssss     ", events.toString())
+                    val adapter = HomeEventAdapter(events, true)
+                    Profile_Participated_events.adapter = adapter
+                    Profile_Participated_events.layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                } else {
+                    Log.e("Username or Password wrong", "true")
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<Event>>, t: Throwable) {
                 Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
             }
         })
