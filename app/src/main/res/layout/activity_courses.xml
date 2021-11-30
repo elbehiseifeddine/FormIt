@@ -3,20 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.view.activitys.CoursesActivity">
 
-    <include layout="@layout/reusable_toolbar"/>
+    <include layout="@layout/reusable_toolbar" />
+
+    <SearchView
+        android:id="@+id/sv_Search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search Courses" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_Cour"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_Cour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
     </ScrollView>
 </LinearLayout>

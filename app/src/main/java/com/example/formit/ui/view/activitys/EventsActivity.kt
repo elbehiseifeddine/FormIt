@@ -51,7 +51,7 @@ class EventsActivity : AppCompatActivity() {
             }
         })
 
-        toolbar_title.text="Courses"
+        toolbar_title.text="Events"
         button_Right.visibility= View.INVISIBLE
 
         btn_reus_back.setOnClickListener {
