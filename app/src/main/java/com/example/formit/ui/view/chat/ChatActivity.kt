@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.formit.R
 import com.example.formit.data.model.Message
 import com.example.formit.data.repository.ApiInterface
+import com.example.formit.ui.adapter.CourseDiscussionAdapter
 import com.example.formit.ui.adapter.MessageAdapter
 import com.example.formit.ui.view.activitys.FIRSTNAME
 import com.example.formit.ui.view.activitys.ID
@@ -51,6 +52,7 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
     private var recyclerView: RecyclerView? = null
     private val IMAGE_REQUEST_ID = 1
     private var messageAdapter: MessageAdapter? = null
+    //private var CourseDiscussion :CourseDiscussionAdapter?= null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -135,6 +137,8 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
 
                             val messages = response.body()
                             if (messages != null) {
+
+                                //CourseDiscussion?.update(messages)
                                 messageAdapter?.addItem(messages)
                                 messageAdapter?.getItemCount()?.minus(1)?.let {
                                     recyclerView!!.smoothScrollToPosition(

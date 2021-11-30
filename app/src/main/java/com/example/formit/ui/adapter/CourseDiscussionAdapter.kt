@@ -8,6 +8,7 @@ import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.example.formit.R
 import com.example.formit.data.model.Conversation
+import com.example.formit.data.model.Message
 import com.example.formit.ui.view.chat.ChatActivity
 import kotlinx.android.synthetic.main.item_course_discussion.view.*
 
@@ -68,6 +69,14 @@ class CourseDiscussionAdapter(var CourseDiscussion : MutableList<Conversation>, 
             holder.itemView.context.startActivity(intent)
         }
     }
+
+    /*fun update(msg : Message){
+        var holder: CourseDiscussionViewHolder?= null
+        holder!!.itemView.CourseDiscussionLastMessage.text=msg.message
+        holder!!.itemView.CourseDiscussionTime.text=msg.createdAt.toString()
+        notifyDataSetChanged()
+
+    }*/
 
     override fun getItemCount(): Int = CourseDiscussion.size
 
