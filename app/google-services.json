@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "702953130294",
+    "project_id": "formit-f214c",
+    "storage_bucket": "formit-f214c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702953130294:android:0ed988d48351f122e30b97",
+        "android_client_info": {
+          "package_name": "com.example.formit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702953130294-l8taqs9b1s4jkn0591k1hkch75ieup99.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY0udCI1x8vwS60EdGEIFFMx9dtXBf2uY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702953130294-l8taqs9b1s4jkn0591k1hkch75ieup99.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

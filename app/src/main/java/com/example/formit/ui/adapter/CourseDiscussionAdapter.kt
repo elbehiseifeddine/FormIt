@@ -8,7 +8,6 @@ import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.example.formit.R
 import com.example.formit.data.model.Conversation
-import com.example.formit.data.model.Message
 import com.example.formit.ui.view.chat.ChatActivity
 import kotlinx.android.synthetic.main.item_course_discussion.view.*
 
@@ -39,7 +38,7 @@ class CourseDiscussionAdapter(var CourseDiscussion : MutableList<Conversation>, 
             CourseDiscussionName.text=CourseDiscussion[position].course.courseName
             if (!CourseDiscussion[position].message.isEmpty()){
                 CourseDiscussionLastMessage.text=CourseDiscussion[position].message[CourseDiscussion[position].message.size-1].message
-                CourseDiscussionTime.text=CourseDiscussion[position].message[CourseDiscussion[position].message.size-1].createdAt.toString()
+                CourseDiscussionTime.text=CourseDiscussion[position].message[CourseDiscussion[position].message.size-1].createdAt.time.toString()
 
             }else {
                 CourseDiscussionLastMessage.text=""
@@ -79,5 +78,20 @@ class CourseDiscussionAdapter(var CourseDiscussion : MutableList<Conversation>, 
     }*/
 
     override fun getItemCount(): Int = CourseDiscussion.size
+
+    fun getItemPosition (id : String) : Int{
+      var position=0
+      for (convo : Conversation in CourseDiscussion){
+          var i=0;
+          if (convo.id == id){
+              position = i
+          }
+          i++
+      }
+        return position
+    }
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
 
 }
