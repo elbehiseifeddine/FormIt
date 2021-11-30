@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.view.activitys.DescriptionActivity">
-
+    tools:context=".ui.view.activitys.DescriptionEventActivity">
     <include layout="@layout/description_toolbar" />
 
     <ScrollView
@@ -41,21 +40,21 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_CourseName"
+                    android:id="@+id/tv_EventName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="Course Name"
+                    android:text="Event Name"
                     android:textColor="#2E363E"
                     android:textSize="@dimen/_16ssp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_MentorName"
+                    android:id="@+id/tv_LocationName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="Mentor Name"
+                    android:text="Location Name"
                     android:textColor="#2E363E"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold" />
@@ -113,52 +112,7 @@
 
                     </androidx.cardview.widget.CardView>
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/_85sdp"
-                        android:layout_height="@dimen/_85sdp"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="@dimen/_5sdp"
-                        android:layout_marginVertical="@dimen/_5sdp"
-                        android:elevation="10dp"
-                        app:cardCornerRadius="@dimen/_16sdp">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:background="@drawable/icon_container"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:layout_width="@dimen/_20sdp"
-                                    android:layout_height="@dimen/_20sdp"
-                                    android:src="@drawable/ic_money"
-                                    app:tint="#7F53AC" />
-
-
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/tv_Price"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_4sdp"
-                                android:fontFamily="@font/poppins_medium"
-                                android:gravity="center"
-                                android:text="00 dt"
-                                android:textColor="#2E363E"
-                                android:textSize="@dimen/_10sdp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-
-                    </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="@dimen/_85sdp"
@@ -212,25 +166,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="Prerequisites"
-                    android:textColor="#2E363E"
-                    android:textSize="@dimen/_14ssp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_Prerequisites"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_6sdp"
-                    android:fontFamily="@font/poppins"
-                    android:text="Prerequisites Prerequisites "
-                    android:textColor="#2E363E"
-                    android:textSize="@dimen/_11ssp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
                     android:text="Description"
                     android:textColor="#2E363E"
                     android:textSize="@dimen/_14ssp"
@@ -255,7 +190,7 @@
                         android:id="@+id/btn_Participate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Subscribe"
+                        android:text="Participate"
                         android:background="@drawable/gradient_background_and_rounded"
                         android:textColor="@color/white"
                         android:fontFamily="@font/poppins_bold"

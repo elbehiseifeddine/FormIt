@@ -29,6 +29,9 @@ interface ApiInterface {
     @GET("/event/getEventsNotParticipated/{idUser}")
     fun getEventsNotParticipated(@Path("idUser") id: String?): Call<MutableList<Event>>
 
+    @GET("/event/getEventsParticipated/{idUser}")
+    fun getEventsParticipated(@Path("idUser") id: String?): Call<MutableList<Event>>
+
     @GET("/courses/getCoursesBookmarked/{idUser}")
     fun getCoursesBookmarked(@Path("idUser") id: String?): Call<MutableList<Course>>
 
@@ -47,6 +50,9 @@ interface ApiInterface {
     @PATCH("/users/addParticipation/{id}/{idCourse}")
     fun AddParticipation(@Path("id") id: String?,@Path("idCourse") idCourse: String?): Call<String>
 
+    @PATCH("/users/addEventsParticipation/{id}/{idEvent}")
+    fun AddEventParticipation(@Path("id") id: String?,@Path("idEvent") idEvent: String?): Call<String>
+
     @GET("/conversations/getOwnConversations/{id}")
     fun getOwnConversations(@Path("id") id: String?): Call<MutableList<Conversation>>
 
@@ -63,7 +69,7 @@ interface ApiInterface {
     companion object {
 
 
-        var BASE_URL = "http://192.168.1.15:5000"
+        var BASE_URL = "http://192.168.1.33:5000"
 
         fun create() : ApiInterface {
 
