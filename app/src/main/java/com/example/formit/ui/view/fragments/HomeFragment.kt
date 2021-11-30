@@ -85,8 +85,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
                 }
             })
+        Log.e("***************id user ",mSharedPref.getString(ID, "").toString())
+        apiInterface.getEventsNotParticipated(mSharedPref.getString(ID, "").toString())
 
-        apiInterface.getEventsNotParticipated(mSharedPref.getString(ID, ""))
             .enqueue(object : Callback<MutableList<Event>> {
                 override fun onResponse(
                     call: Call<MutableList<Event>>, response:

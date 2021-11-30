@@ -30,6 +30,7 @@ const val ID= "ID"
 const val FIRSTNAME= "FIRSTNAME"
 const val LASTNAME= "LASTNAME"
 const val ADDRESS= "ADDRESS"
+const val PICTURE= "PICTURE"
 const val BIRTHDATE= "BIRTHDATE"
 const val PHONENUMBER= "PHONENUMBER"
 const val IS_REMEMBRED = "IS_REMEMBRED"
@@ -131,6 +132,7 @@ class SignInUpActivity : AppCompatActivity() {
                                 putString(PASSWORD, user.password)
                                 putInt(PHONENUMBER, user.phonenumber)
                                 putString(ADDRESS, user.address)
+                                putString(PICTURE, user.picture)
                                 putString(ID, user.id)
                             }.apply()
 

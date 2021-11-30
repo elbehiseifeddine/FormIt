@@ -38,9 +38,11 @@ import retrofit2.Response
 class MessagesFragment: Fragment() {
 
     private var webSocket: WebSocket? = null
-    private val SERVER_PATH = "ws://192.168.1.15:3000"
+    private val SERVER_PATH = "ws://192.168.1.6:3000"
     val apiInterface = ApiInterface.create()
     lateinit var mSharedPref: SharedPreferences
+
+    private var courseAdapter :CourseDiscussionAdapter?= null
 
 
 
@@ -80,9 +82,19 @@ class MessagesFragment: Fragment() {
             super.onMessage(webSocket, text)
             activity!!.runOnUiThread {
                 try {
-                   var id = text.subSequence(text.indexOf("conversationId=",0,false)+3,text.indexOf(",",0,false))
-                    Log.e("idConversation",id.toString())
 
+                    Log.e("**************Text",text)
+                    var textstart = text.indexOf("conversationId=",0,false)+15
+                    var textend =text.indexOf(",",textstart,false)
+                    var id1 = text.subSequence(textstart,textend)
+                    Log.e("**************idConversation",id1.toString())
+                    val position = courseAdapter?.getItemPosition(id1.toString())
+                    courseAdapter?.getItemPosition(id1.toString())?.let {
+
+                        courseAdapter?.notifyItemChanged(
+                            it
+                        )
+                    }
 
 
                 } catch (e: JSONException) {

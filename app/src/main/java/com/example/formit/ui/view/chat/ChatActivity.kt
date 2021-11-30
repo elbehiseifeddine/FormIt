@@ -45,7 +45,7 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
     private var CourseName: String? = null
     private var idConversation: String? = null
     private var webSocket: WebSocket? = null
-    private val SERVER_PATH = "ws://192.168.1.15:3000"
+    private val SERVER_PATH = "ws://192.168.1.6:3000"
     private var messageEdit: EditText? = null
     private var sendBtn: View? = null
     private var pickImgBtn: View? = null
