@@ -1,5 +1,6 @@
 package com.example.formit.data.repository
 import com.example.formit.data.model.*
+import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -62,9 +63,18 @@ interface ApiInterface {
     @GET("/messages/sendMessage/{idConversation}/{idUser}/{message}")
     fun sendMessages(@Path("idConversation") idConversation: String?,@Path("idUser") idUser: String?,@Path("message") message :String? ): Call<Message>
 
-
     @GET("/messages/getMessageById/{id}")
     fun getMessageById(@Path("id") id: String?): Call<Message>
+
+    data class SearchResponse(
+        @SerializedName("courses")
+        val courses: MutableList<Course>
+    )
+    data class SearchBody(val text: String,val idUser: String)
+
+    @POST("/courses/searchCourse")
+    fun search(@Body text: SearchBody): Call<SearchResponse>
+
 
     companion object {
 
