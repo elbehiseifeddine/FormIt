@@ -10,6 +10,8 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.formit.R
@@ -55,7 +57,7 @@ class EditProfileActivity : AppCompatActivity() {
             finish()
         }
 
-        profilePic!!.setOnClickListener {
+        ProfilePicture!!.setOnClickListener {
             openGallery()
         }
 
@@ -85,9 +87,10 @@ class EditProfileActivity : AppCompatActivity() {
         {
             val filename2 = mSharedPref.getString(PICTURE, "").toString()
             val path = "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F"+filename2+"?alt=media"
+            Log.e("*******************************path image ",path)
             Glide.with(this)
                 .load(path)
-                .into(profilePic)
+                .into(ProfilePicture)
         }
         btn_Update.setOnClickListener {
 
@@ -179,18 +182,19 @@ class EditProfileActivity : AppCompatActivity() {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == 100 && resultCode == RESULT_OK)
+    private val startForResultOpenGallery = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result: ActivityResult ->
+        if(result.resultCode == RESULT_OK)
         {
-            selectedImageUri = data?.data!!
+            selectedImageUri = result.data!!.data
             profilePic!!.setImageURI(selectedImageUri)
         }
     }
     private fun openGallery() {
         val intent = Intent()
-        intent.type = "image/*"
+
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent,100)
+        intent.type = "image/*"
+        startForResultOpenGallery.launch(intent)
     }
 }

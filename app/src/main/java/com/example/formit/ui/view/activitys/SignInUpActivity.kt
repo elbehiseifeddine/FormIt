@@ -245,6 +245,7 @@ class SignInUpActivity : AppCompatActivity() {
                                 putString(BIRTHDATE, user.birthdate)
                                 putString(ADDRESS, user.address)
                                 putString(PASSWORD, user.password)
+                                putString(PICTURE, user.picture)
                                 putString(ID, user.id)
                             }.apply()
 

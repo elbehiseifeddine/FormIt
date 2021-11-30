@@ -237,7 +237,7 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
                 if (messages != null) {
                     Log.e("---------------------------Messages",messages.toString())
 
-                    messageAdapter = MessageAdapter(layoutInflater,messages as List<Message>,mSharedPref.getString(ID, "").toString(),mSharedPref.getString(FIRSTNAME, "").toString())
+                    messageAdapter = MessageAdapter(this@ChatActivity,layoutInflater,messages as List<Message>,mSharedPref.getString(ID, "").toString(),mSharedPref.getString(FIRSTNAME, "").toString())
                     recyclerView!!.setAdapter(messageAdapter)
                     recyclerView!!.setLayoutManager(LinearLayoutManager(this@ChatActivity))
                 } else {

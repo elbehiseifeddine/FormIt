@@ -1,14 +1,9 @@
 package com.example.formit.ui.adapter;
 
-import android.app.Activity;
-import android.app.Application;
+
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.util.Base64;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.formit.BuildConfig;
+import com.bumptech.glide.Glide;
 import com.example.formit.R;
 import com.example.formit.data.model.Message;
 import com.example.formit.data.model.User;
@@ -48,7 +43,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private static final int TYPE_MESSAGE_RECEIVED = 1;
     private static final int TYPE_IMAGE_SENT = 2;
     private static final int TYPE_IMAGE_RECEIVED = 3;
-
+    private Context context;
+    String  PREF_NAME = "LOGIN_PREF";
 
     public Context conn;
     private LayoutInflater inflater;
@@ -58,11 +54,12 @@ public class MessageAdapter extends RecyclerView.Adapter {
     String name ;
     private ApiInterface api = ApiInterface.Companion.create();
 
-    public MessageAdapter (LayoutInflater inflater, List<Message> list,String idUser,String name) {
+    public MessageAdapter (Context context,LayoutInflater inflater, List<Message> list,String idUser,String name) {
         this.inflater = inflater;
         this.list=list;
         this.name=name;
         IdUser=idUser;
+        this.context = context;
     }
 
     private class SentMessageHolder extends RecyclerView.ViewHolder {
@@ -136,8 +133,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        //String packagename= MessageAdapter.getContext().getPackageName();
 
+        SharedPreferences mSharedPref = holder.itemView.getContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        //String packagename= MessageAdapter.getContext().getPackageName();
 
         Message msg = list.get(position);
         Log.e("msg auther",msg.getAuthor());
@@ -147,16 +145,15 @@ public class MessageAdapter extends RecyclerView.Adapter {
             if (!msg.getMessage().isEmpty()) {
 
 
-                //String img = msg.getAuthor().getPicture();
-                //String uri = "@drawable/"+img+"";
-                //int imageResource = Resources.getSystem().getIdentifier(img, "drawable", Application.getPackageName);
 
-                //Drawable res = Resources.getSystem().getDrawable(imageResource,null);
                 SentMessageHolder messageHolder = (SentMessageHolder) holder;
-                //if (msg.getAuthor().getFirstname().equals("aaaa")){
-                    messageHolder.image.setImageResource(R.drawable.test1);
-                //}else
-               // {
+
+                String filename2 =mSharedPref.getString("PICTURE", "");
+                String path = "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F"+filename2+"?alt=media";
+                Log.e("*******************************path image ",path);
+                /*Glide.with(context)
+                        .load(path)
+                        .into(((SentMessageHolder) holder).image);*/
                     messageHolder.image.setImageResource(R.drawable.backpack);
                 //}
 
@@ -171,14 +168,21 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 Log.e("message auther ",msg.getAuthor());
 
                 Call<User> call = api.getUserById(msg.getAuthor());
-
-
-                call.enqueue(new Callback<User>() {
+                 call.enqueue(new Callback<User>() {
                                  @Override
                                  public void onResponse(Call<User> call, Response<User> response) {
                                         user= response.body();
                                         Log.e("-------------------------user from get user by id ", user.toString());
                                      messageHolder.nameTxt.setText(user.getFirstname());
+
+                                     String filename2 =user.getPicture();
+                                     String path = "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F"+filename2+"?alt=media";
+                                     Log.e("*******************************path image ",path);
+                                     /*Glide.with(holder.itemView.getContext())
+                                             .load(path)
+                                             .into(((ReceivedMessageHolder) holder).image);*/
+
+                                     messageHolder.image.setImageResource(R.drawable.backpack);
                                  }
 
                                  @Override
@@ -187,22 +191,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
                                  }
                              });
 
-               /* String img = user.getPicture();
-                String uri = "@drawable/"+img+"";
-                int imageResource = Resources.getSystem().getIdentifier(uri, null, conn.getPackageName());
 
-                Drawable res = Resources.getSystem().getDrawable(imageResource,null);
-*/
-
-
-                //if (msg.getAuthor().getFirstname().equals("Seifeddine")){
-                //messageHolder.image.setImageDrawable(res);
-                // }else
-                // {
-
-
-                messageHolder.image.setImageResource(R.drawable.backpack);
-                // }
                 messageHolder.messageTxt.setText(msg.getMessage());
 
             }
