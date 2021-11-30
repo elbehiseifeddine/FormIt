@@ -1,5 +1,6 @@
 package com.example.formit.ui.view.fragments
 
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.formit.R
@@ -23,22 +25,77 @@ import com.example.formit.ui.view.activitys.PREF_NAME
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_messages.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.WebSocket
+import okhttp3.WebSocketListener
+import org.json.JSONException
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
 class MessagesFragment: Fragment() {
+
+    private var webSocket: WebSocket? = null
+    private val SERVER_PATH = "ws://192.168.1.15:3000"
     val apiInterface = ApiInterface.create()
     lateinit var mSharedPref: SharedPreferences
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        initiateSocketConnection()
         return inflater.inflate(R.layout.fragment_messages, container, false)
     }
 
+    private fun initiateSocketConnection() {
+        val client = OkHttpClient()
+        val request = Request.Builder().url(SERVER_PATH).build()
+        webSocket = client.newWebSocket(request, SocketListener())
+    }
+
+
+    private inner class SocketListener : WebSocketListener() {
+        override fun onOpen(webSocket: WebSocket, response: okhttp3.Response) {
+            super.onOpen(webSocket, response)
+            activity!!.runOnUiThread {
+                Toast.makeText(
+                    context,
+                    "Socket Connection Successful!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                Log.e("-", "-------------------------------------------")
+                Log.e("before intialized", "true")
+                Log.e("-", "-------------------------------------------")
+                initializeView()
+            }
+        }
+
+        override fun onMessage(webSocket: WebSocket, text: String) {
+            super.onMessage(webSocket, text)
+            activity!!.runOnUiThread {
+                try {
+                   var id = text.subSequence(text.indexOf("conversationId=",0,false)+3,text.indexOf(",",0,false))
+                    Log.e("idConversation",id.toString())
+
+
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
+
+    private fun initializeView() {
+        this.loadOwnConversation()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
