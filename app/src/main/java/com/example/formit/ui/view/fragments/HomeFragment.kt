@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.formit.data.model.Course
 import com.example.formit.ui.adapter.HomeCouseAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -18,6 +19,7 @@ import com.example.formit.data.model.Event
 import com.example.formit.data.repository.ApiInterface
 import com.example.formit.ui.adapter.HomeEventAdapter
 import com.example.formit.ui.view.activitys.*
+import kotlinx.android.synthetic.main.activity_edit_profile.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,7 +49,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
         getCoursesNotParticipated()
-
+        if(mSharedPref.getString(PICTURE, "").toString()=="avatar default.png")
+        {
+            profile_pic!!.setImageResource(R.drawable.male_student)
+        }
+        else
+        {
+            val filename2 = mSharedPref.getString(PICTURE, "").toString()
+            val path = "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F"+filename2+"?alt=media"
+            Log.e("*******************************path image ",path)
+            Glide.with(requireActivity())
+                .load(path)
+                .into(profile_pic)
+        }
         tv_CourseSeeAll.setOnClickListener {
             Intent(activity, CoursesActivity::class.java).also {
                 startActivity(it)
