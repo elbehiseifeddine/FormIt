@@ -10,6 +10,7 @@ data class Event(
     @SerializedName("places") val places: Int,
     @SerializedName("duration") val duration: Int,
     @SerializedName("startDate") val startDate: String,
+    @SerializedName("location") val location: String,
     @SerializedName("color") val color: String,
     @SerializedName("image") val image: String,
     @SerializedName("participatedMembers") val participatedMembers: Array<String>,

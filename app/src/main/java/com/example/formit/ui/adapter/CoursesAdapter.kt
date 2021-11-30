@@ -66,14 +66,14 @@ class CoursesAdapter(var courses: MutableList<Course>, var bookmarked: Boolean) 
                         })
 
                 }
-                var test : Boolean
+                var test: Boolean
                 test = false
                 for (n in courses[position].participatedMembers) {
                     if (n.toString() == mSharedPref.getString(ID, "")) {
                         test = true
                     }
                 }
-                Log.e("placesssssssssssssssssssssssssssssss",courses[position].places.toString())
+                Log.e("placesssssssssssssssssssssssssssssss", courses[position].places.toString())
                 setOnClickListener {
                     val intent =
                         Intent(holder.itemView.context, DescriptionActivity::class.java).also {
@@ -88,78 +88,75 @@ class CoursesAdapter(var courses: MutableList<Course>, var bookmarked: Boolean) 
                             it.putExtra("DESCRIPTION", courses[position].description)
                             it.putExtra("PREREQUISITES", courses[position].prerequisites)
                             it.putExtra("STARTDATE", courses[position].startDate)
-                            it.putExtra("PLACES", courses[position].places.toString()+" Places")
+                            it.putExtra("PLACES", courses[position].places.toString() + " Places")
                             it.putExtra("PARTICIPATED", test)
                         }
                     holder.itemView.context.startActivity(intent)
                 }
 
-        }
-
-    }
-
-    else
-    {
-        holder.itemView.apply {
-            tv_CourseName.text = courses[position].courseName
-            tv_Cost.text = courses[position].price.toString() + " dt"
-            tv_Hours.text = courses[position].duration.toString() + " Hours"
-            tv_MentorName.text = courses[position].mentor
-            for (n in courses[position].usersbookmarked) {
-                if (n.toString() == mSharedPref.getString(ID, "")) {
-                    btn_bookmark.setImageResource(R.drawable.ic_bookmark)
-                }
             }
-            btn_bookmark.setOnClickListener {
-                if (btn_bookmark.getTag() == R.drawable.ic_bookmark) {
-                    btn_bookmark.setImageResource(R.drawable.ic_bookmark_empty)
-                    btn_bookmark.setTag(R.drawable.ic_bookmark_empty)
-                } else {
-                    btn_bookmark.setImageResource(R.drawable.ic_bookmark)
-                    btn_bookmark.setTag(R.drawable.ic_bookmark)
-                }
-                val apiInterface = ApiInterface.create()
 
-                apiInterface.AddBookmark(mSharedPref.getString(ID, ""), courses[position].id)
-                    .enqueue(object : Callback<User> {
-                        override fun onResponse(
-                            call: Call<User>, response:
-                            Response<User>
-                        ) {
-                            val courses = response.body()
-                            if (courses != null) {
-                                Log.e("courses", courses.toString())
-                            } else {
-                                Log.e("Username or Password wrong", "true")
+        } else {
+            holder.itemView.apply {
+                tv_CourseName.text = courses[position].courseName
+                tv_Cost.text = courses[position].price.toString() + " dt"
+                tv_Hours.text = courses[position].duration.toString() + " Hours"
+                tv_MentorName.text = courses[position].mentor
+                for (n in courses[position].usersbookmarked) {
+                    if (n.toString() == mSharedPref.getString(ID, "")) {
+                        btn_bookmark.setImageResource(R.drawable.ic_bookmark)
+                    }
+                }
+                btn_bookmark.setOnClickListener {
+                    if (btn_bookmark.getTag() == R.drawable.ic_bookmark) {
+                        btn_bookmark.setImageResource(R.drawable.ic_bookmark_empty)
+                        btn_bookmark.setTag(R.drawable.ic_bookmark_empty)
+                    } else {
+                        btn_bookmark.setImageResource(R.drawable.ic_bookmark)
+                        btn_bookmark.setTag(R.drawable.ic_bookmark)
+                    }
+                    val apiInterface = ApiInterface.create()
+
+                    apiInterface.AddBookmark(mSharedPref.getString(ID, ""), courses[position].id)
+                        .enqueue(object : Callback<User> {
+                            override fun onResponse(
+                                call: Call<User>, response:
+                                Response<User>
+                            ) {
+                                val courses = response.body()
+                                if (courses != null) {
+                                    Log.e("courses", courses.toString())
+                                } else {
+                                    Log.e("Username or Password wrong", "true")
+                                }
                             }
-                        }
 
-                        override fun onFailure(call: Call<User>, t: Throwable) {
-                            Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
-                        }
-                    })
+                            override fun onFailure(call: Call<User>, t: Throwable) {
+                                Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
+                            }
+                        })
 
+                }
             }
-        }
 
-        holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, DescriptionActivity::class.java).also {
-                it.putExtra("ID", courses[position].id)
-                it.putExtra("NAME", courses[position].courseName)
-                it.putExtra("PRICE", courses[position].price.toString() + " dt")
-                it.putExtra("DURATION", courses[position].duration.toString() + " Hours")
-                it.putExtra("MENTOR", courses[position].mentor)
-                it.putExtra("DESCRIPTION", courses[position].description)
-                it.putExtra("PREREQUISITES", courses[position].prerequisites)
-                it.putExtra("STARTDATE", courses[position].startDate)
-                it.putExtra("PLACES", courses[position].places.toString() + " Places")
+            holder.itemView.setOnClickListener {
+                val intent = Intent(holder.itemView.context, DescriptionActivity::class.java).also {
+                    it.putExtra("ID", courses[position].id)
+                    it.putExtra("NAME", courses[position].courseName)
+                    it.putExtra("PRICE", courses[position].price.toString() + " dt")
+                    it.putExtra("DURATION", courses[position].duration.toString() + " Hours")
+                    it.putExtra("MENTOR", courses[position].mentor)
+                    it.putExtra("DESCRIPTION", courses[position].description)
+                    it.putExtra("PREREQUISITES", courses[position].prerequisites)
+                    it.putExtra("STARTDATE", courses[position].startDate)
+                    it.putExtra("PLACES", courses[position].places.toString() + " Places")
+                }
+                holder.itemView.context.startActivity(intent)
             }
-            holder.itemView.context.startActivity(intent)
         }
     }
-}
 
-override fun getItemCount(): Int {
-    return courses.size
-}
+    override fun getItemCount(): Int {
+        return courses.size
+    }
 }

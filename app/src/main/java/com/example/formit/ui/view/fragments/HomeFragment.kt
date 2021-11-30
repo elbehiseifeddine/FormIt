@@ -14,7 +14,9 @@ import com.example.formit.data.model.Course
 import com.example.formit.ui.adapter.HomeCouseAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 import com.example.formit.R
+import com.example.formit.data.model.Event
 import com.example.formit.data.repository.ApiInterface
+import com.example.formit.ui.adapter.HomeEventAdapter
 import com.example.formit.ui.view.activitys.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,6 +41,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         return rootView
 
     }
+
     lateinit var mSharedPref: SharedPreferences
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -52,34 +55,55 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
 
-
     }
 
-    private fun getCoursesNotParticipated(){
-        apiInterface.getCoursesNotParticipated(mSharedPref.getString(ID, "")).enqueue(object : Callback<MutableList<Course>> {
-            override fun onResponse(
-                call: Call<MutableList<Course>>, response:
-                Response<MutableList<Course>>
-            ) {
-                val courses = response.body()
-                if (courses != null) {
-                    Log.e("courses",courses.toString())
-                    val adapter = HomeCouseAdapter(courses,false)
-                    rv_courses.adapter = adapter
-                    rv_events.adapter = adapter
-                    rv_courses.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    rv_events.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                } else {
-                    Log.e("Username or Password wrong","true")
+    private fun getCoursesNotParticipated() {
+        apiInterface.getCoursesNotParticipated(mSharedPref.getString(ID, ""))
+            .enqueue(object : Callback<MutableList<Course>> {
+                override fun onResponse(
+                    call: Call<MutableList<Course>>, response:
+                    Response<MutableList<Course>>
+                ) {
+                    val courses = response.body()
+                    if (courses != null) {
+                        Log.e("courses", courses.toString())
+                        val adapter = HomeCouseAdapter(courses, false)
+                        rv_courses.adapter = adapter
+                        rv_courses.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    } else {
+                        Log.e("Username or Password wrong", "true")
+                    }
+                }
+
+                override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
+                    Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
+                }
+            })
+
+        apiInterface.getEventsNotParticipated(mSharedPref.getString(ID, ""))
+            .enqueue(object : Callback<MutableList<Event>> {
+                override fun onResponse(
+                    call: Call<MutableList<Event>>, response:
+                    Response<MutableList<Event>>
+                ) {
+                    val event = response.body()
+                    if (event != null) {
+                        Log.e("courses", event.toString())
+                        val adapter = HomeEventAdapter(event, false)
+                        rv_events.adapter = adapter
+                        rv_events.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    } else {
+                        Log.e("Username or Password wrong", "true")
+                    }
+                }
+
+                override fun onFailure(call: Call<MutableList<Event>>, t: Throwable) {
+                    Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
                 }
             }
-
-            override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
-                Log.e("aaaaaaaaaaaaaaaaaaaaaaaa","true")
-            }
-        })
+            )
 
     }
 

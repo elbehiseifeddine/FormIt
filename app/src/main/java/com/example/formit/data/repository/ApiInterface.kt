@@ -1,8 +1,5 @@
 package com.example.formit.data.repository
-import com.example.formit.data.model.Conversation
-import com.example.formit.data.model.Course
-import com.example.formit.data.model.Message
-import com.example.formit.data.model.User
+import com.example.formit.data.model.*
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -28,6 +25,9 @@ interface ApiInterface {
 
     @GET("/courses")
     fun getAllCourses(): Call<MutableList<Course>>
+
+    @GET("/event/getEventsNotParticipated/{idUser}")
+    fun getEventsNotParticipated(@Path("idUser") id: String?): Call<MutableList<Event>>
 
     @GET("/courses/getCoursesBookmarked/{idUser}")
     fun getCoursesBookmarked(@Path("idUser") id: String?): Call<MutableList<Course>>
