@@ -42,6 +42,9 @@ interface ApiInterface {
     @GET("/courses/getCoursesNotParticipated/{idUser}")
     fun getCoursesNotParticipated(@Path("idUser") id: String?): Call<MutableList<Course>>
 
+    @GET("/users/getUserNotifications/{idUser}")
+    fun getUserNotifications(@Path("idUser") id: String?): Call<MutableList<Notification>>
+
     @PATCH("/users/update/{id}")
     fun UpdateCurrentUser(@Path("id") id: String?, @Body map : HashMap<String, String>): Call<User>
 
@@ -78,10 +81,7 @@ interface ApiInterface {
 
     companion object {
 
-
-
-        var BASE_URL = "http://192.168.1.6:5000"
-
+        var BASE_URL = "http://192.168.1.33:5000"
 
         fun create() : ApiInterface {
 

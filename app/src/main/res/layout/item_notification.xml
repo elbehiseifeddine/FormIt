@@ -69,21 +69,21 @@
                     android:text="Android Course"
                     android:fontFamily="@font/poppins_semibold"
                     android:textColor="@color/textColor"
-                    android:textSize="17sp"
+                    android:textSize="24sp"
                     android:textAlignment="textStart"
                     android:layout_weight="1"/>
 
-                <TextView
-                    android:id="@+id/tv_Notification_Time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1 hour"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:textStyle="normal"
-                    android:textSize="@dimen/_9sdp"
-                    android:textColor="@color/grey"
-                    android:layout_weight="1"
-                    android:textAlignment="textEnd"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_Notification_Time"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="1 hour"-->
+<!--                    android:fontFamily="@font/poppins_semibold"-->
+<!--                    android:textStyle="normal"-->
+<!--                    android:textSize="@dimen/_9sdp"-->
+<!--                    android:textColor="@color/grey"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:textAlignment="textEnd"/>-->
             </LinearLayout>
 
 
@@ -95,6 +95,7 @@
                     android:text="Welcome all of you ..."
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/grey"
+                    android:textSize="18sp"
                     android:textAlignment="textStart"
                     android:layout_weight="2"/>
 
