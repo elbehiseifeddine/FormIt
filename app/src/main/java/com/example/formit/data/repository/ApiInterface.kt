@@ -1,5 +1,6 @@
 package com.example.formit.data.repository
 import com.example.formit.data.model.*
+import com.example.formit.ui.view.activitys.SERVER_PATH
 import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -81,7 +82,7 @@ interface ApiInterface {
 
     companion object {
 
-        var BASE_URL = "http://192.168.1.33:5000"
+        var BASE_URL = SERVER_PATH
 
         fun create() : ApiInterface {
 

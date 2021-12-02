@@ -23,6 +23,7 @@ import com.example.formit.ui.adapter.MessageAdapter
 import com.example.formit.ui.view.activitys.FIRSTNAME
 import com.example.formit.ui.view.activitys.ID
 import com.example.formit.ui.view.activitys.PREF_NAME
+import com.example.formit.ui.view.activitys.SERVER_CHAT_PATH
 import kotlinx.android.synthetic.main.activity_sign_in_up.*
 import kotlinx.android.synthetic.main.fragment_messages.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
@@ -45,7 +46,7 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
     private var CourseName: String? = null
     private var idConversation: String? = null
     private var webSocket: WebSocket? = null
-    private val SERVER_PATH = "ws://192.168.1.6:3000"
+    private val SERVER_PATH = SERVER_CHAT_PATH
     private var messageEdit: EditText? = null
     private var sendBtn: View? = null
     private var pickImgBtn: View? = null

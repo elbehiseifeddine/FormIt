@@ -1,6 +1,7 @@
 package com.example.formit.ui.adapter
 
 import android.content.Intent
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +39,10 @@ class CourseDiscussionAdapter(var CourseDiscussion : MutableList<Conversation>, 
             CourseDiscussionName.text=CourseDiscussion[position].course.courseName
             if (!CourseDiscussion[position].message.isEmpty()){
                 CourseDiscussionLastMessage.text=CourseDiscussion[position].message[CourseDiscussion[position].message.size-1].message
-                CourseDiscussionTime.text=CourseDiscussion[position].message[CourseDiscussion[position].message.size-1].createdAt.time.toString()
+
+                var d = CourseDiscussion[position].message[CourseDiscussion[position].message.size-1].createdAt.time
+                val now = System.currentTimeMillis()
+                CourseDiscussionTime.text=DateUtils.getRelativeTimeSpanString(d,now, DateUtils.SECOND_IN_MILLIS)
 
             }else {
                 CourseDiscussionLastMessage.text=""
