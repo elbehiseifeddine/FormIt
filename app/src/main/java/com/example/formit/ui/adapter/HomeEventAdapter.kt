@@ -31,7 +31,7 @@ class HomeEventAdapter (var events: MutableList<Event>, var bookmarked: Boolean)
         mSharedPref = holder.itemView.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         holder.itemView.apply {
             tv_EventName.text = events[position].eventName
-            tv_LocationName.text = events[position].location.toString() + " dt"
+            tv_LocationName.text = events[position].location.toString()
             tv_Hours.text = events[position].duration.toString() + " Hours"
 
             var test: Boolean
@@ -47,7 +47,7 @@ class HomeEventAdapter (var events: MutableList<Event>, var bookmarked: Boolean)
                     Intent(holder.itemView.context, DescriptionEventActivity::class.java).also {
                         it.putExtra("ID", events[position].id)
                         it.putExtra("NAME", events[position].eventName)
-                        it.putExtra("LOCATION", events[position].location.toString() + " dt")
+                        it.putExtra("LOCATION", events[position].location.toString())
                         it.putExtra(
                             "DURATION",
                             events[position].duration.toString()
