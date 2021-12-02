@@ -37,12 +37,12 @@ import retrofit2.Response
 
 class MessagesFragment: Fragment() {
 
-    private var webSocket: WebSocket? = null
-    private val SERVER_PATH = "ws://192.168.1.6:3000"
+    //private var webSocket: WebSocket? = null
+    //private val SERVER_PATH = "ws://192.168.1.6:3000"
     val apiInterface = ApiInterface.create()
     lateinit var mSharedPref: SharedPreferences
 
-    private var courseAdapter :CourseDiscussionAdapter?= null
+    //private var courseAdapter :CourseDiscussionAdapter?= null
 
 
 
@@ -51,11 +51,11 @@ class MessagesFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        initiateSocketConnection()
+        //initiateSocketConnection()
         return inflater.inflate(R.layout.fragment_messages, container, false)
     }
 
-    private fun initiateSocketConnection() {
+    /*private fun initiateSocketConnection() {
         val client = OkHttpClient()
         val request = Request.Builder().url(SERVER_PATH).build()
         webSocket = client.newWebSocket(request, SocketListener())
@@ -107,11 +107,11 @@ class MessagesFragment: Fragment() {
 
     private fun initializeView() {
         this.loadOwnConversation()
-    }
+    }*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-
+        this.loadOwnConversation()
         val email = requireArguments().getString(EMAIL,"NULL")
         btn_reus_back.visibility=View.INVISIBLE
         var BubleList = mutableListOf(

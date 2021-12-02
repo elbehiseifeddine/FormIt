@@ -14,7 +14,7 @@
         android:orientation="vertical">
         <TextView
             android:id="@+id/tv_EditProfile"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="Edit Profile"
@@ -25,7 +25,6 @@
             android:drawableLeft="@drawable/ic_profile"
             android:drawablePadding="12dp"
             android:drawableTint="@color/black"
-            android:gravity="center"
             />
 
     </LinearLayout>
