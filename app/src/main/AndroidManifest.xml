@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FormIt"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.view.activitys.EventsActivity"></activity>
+        <activity android:name=".ui.view.activitys.EventsActivity" />
         <activity android:name=".ui.view.activitys.DescriptionEventActivity" />
         <activity
             android:name=".ui.view.chat.ChatActivity"
