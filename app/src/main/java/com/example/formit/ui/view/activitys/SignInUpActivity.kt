@@ -29,8 +29,8 @@ const val PASSWORD = "PASSWORD"
 const val ID= "ID"
 const val FIRSTNAME= "FIRSTNAME"
 const val LASTNAME= "LASTNAME"
-const val SERVER_PATH= "http://192.168.1.6:5000"
-const val SERVER_CHAT_PATH= "ws://192.168.1.6:3000"
+const val SERVER_PATH= "http://192.168.1.12:5000"
+const val SERVER_CHAT_PATH= "ws://192.168.1.12:3000"
 const val ADDRESS= "ADDRESS"
 const val PICTURE= "PICTURE"
 const val BIRTHDATE= "BIRTHDATE"
@@ -124,7 +124,7 @@ class SignInUpActivity : AppCompatActivity() {
                         btn_SingIn.visibility = View.VISIBLE
                         window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         Log.e("user : ",user.toString())
-                        if (cbRememberMe.isChecked){
+
                             //TODO 4 "Edit the SharedPreferences by putting all the data"
                             mSharedPref.edit().apply{
                                 putBoolean(IS_REMEMBRED, true)
@@ -138,9 +138,7 @@ class SignInUpActivity : AppCompatActivity() {
                                 putString(ID, user.id)
                             }.apply()
 
-                        }else{
-                            mSharedPref.edit().clear().apply()
-                        }
+
                         val intent = Intent(this@SignInUpActivity, HomeActivity::class.java)
                         startActivity(intent)
                         finish()
@@ -235,7 +233,7 @@ class SignInUpActivity : AppCompatActivity() {
                         progBarSignUp.visibility = View.GONE
                         btn_SignUp.visibility = View.VISIBLE
                         window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                        if (cbRememberMe.isChecked){
+
                             mSharedPref.edit().clear().apply()
                             //TODO 4 "Edit the SharedPreferences by putting all the data"
                             mSharedPref.edit().apply{
@@ -251,9 +249,7 @@ class SignInUpActivity : AppCompatActivity() {
                                 putString(ID, user.id)
                             }.apply()
 
-                        }else{
-                            mSharedPref.edit().clear().apply()
-                        }
+
                         val intent = Intent(this@SignInUpActivity, HomeActivity::class.java)
                         startActivity(intent)
                         finish()
