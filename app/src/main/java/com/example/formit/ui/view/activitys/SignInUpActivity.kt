@@ -30,10 +30,11 @@ const val PASSWORD = "PASSWORD"
 const val ID= "ID"
 const val FIRSTNAME= "FIRSTNAME"
 const val LASTNAME= "LASTNAME"
-const val SERVER_PATH= "http://192.168.1.12:5000"
-const val SERVER_CHAT_PATH= "ws://192.168.1.12:3000"
+const val SERVER_PATH= "http://192.168.1.33:5000"
+const val SERVER_CHAT_PATH= "ws://192.168.1.33:3000"
 const val ADDRESS= "ADDRESS"
 const val PICTURE= "PICTURE"
+const val XP= "XP"
 const val BIRTHDATE= "BIRTHDATE"
 const val PHONENUMBER= "PHONENUMBER"
 const val IS_REMEMBRED = "IS_REMEMBRED"
@@ -140,6 +141,7 @@ class SignInUpActivity : AppCompatActivity() {
                                 putString(LASTNAME, user.lastname)
                                 putString(PASSWORD, ti_SignInPassword.text.toString())
                                 putInt(PHONENUMBER, user.phonenumber)
+                                putInt(XP, user.achievements)
                                 putString(ADDRESS, user.address)
                                 putString(PICTURE, user.picture)
                                 putString(ID, user.id)
@@ -249,6 +251,7 @@ class SignInUpActivity : AppCompatActivity() {
                                 putString(FIRSTNAME, user.firstname)
                                 putString(LASTNAME, user.lastname)
                                 putInt(PHONENUMBER, user.phonenumber)
+                                putInt(XP, user.achievements)
                                 putString(BIRTHDATE, user.birthdate)
                                 putString(ADDRESS, user.address)
                                 putString(PASSWORD, ti_signUpPassword.text.toString())

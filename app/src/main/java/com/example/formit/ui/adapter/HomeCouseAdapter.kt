@@ -58,6 +58,7 @@ class HomeCouseAdapter(var courses: MutableList<Course>, var participated: Boole
                     it.putExtra("DESCRIPTION", courses[position].description)
                     it.putExtra("PREREQUISITES", courses[position].prerequisites)
                     it.putExtra("STARTDATE", courses[position].startDate)
+                    it.putExtra("SUBSCRIBED", true)
                     it.putExtra("PLACES", courses[position].places.toString() + " Places")
                 }
                 holder.itemView.context.startActivity(intent)

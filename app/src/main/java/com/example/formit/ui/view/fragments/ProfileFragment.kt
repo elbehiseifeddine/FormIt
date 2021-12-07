@@ -173,6 +173,17 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 //            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 //        Profile_Participated_events.layoutManager =
 //            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        if(mSharedPref.getInt(XP, 0)<500){
+            iv_AchievmentId.setImageResource(R.drawable.ic_bronze)
+            tv_Achievement.text="Bronze"
+        }else if (mSharedPref.getInt(XP, 0)>=500 && mSharedPref.getInt(XP, 0)<1000){
+            iv_AchievmentId.setImageResource(R.drawable.ic_sliver)
+            tv_Achievement.text="Silver"
+        }else if (mSharedPref.getInt(XP, 0)>=1000){
+            iv_AchievmentId.setImageResource(R.drawable.ic_gold)
+            tv_Achievement.text="Gold"
+        }
     }
 
     override fun onResume() {
