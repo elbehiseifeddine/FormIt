@@ -34,7 +34,7 @@ class DescriptionActivity : AppCompatActivity() {
         tv_Prerequisites.text=intent.getStringExtra("PREREQUISITES")
         tv_Description.text=intent.getStringExtra("DESCRIPTION")
         tv_Places.text=intent.getStringExtra("PLACES")
-        if(intent.getBooleanExtra("PARTICIPATED",false)){
+        if(intent.getBooleanExtra("SUBSCRIBED",false)){
             btn_Participate.visibility= View.GONE
         }
         else{

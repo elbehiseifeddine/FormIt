@@ -48,16 +48,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
-        getCoursesNotParticipated()
-        if(mSharedPref.getString(PICTURE, "").toString()=="avatar default.png")
-        {
+        pulltorefresh.setOnRefreshListener {getCoursesNotParticipated()}
+        if (mSharedPref.getString(PICTURE, "").toString() == "avatar default.png") {
             profile_pic!!.setImageResource(R.drawable.male_student)
-        }
-        else
-        {
+        } else {
             val filename2 = mSharedPref.getString(PICTURE, "").toString()
-            val path = "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F"+filename2+"?alt=media"
-            Log.e("*******************************path image ",path)
+            val path =
+                "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F" + filename2 + "?alt=media"
+            Log.e("*******************************path image ", path)
             Glide.with(requireActivity())
                 .load(path)
                 .into(profile_pic)
@@ -77,53 +75,57 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun getCoursesNotParticipated() {
-        apiInterface.getCoursesNotParticipated(mSharedPref.getString(ID, ""))
-            .enqueue(object : Callback<MutableList<Course>> {
-                override fun onResponse(
-                    call: Call<MutableList<Course>>, response:
-                    Response<MutableList<Course>>
-                ) {
-                    val courses = response.body()
-                    if (courses != null) {
-                        Log.e("courses", courses.toString())
-                        val adapter = HomeCouseAdapter(courses, false)
-                        rv_courses.adapter = adapter
-                        rv_courses.layoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    } else {
-                        Log.e("Username or Password wrong", "true")
+
+            apiInterface.getCoursesNotParticipated(mSharedPref.getString(ID, ""))
+                .enqueue(object : Callback<MutableList<Course>> {
+                    override fun onResponse(
+                        call: Call<MutableList<Course>>, response:
+                        Response<MutableList<Course>>
+                    ) {
+                        val courses = response.body()
+                        if (courses != null) {
+
+                            Log.e("courses", courses.toString())
+                            val adapter = HomeCouseAdapter(courses, false)
+                            rv_courses.adapter = adapter
+                            rv_courses.layoutManager =
+                                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                            pulltorefresh.isRefreshing = false
+                        } else {
+                            Log.e("Username or Password wrong", "true")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
+                        Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
+                    }
+                })
+            Log.e("***************id user ", mSharedPref.getString(ID, "").toString())
+            apiInterface.getEventsNotParticipated(mSharedPref.getString(ID, "").toString())
+
+                .enqueue(object : Callback<MutableList<Event>> {
+                    override fun onResponse(
+                        call: Call<MutableList<Event>>, response:
+                        Response<MutableList<Event>>
+                    ) {
+                        val event = response.body()
+                        if (event != null) {
+                            Log.e("courses", event.toString())
+                            val adapter = HomeEventAdapter(event, false)
+                            rv_events.adapter = adapter
+                            rv_events.layoutManager =
+                                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        } else {
+                            Log.e("Username or Password wrong", "true")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<MutableList<Event>>, t: Throwable) {
+                        Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
                     }
                 }
+                )
 
-                override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
-                    Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
-                }
-            })
-        Log.e("***************id user ",mSharedPref.getString(ID, "").toString())
-        apiInterface.getEventsNotParticipated(mSharedPref.getString(ID, "").toString())
-
-            .enqueue(object : Callback<MutableList<Event>> {
-                override fun onResponse(
-                    call: Call<MutableList<Event>>, response:
-                    Response<MutableList<Event>>
-                ) {
-                    val event = response.body()
-                    if (event != null) {
-                        Log.e("courses", event.toString())
-                        val adapter = HomeEventAdapter(event, false)
-                        rv_events.adapter = adapter
-                        rv_events.layoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    } else {
-                        Log.e("Username or Password wrong", "true")
-                    }
-                }
-
-                override fun onFailure(call: Call<MutableList<Event>>, t: Throwable) {
-                    Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
-                }
-            }
-            )
 
     }
 

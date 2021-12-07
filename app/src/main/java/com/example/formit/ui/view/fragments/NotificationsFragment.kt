@@ -36,7 +36,7 @@ class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mSharedPref = requireActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         val apiInterface = ApiInterface.create()
-        apiInterface.getUserNotifications(mSharedPref.getString(ID,"")).enqueue(object :
+        apiInterface.getUserNotifications(mSharedPref.getString(ID,"") as String).enqueue(object :
             Callback<MutableList<Notification>> {
             override fun onResponse(
                 call: Call<MutableList<Notification>>, response:
