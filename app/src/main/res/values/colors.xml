@@ -20,4 +20,5 @@
     <color name="grey">#7E7E7E</color>
     <color name="lightgrey">#CCCCCC</color>
     <color name="tansparentColor">#00FFFFFF</color>
+    <color name="colorAccent">#fb8c00</color>
 </resources>

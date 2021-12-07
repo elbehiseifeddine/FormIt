@@ -70,6 +70,11 @@ interface ApiInterface {
     @GET("/messages/getMessageById/{id}")
     fun getMessageById(@Path("id") id: String?): Call<Message>
 
+    @POST("/users/SendMail/{mail}")
+    fun sendMail(@Path("mail",) mail: String?, @Body map : HashMap<String, String>): Call<String>
+
+    @POST("/users/resetpassword/{email}")
+    fun resetPassword(@Path("email",) email: String?, @Body map : HashMap<String, String>): Call<String>
     data class SearchResponse(
         @SerializedName("courses")
         val courses: MutableList<Course>
