@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.formit.R
@@ -18,10 +19,7 @@ import com.example.formit.ui.adapter.BubleMessageAdapter
 import com.example.formit.ui.adapter.CoacheDiscussionAdapter
 import com.example.formit.ui.adapter.CourseDiscussionAdapter
 import com.example.formit.ui.adapter.HomeCouseAdapter
-import com.example.formit.ui.view.activitys.EMAIL
-import com.example.formit.ui.view.activitys.FIRSTNAME
-import com.example.formit.ui.view.activitys.ID
-import com.example.formit.ui.view.activitys.PREF_NAME
+import com.example.formit.ui.view.activitys.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_messages.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
@@ -39,7 +37,6 @@ class MessagesFragment: Fragment() {
 
     //private var webSocket: WebSocket? = null
     //private val SERVER_PATH = "ws://192.168.1.6:3000"
-    val apiInterface = ApiInterface.create()
     lateinit var mSharedPref: SharedPreferences
 
     //private var courseAdapter :CourseDiscussionAdapter?= null
@@ -51,6 +48,9 @@ class MessagesFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
+
         //initiateSocketConnection()
         return inflater.inflate(R.layout.fragment_messages, container, false)
     }
@@ -111,23 +111,71 @@ class MessagesFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        if (mSharedPref.getString(ROLE,"").equals("coache")){
+            updateTextWithRole.text="My Students"
+        }
+        else{
+            updateTextWithRole.text="Coaches"
+        }
+
+        /*activity?.runOnUiThread{
+            this.loadOwnConversation()
+        }*/
         this.loadOwnConversation()
-        val email = requireArguments().getString(EMAIL,"NULL")
+        this.loadOwnCoacheConversation()
         btn_reus_back.visibility=View.INVISIBLE
-        var BubleList = mutableListOf(
+
+        /*activity?.runOnUiThread{
+            val BubleList = mutableListOf(
+                Buble_Message(R.drawable.test1,"ahmed",true),
+                Buble_Message(R.drawable.test2,"Seif",false),
+                Buble_Message(R.drawable.test3,"ahmedSeif",false),
+
+                )
+            val adapterBuble =BubleMessageAdapter(BubleList)
+            bubleMessageRecycleView.adapter = adapterBuble
+            bubleMessageRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        }*/
+
+        val BubleList = mutableListOf(
             Buble_Message(R.drawable.test1,"ahmed",true),
             Buble_Message(R.drawable.test2,"Seif",false),
             Buble_Message(R.drawable.test3,"ahmedSeif",false),
 
-        )
+            )
         val adapterBuble =BubleMessageAdapter(BubleList)
-        bubleMessageRecycleView.adapter = adapterBuble
+        /*bubleMessageRecycleView.adapter = adapterBuble
         bubleMessageRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+*/
+
+
         Log.e("id user", mSharedPref.getString(ID, "").toString())
 
-        this.loadOwnConversation()
 
-        var CoacheDiscussion = mutableListOf(
+     /*  activity?.runOnUiThread {
+           val CoacheDiscussion = mutableListOf(
+               Coache_Discussion(
+                   R.drawable.test1,
+                   "Ahmed Ben Dahmen",
+                   "Welcome seifoun !!",
+                   "1 hour",
+                   9,
+               ),
+               Coache_Discussion(
+                   R.drawable.test4,
+                   "SeifEddine ElBehi",
+                   "Yoo bouhmid ...",
+                   "1 hour",
+                   1,
+               )
+           )
+           val adapterCoache =CoacheDiscussionAdapter(CoacheDiscussion,email)
+           CoachesDiscussionRecycleView.adapter = adapterCoache
+           CoachesDiscussionRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+
+       }*/
+
+        /*val CoacheDiscussion = mutableListOf(
             Coache_Discussion(
                 R.drawable.test1,
                 "Ahmed Ben Dahmen",
@@ -146,10 +194,10 @@ class MessagesFragment: Fragment() {
         val adapterCoache =CoacheDiscussionAdapter(CoacheDiscussion,email)
         CoachesDiscussionRecycleView.adapter = adapterCoache
         CoachesDiscussionRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-
+*/
     }
 
-    fun loadOwnConversation(){
+    private fun loadOwnConversation(){
         Log.e("User connected",mSharedPref.getString(ID, "").toString())
         apiInterface.getOwnConversations(mSharedPref.getString(ID, "")).enqueue(object :
             Callback<MutableList<Conversation>> {
@@ -173,7 +221,41 @@ class MessagesFragment: Fragment() {
             }
 
             override fun onFailure(call: Call<MutableList<Conversation>>, t: Throwable) {
-                Log.e("failure conversation course","true")
+                Log.e("failure conversation course",call.request().toString())
+                Log.e("failure conversation course",call.isExecuted.toString())
+            }
+        })
+
+    }
+
+    private fun loadOwnCoacheConversation(){
+        Log.e("User connected",mSharedPref.getString(ID, "").toString())
+        apiInterface.getOwnCoacheConversations(mSharedPref.getString(ID, "")).enqueue(object :
+            Callback<MutableList<Conversation>> {
+            override fun onResponse(
+                call: Call<MutableList<Conversation>>, response:
+                Response<MutableList<Conversation>>
+            ) {
+                val conversations = response.body()
+                if (conversations != null) {
+                    Log.e("conversations coaches aaaaaaaaaaaaaaaaaaa",conversations.toString())
+                    val adapterCoache =CoacheDiscussionAdapter(conversations,
+                        mSharedPref.getString(ID, "").toString(),
+                        mSharedPref.getString(FIRSTNAME, "").toString())
+
+
+
+                    CoachesDiscussionRecycleView.adapter = adapterCoache
+                    CoachesDiscussionRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+
+                } else {
+                    Log.e("Error from conversation course","true")
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<Conversation>>, t: Throwable) {
+                Log.e("failure conversation course",call.request().toString())
+                Log.e("failure conversation course",call.isExecuted.toString())
             }
         })
 
@@ -182,6 +264,7 @@ class MessagesFragment: Fragment() {
     override fun onResume() {
 
         this.loadOwnConversation()
+        this.loadOwnCoacheConversation()
         super.onResume()
     }
 

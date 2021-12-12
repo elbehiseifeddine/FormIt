@@ -35,4 +35,22 @@
         app:itemIconSize="30dp"
         />
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationViewCoache"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu_coach"
+        app:itemIconTint="@drawable/item_selector"
+        app:labelVisibilityMode="unlabeled"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/bottom_nav_corner"
+        android:elevation="4dp"
+        app:itemBackground="@drawable/item_backgroud"
+        app:itemIconSize="30dp"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -94,7 +94,6 @@ class EditProfileActivity : AppCompatActivity() {
         }
         btn_Update.setOnClickListener {
 
-            val apiInterface = ApiInterface.create()
             val map: HashMap<String, String> = HashMap()
             map["email"] = ti_EditEmail.text.toString()
             map["firstname"] = ti_EditFirstName.text.toString()

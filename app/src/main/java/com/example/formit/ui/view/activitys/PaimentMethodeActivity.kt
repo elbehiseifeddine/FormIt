@@ -32,7 +32,6 @@ class PaimentMethodeActivity : AppCompatActivity() {
         }
 
         btn_payCourse.setOnClickListener {
-            val apiInterface = ApiInterface.create()
             apiInterface.AddParticipation(mSharedPref.getString(ID,"")as String,intent.getStringExtra("IDCOURS")).enqueue(object :
                 Callback<String> {
                 override fun onResponse(

@@ -17,6 +17,7 @@ import com.example.formit.ui.adapter.CoursesAdapter
 import com.example.formit.ui.adapter.NotificationsAdapter
 import com.example.formit.ui.view.activitys.ID
 import com.example.formit.ui.view.activitys.PREF_NAME
+import com.example.formit.ui.view.activitys.apiInterface
 import kotlinx.android.synthetic.main.fragment_bookmark.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,7 +36,13 @@ class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
     lateinit var mSharedPref: SharedPreferences
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mSharedPref = requireActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val apiInterface = ApiInterface.create()
+        /*activity?.runOnUiThread {
+            LoadNotificationData()
+        }*/
+        LoadNotificationData()
+    }
+
+    fun LoadNotificationData(){
         apiInterface.getUserNotifications(mSharedPref.getString(ID,"") as String).enqueue(object :
             Callback<MutableList<Notification>> {
             override fun onResponse(

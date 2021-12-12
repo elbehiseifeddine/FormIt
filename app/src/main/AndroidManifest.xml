@@ -10,8 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FormIt"
         android:usesCleartextTraffic="true">
-        <activity android:name=".reset_password"></activity>
-        <activity android:name=".forget_password" />
+        <activity android:name=".ui.view.activitys.reset_password"></activity>
+        <activity android:name=".ui.view.activitys.forget_password" />
         <activity android:name=".ui.view.activitys.EventsActivity" />
         <activity android:name=".ui.view.activitys.DescriptionEventActivity" />
         <activity

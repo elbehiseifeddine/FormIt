@@ -26,7 +26,6 @@ class EventsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_events)
         mSharedPref = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val apiInterface = ApiInterface.create()
         apiInterface.getEventsNotParticipated(mSharedPref.getString(ID, "")).enqueue(object :
             Callback<MutableList<Event>> {
             override fun onResponse(

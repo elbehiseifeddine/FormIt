@@ -41,7 +41,6 @@ class DescriptionEventActivity : AppCompatActivity() {
         }
         else{
             btn_Participate.setOnClickListener {
-                val apiInterface = ApiInterface.create()
                 apiInterface.AddEventParticipation(mSharedPref.getString(ID,"")as String,intent.getStringExtra("ID")).enqueue(object :
                     Callback<String> {
                     override fun onResponse(

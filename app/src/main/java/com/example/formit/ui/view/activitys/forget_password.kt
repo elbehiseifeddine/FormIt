@@ -1,8 +1,6 @@
-package com.example.formit
+package com.example.formit.ui.view.activitys
 
 import android.content.Intent
-import android.graphics.Color
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -12,10 +10,8 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import com.example.formit.R
 import com.example.formit.data.repository.ApiInterface
-import com.example.formit.ui.view.activitys.DescriptionEventActivity
-import com.example.formit.ui.view.activitys.HomeActivity
-import com.example.formit.ui.view.activitys.SignInUpActivity
 import kotlinx.android.synthetic.main.activity_forget_password.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,7 +39,6 @@ class forget_password : AppCompatActivity(), TextWatcher {
 
 
 
-                    val apiInterface = ApiInterface.create()
                     val map: HashMap<String, String> = HashMap()
                     map["code"] = randomString
                     apiInterface.sendMail(ti_ForgetPasswordEmail.text.toString(), map).enqueue(object :

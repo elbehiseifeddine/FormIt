@@ -17,6 +17,7 @@ import com.example.formit.ui.adapter.CoursesAdapter
 import com.example.formit.ui.view.activitys.CoursesActivity
 import com.example.formit.ui.view.activitys.ID
 import com.example.formit.ui.view.activitys.PREF_NAME
+import com.example.formit.ui.view.activitys.apiInterface
 import kotlinx.android.synthetic.main.fragment_bookmark.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,14 +29,13 @@ class BookmarkFragment : Fragment(R.layout.fragment_bookmark) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        var rootView: View = inflater.inflate(R.layout.fragment_bookmark, container, false)
+    ): View {
+        val rootView: View = inflater.inflate(R.layout.fragment_bookmark, container, false)
         return rootView
     }
     lateinit var mSharedPref: SharedPreferences
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mSharedPref = requireActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val apiInterface = ApiInterface.create()
         apiInterface.getCoursesBookmarked(mSharedPref.getString(ID,"")).enqueue(object : Callback<MutableList<Course>> {
             override fun onResponse(
                 call: Call<MutableList<Course>>, response:

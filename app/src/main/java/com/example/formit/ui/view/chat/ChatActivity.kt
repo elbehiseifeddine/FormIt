@@ -3,11 +3,9 @@ package com.example.formit.ui.view.chat
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -17,29 +15,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.formit.R
 import com.example.formit.data.model.Message
-import com.example.formit.data.repository.ApiInterface
-import com.example.formit.ui.adapter.CourseDiscussionAdapter
 import com.example.formit.ui.adapter.MessageAdapter
-import com.example.formit.ui.view.activitys.FIRSTNAME
-import com.example.formit.ui.view.activitys.ID
-import com.example.formit.ui.view.activitys.PREF_NAME
-import com.example.formit.ui.view.activitys.SERVER_CHAT_PATH
+import com.example.formit.ui.view.activitys.*
 import kotlinx.android.synthetic.main.activity_sign_in_up.*
 import kotlinx.android.synthetic.main.fragment_messages.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
 import okhttp3.*
 import org.json.JSONException
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
-import java.io.ByteArrayOutputStream
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class ChatActivity : AppCompatActivity(), TextWatcher {
 
-    val apiInterface = ApiInterface.create()
     lateinit var mSharedPref: SharedPreferences
     private var name: String? = null
     private var idUser: String? = null
@@ -126,7 +115,7 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
                     Log.e("(----------------------------------------------------)","-----------------------")
                     Log.e("text from onmessage",text)
                     Log.e("(----------------------------------------------------)","-----------------------")
-                    var id = text.subSequence(text.indexOf("id=",0,false)+3,text.indexOf(",",0,false))
+                    val id = text.subSequence(text.indexOf("id=",0,false)+3,text.indexOf(",",0,false))
                     Log.e("idMessage",id.toString())
 
                     apiInterface.getMessageById(id.toString()).enqueue(object :
@@ -141,7 +130,7 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
 
                                 //CourseDiscussion?.update(messages)
                                 messageAdapter?.addItem(messages)
-                                messageAdapter?.getItemCount()?.minus(1)?.let {
+                                messageAdapter?.itemCount?.minus(1)?.let {
                                     recyclerView!!.smoothScrollToPosition(
                                         it
                                     )
@@ -175,53 +164,57 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
 
         retrieveMessage()
         messageEdit!!.addTextChangedListener(this)
-        sendBtn?.setOnClickListener(View.OnClickListener { v: View? ->
+        sendBtn?.setOnClickListener {
             try {
 
                 val map: HashMap<String, String> = HashMap()
-                map["message"] = messageEdit?.getText().toString()
-                apiInterface.sendMessages(idConversation,idUser,messageEdit?.getText().toString()).enqueue(object :
-                    Callback<Message>{
-                    override fun onResponse(
-                        call: Call<Message>, response:
-                        retrofit2.Response<Message>
-                    ) {
-                        Log.e("++++++++++++++++++++++call request ",call.request().toString())
-                        val messages = response.body()
-                        if (messages != null) {
+                map["message"] = messageEdit?.text.toString()
+                apiInterface.sendMessages(idConversation, idUser, messageEdit?.text.toString())
+                    .enqueue(object :
+                        Callback<Message> {
+                        override fun onResponse(
+                            call: Call<Message>, response:
+                            retrofit2.Response<Message>
+                        ) {
+                            Log.e("++++++++++++++++++++++call request ", call.request().toString())
+                            val messages = response.body()
+                            if (messages != null) {
 
-                            Log.e("+++++++++++++++++++++++message from send message",messages.toString())
-                            messageAdapter?.addItem(messages)
-
-                            messageAdapter?.getItemCount()?.minus(1)?.let {
-                                recyclerView?.smoothScrollToPosition(
-                                    it
+                                Log.e(
+                                    "+++++++++++++++++++++++message from send message",
+                                    messages.toString()
                                 )
-                            }
-                            webSocket!!.send(messages.toString())
-                        } else {
-                            Log.e(" Error from message chat Activity","true")
-                        }
-                    }
+                                messageAdapter?.addItem(messages)
 
-                    override fun onFailure(call: Call<Message>, t: Throwable) {
-                        Log.e("failure message sending chat Activity","true")
-                    }
-                })
+                                messageAdapter?.itemCount?.minus(1)?.let {
+                                    recyclerView?.smoothScrollToPosition(
+                                        it
+                                    )
+                                }
+                                webSocket!!.send(messages.toString())
+                            } else {
+                                Log.e(" Error from message chat Activity", "true")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Message>, t: Throwable) {
+                            Log.e("failure message sending chat Activity", "true")
+                        }
+                    })
 
                 resetMessageEdit()
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
-        })
-        pickImgBtn?.setOnClickListener(View.OnClickListener { v: View? ->
+        }
+        pickImgBtn?.setOnClickListener { v: View? ->
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*"
             startActivityForResult(
                 Intent.createChooser(intent, "Pick image"),
                 IMAGE_REQUEST_ID
             )
-        })
+        }
     }
 
 
@@ -238,9 +231,9 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
                 if (messages != null) {
                     Log.e("---------------------------Messages",messages.toString())
 
-                    messageAdapter = MessageAdapter(this@ChatActivity,layoutInflater,messages as List<Message>,mSharedPref.getString(ID, "").toString(),mSharedPref.getString(FIRSTNAME, "").toString())
-                    recyclerView!!.setAdapter(messageAdapter)
-                    recyclerView!!.setLayoutManager(LinearLayoutManager(this@ChatActivity))
+                    messageAdapter = MessageAdapter(layoutInflater,messages as List<Message>,mSharedPref.getString(ID, "").toString(),mSharedPref.getString(FIRSTNAME, "").toString())
+                    recyclerView!!.adapter = messageAdapter
+                    recyclerView!!.layoutManager = LinearLayoutManager(this@ChatActivity)
                 } else {
                     Log.e("------------Error from message chat Activity","true")
                 }

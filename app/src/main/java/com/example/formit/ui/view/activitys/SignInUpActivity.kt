@@ -9,15 +9,12 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.children
 import com.example.formit.R
 import com.example.formit.data.repository.ApiInterface
 import com.example.formit.data.model.User
-import com.example.formit.forget_password
 import kotlinx.android.synthetic.main.activity_sign_in_up.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,17 +24,19 @@ import java.util.*
 const val PREF_NAME = "LOGIN_PREF"
 const val EMAIL = "EMAIL"
 const val PASSWORD = "PASSWORD"
+const val ROLE = "ROLE"
 const val ID= "ID"
 const val FIRSTNAME= "FIRSTNAME"
 const val LASTNAME= "LASTNAME"
-const val SERVER_PATH= "http://192.168.1.33:5000"
-const val SERVER_CHAT_PATH= "ws://192.168.1.33:3000"
+const val SERVER_PATH= "http://192.168.1.12:5000"
+const val SERVER_CHAT_PATH= "ws://192.168.1.12:3000"
 const val ADDRESS= "ADDRESS"
 const val PICTURE= "PICTURE"
 const val XP= "XP"
 const val BIRTHDATE= "BIRTHDATE"
 const val PHONENUMBER= "PHONENUMBER"
 const val IS_REMEMBRED = "IS_REMEMBRED"
+val apiInterface = ApiInterface.create()
 class SignInUpActivity : AppCompatActivity() {
 
     //TODO 1 "Declare a var of SharedPreferences"
@@ -141,6 +140,7 @@ class SignInUpActivity : AppCompatActivity() {
                                 putString(LASTNAME, user.lastname)
                                 putString(PASSWORD, ti_SignInPassword.text.toString())
                                 putInt(PHONENUMBER, user.phonenumber)
+                                putString(ROLE, user.role)
                                 putInt(XP, user.achievements)
                                 putString(ADDRESS, user.address)
                                 putString(PICTURE, user.picture)
@@ -253,6 +253,7 @@ class SignInUpActivity : AppCompatActivity() {
                                 putInt(PHONENUMBER, user.phonenumber)
                                 putInt(XP, user.achievements)
                                 putString(BIRTHDATE, user.birthdate)
+                                putString(ROLE, user.role)
                                 putString(ADDRESS, user.address)
                                 putString(PASSWORD, ti_signUpPassword.text.toString())
                                 putString(PICTURE, user.picture)

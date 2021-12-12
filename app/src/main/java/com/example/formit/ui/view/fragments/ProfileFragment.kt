@@ -23,6 +23,7 @@ import com.example.formit.ui.adapter.CoursesAdapter
 import com.example.formit.ui.adapter.HomeCouseAdapter
 import com.example.formit.ui.adapter.HomeEventAdapter
 import com.example.formit.ui.view.activitys.*
+import kotlinx.android.synthetic.main.activity_description.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
@@ -79,8 +80,84 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         btn_reus_back.visibility = View.GONE
 
         mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        if (mSharedPref.getString(ROLE, "").toString() == "coache") {
+            Profile_Enrolled_courses.visibility=View.GONE
+            Profile_Participated_events.visibility=View.GONE
+            CourseTextLayout.visibility=View.GONE
+            EventTextLayout.visibility=View.GONE
+        }else {
 
-        val apiInterface = ApiInterface.create()
+            /*activity?.runOnUiThread{
+                LoadUserParticipatedData()
+            }*/
+            LoadUserParticipatedData()
+
+            Profile_CourseSeeAll.setOnClickListener {
+                Intent(activity, CoursesActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
+
+            Profile_EventsSeeAll.setOnClickListener {
+                Intent(activity, CoursesActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
+        }
+        ProfileSettings.setOnClickListener {
+            Intent(activity, SettingsActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+        if(mSharedPref.getString(PICTURE, "").toString()=="avatar default.png")
+        {
+            ProfilePicture!!.setImageResource(R.drawable.male_student)
+        }
+        else
+        {
+            val filename2 = mSharedPref.getString(PICTURE, "").toString()
+            val path = "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F"+filename2+"?alt=media"
+            Log.e("*******************************path image ",path)
+            Glide.with(requireActivity())
+                .load(path)
+                .into(ProfilePicture)
+        }
+        tv_ProfileFullName.setText(
+            mSharedPref.getString(FIRSTNAME, "").toString() + " " + mSharedPref.getString(LASTNAME,"").toString()
+        )
+        tv_ProfileEmail.setText(mSharedPref.getString(EMAIL, "").toString())
+
+
+//        Profile_Participated_events.adapter = adapter
+//        Profile_Enrolled_courses.adapter = adapter
+//        Profile_Enrolled_courses.layoutManager =
+//            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//        Profile_Participated_events.layoutManager =
+//            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        if(mSharedPref.getInt(XP, 0)<500){
+            iv_AchievmentId.setImageResource(R.drawable.ic_bronze)
+            tv_Achievement.text="Bronze"
+        }else if (mSharedPref.getInt(XP, 0)>=500 && mSharedPref.getInt(XP, 0)<1000){
+            iv_AchievmentId.setImageResource(R.drawable.ic_sliver)
+            tv_Achievement.text="Silver"
+        }else if (mSharedPref.getInt(XP, 0)>=1000){
+            iv_AchievmentId.setImageResource(R.drawable.ic_gold)
+            tv_Achievement.text="Gold"
+        }
+    }
+
+    override fun onResume() {
+        tv_ProfileFullName.setText(
+            mSharedPref.getString(FIRSTNAME, "").toString() + " " + mSharedPref.getString(LASTNAME,"")
+        )
+        tv_ProfileEmail.setText(mSharedPref.getString(EMAIL, "").toString())
+
+
+        super.onResume()
+    }
+
+    fun LoadUserParticipatedData(){
         apiInterface.getCoursesParticipated(mSharedPref.getString(ID, "")).enqueue(object :
             Callback<MutableList<Course>> {
             override fun onResponse(
@@ -127,73 +204,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
         })
 
-
-        Profile_CourseSeeAll.setOnClickListener {
-            Intent(activity, CoursesActivity::class.java).also {
-                startActivity(it)
-            }
-        }
-
-        Profile_EventsSeeAll.setOnClickListener {
-            Intent(activity, CoursesActivity::class.java).also {
-                startActivity(it)
-            }
-        }
-
-        ProfileSettings.setOnClickListener {
-            Intent(activity, SettingsActivity::class.java).also {
-                startActivity(it)
-            }
-        }
-        if(mSharedPref.getString(PICTURE, "").toString()=="avatar default.png")
-        {
-            ProfilePicture!!.setImageResource(R.drawable.male_student)
-        }
-        else
-        {
-            val filename2 = mSharedPref.getString(PICTURE, "").toString()
-            val path = "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F"+filename2+"?alt=media"
-            Log.e("*******************************path image ",path)
-            Glide.with(requireActivity())
-                .load(path)
-                .into(ProfilePicture)
-        }
-        tv_ProfileFullName.setText(
-            mSharedPref.getString(FIRSTNAME, "").toString() + " " + mSharedPref.getString(
-                LASTNAME,
-                ""
-            ).toString()
-        )
-        tv_ProfileEmail.setText(mSharedPref.getString(EMAIL, "").toString())
-
-
-//        Profile_Participated_events.adapter = adapter
-//        Profile_Enrolled_courses.adapter = adapter
-//        Profile_Enrolled_courses.layoutManager =
-//            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//        Profile_Participated_events.layoutManager =
-//            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-
-        if(mSharedPref.getInt(XP, 0)<500){
-            iv_AchievmentId.setImageResource(R.drawable.ic_bronze)
-            tv_Achievement.text="Bronze"
-        }else if (mSharedPref.getInt(XP, 0)>=500 && mSharedPref.getInt(XP, 0)<1000){
-            iv_AchievmentId.setImageResource(R.drawable.ic_sliver)
-            tv_Achievement.text="Silver"
-        }else if (mSharedPref.getInt(XP, 0)>=1000){
-            iv_AchievmentId.setImageResource(R.drawable.ic_gold)
-            tv_Achievement.text="Gold"
-        }
-    }
-
-    override fun onResume() {
-        tv_ProfileFullName.setText(
-            mSharedPref.getString(FIRSTNAME, "").toString() + " " + mSharedPref.getString(LASTNAME,"")
-        )
-        tv_ProfileEmail.setText(mSharedPref.getString(EMAIL, "").toString())
-
-
-        super.onResume()
     }
 
 }

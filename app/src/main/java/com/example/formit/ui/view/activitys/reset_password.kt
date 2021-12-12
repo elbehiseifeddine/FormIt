@@ -1,16 +1,15 @@
-package com.example.formit
+package com.example.formit.ui.view.activitys
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.formit.R
 import com.example.formit.data.repository.ApiInterface
-import com.example.formit.ui.view.activitys.SignInUpActivity
 import kotlinx.android.synthetic.main.activity_forget_password.*
 import kotlinx.android.synthetic.main.activity_reset_password.*
 import kotlinx.android.synthetic.main.activity_sign_in_up.*
-import kotlinx.android.synthetic.main.activity_sign_in_up.ti_signUpPassword
 import retrofit2.Call
 import retrofit2.Callback
 import java.util.HashMap
@@ -24,7 +23,6 @@ class reset_password : AppCompatActivity() {
 
         btn_reset.setOnClickListener {
             if (ResetPassValidate() && ResetConfirmPassValidate()) {
-                val apiInterface = ApiInterface.create()
                 val map: HashMap<String, String> = HashMap()
                 map["password"] = ti_resetPassword.text.toString()
                 apiInterface.resetPassword(email, map).enqueue(object :

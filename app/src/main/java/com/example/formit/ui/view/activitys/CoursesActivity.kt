@@ -25,7 +25,6 @@ class CoursesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_courses)
         var courses:MutableList<Course> = ArrayList()
         mSharedPref = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val apiInterface = ApiInterface.create()
         apiInterface.getCoursesNotParticipated(mSharedPref.getString(ID, "")).enqueue(object : Callback<MutableList<Course>> {
             override fun onResponse(
                 call: Call<MutableList<Course>>, response:

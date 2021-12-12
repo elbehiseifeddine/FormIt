@@ -37,11 +37,18 @@ interface ApiInterface {
     @GET("/courses/getCoursesBookmarked/{idUser}")
     fun getCoursesBookmarked(@Path("idUser") id: String?): Call<MutableList<Course>>
 
+    @GET("/courses/{id}")
+    fun getCoursesById(@Path("id") id: String?): Call<Course>
+
+
     @GET("/courses/getCoursesParticipated/{idUser}")
     fun getCoursesParticipated(@Path("idUser") id: String?): Call<MutableList<Course>>
 
     @GET("/courses/getCoursesNotParticipated/{idUser}")
     fun getCoursesNotParticipated(@Path("idUser") id: String?): Call<MutableList<Course>>
+
+    @GET("/courses/getCoacheCourse/{idCoache}")
+    fun getOwnCourse(@Path("idCoache") id: String?): Call<MutableList<Course>>
 
     @GET("/users/getUserNotifications/{idUser}")
     fun getUserNotifications(@Path("idUser") id: String?): Call<MutableList<Notification>>
@@ -60,6 +67,9 @@ interface ApiInterface {
 
     @GET("/conversations/getOwnConversations/{id}")
     fun getOwnConversations(@Path("id") id: String?): Call<MutableList<Conversation>>
+
+    @GET("/conversations/getOwnCoacheConversations/{id}")
+    fun getOwnCoacheConversations(@Path("id") id: String?): Call<MutableList<Conversation>>
 
     @GET("/messages/getChatMessages/{id}")
     fun getConversationMessages(@Path("id") id: String?): Call<MutableList<Message>>
