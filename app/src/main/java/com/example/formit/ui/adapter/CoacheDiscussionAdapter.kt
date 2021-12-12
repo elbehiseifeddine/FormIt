@@ -31,91 +31,103 @@ class CoacheDiscussionAdapter(var CoachesDiscussion : MutableList<Conversation>,
 
     override fun onBindViewHolder(holder: CoacheDiscussionViewHolder, position: Int) {
 
-        if(CoachesDiscussion[position].members[0].id.equals(idUser)){
-            val ConvoName=CoachesDiscussion[position].members[1].firstname+" "+CoachesDiscussion[position].members[1].lastname
+        if (CoachesDiscussion[position].message.isNotEmpty()) {
+            holder.itemView.visibility=View.VISIBLE
+            if (CoachesDiscussion[position].members[0].id.equals(idUser)) {
+                val ConvoName =
+                    CoachesDiscussion[position].members[1].firstname + " " + CoachesDiscussion[position].members[1].lastname
 
-            holder.itemView.apply {
-                val path = "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F"+CoachesDiscussion[position].members[1].picture+"?alt=media"
-                Glide.with(context)
-                    .load(path)
-                    .into(CoacheDiscussionPic)
+                holder.itemView.apply {
+                    val path =
+                        "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F" + CoachesDiscussion[position].members[1].picture + "?alt=media"
+                    Glide.with(context)
+                        .load(path)
+                        .into(CoacheDiscussionPic)
 
-                CoacheDiscussionName.text = ConvoName
-                if (CoachesDiscussion[position].message.isNotEmpty()) {
-                    CoacheDiscussionLastMessage.text =
-                        CoachesDiscussion[position].message[CoachesDiscussion[position].message.size - 1].message
+                    CoacheDiscussionName.text = ConvoName
+                    if (CoachesDiscussion[position].message.isNotEmpty()) {
+                        CoacheDiscussionLastMessage.text =
+                            CoachesDiscussion[position].message[CoachesDiscussion[position].message.size - 1].message
 
 
-                val d = CoachesDiscussion[position].message[CoachesDiscussion[position].message.size-1].createdAt.time
-                val now = System.currentTimeMillis()
-                CoacheDiscussionTime.text = DateUtils.getRelativeTimeSpanString(d,now, DateUtils.SECOND_IN_MILLIS)
+                        val d =
+                            CoachesDiscussion[position].message[CoachesDiscussion[position].message.size - 1].createdAt.time
+                        val now = System.currentTimeMillis()
+                        CoacheDiscussionTime.text =
+                            DateUtils.getRelativeTimeSpanString(d, now, DateUtils.SECOND_IN_MILLIS)
 
-            }else {
-                    CoacheDiscussionLastMessage.text=""
-                    CoacheDiscussionTime.text=""
+                    } else {
+                        CoacheDiscussionLastMessage.text = ""
+                        CoacheDiscussionTime.text = ""
 
-            }
-                if (position == CoachesDiscussion.size - 1) {
-                    SeparatorCoacheDiscussion.visibility = View.GONE
-                }
-                if (position == 0) {
-                    item_Coache_Discussion.marginTop.countLeadingZeroBits()
-                }
-            }
-            holder.itemView.setOnClickListener{
-                val intent = Intent(holder.itemView.context, ChatActivity::class.java)
-                    .apply{
-                        putExtra("name", name)
-                        putExtra("CourseName", ConvoName)
-                        putExtra("idUser", idUser)
-                        putExtra("idConversation", CoachesDiscussion[position].id)
                     }
-                holder.itemView.context.startActivity(intent)
+                    if (position == CoachesDiscussion.size - 1) {
+                        SeparatorCoacheDiscussion.visibility = View.GONE
+                    }
+                    if (position == 0) {
+                        item_Coache_Discussion.marginTop.countLeadingZeroBits()
+                    }
+                }
+                holder.itemView.setOnClickListener {
+                    val intent = Intent(holder.itemView.context, ChatActivity::class.java)
+                        .apply {
+                            putExtra("name", name)
+                            putExtra("CourseName", ConvoName)
+                            putExtra("idUser", idUser)
+                            putExtra("idConversation", CoachesDiscussion[position].id)
+                        }
+                    holder.itemView.context.startActivity(intent)
+                }
+            } else {
+                val ConvoName =
+                    CoachesDiscussion[position].members[0].firstname + " " + CoachesDiscussion[position].members[1].lastname
+
+                holder.itemView.apply {
+                    val path =
+                        "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F" + CoachesDiscussion[position].members[0].picture + "?alt=media"
+                    Glide.with(context)
+                        .load(path)
+                        .into(CoacheDiscussionPic)
+
+                    CoacheDiscussionName.text = ConvoName
+                    if (CoachesDiscussion[position].message.isNotEmpty()) {
+                        CoacheDiscussionLastMessage.text =
+                            CoachesDiscussion[position].message[CoachesDiscussion[position].message.size - 1].message
+
+
+                        val d =
+                            CoachesDiscussion[position].message[CoachesDiscussion[position].message.size - 1].createdAt.time
+                        val now = System.currentTimeMillis()
+                        CoacheDiscussionTime.text =
+                            DateUtils.getRelativeTimeSpanString(d, now, DateUtils.SECOND_IN_MILLIS)
+
+                    } else {
+                        CoacheDiscussionLastMessage.text = ""
+                        CoacheDiscussionTime.text = ""
+
+                    }
+                    if (position == CoachesDiscussion.size - 1) {
+                        SeparatorCoacheDiscussion.visibility = View.GONE
+                    }
+                    if (position == 0) {
+                        item_Coache_Discussion.marginTop.countLeadingZeroBits()
+                    }
+                }
+                holder.itemView.setOnClickListener {
+                    val intent = Intent(holder.itemView.context, ChatActivity::class.java)
+                        .apply {
+                            putExtra("name", name)
+                            putExtra("CourseName", ConvoName)
+                            putExtra("idUser", idUser)
+                            putExtra("idConversation", CoachesDiscussion[position].id)
+                        }
+                    holder.itemView.context.startActivity(intent)
+                }
             }
+
         }else{
-            val ConvoName=CoachesDiscussion[position].members[0].firstname+" "+CoachesDiscussion[position].members[1].lastname
-
-            holder.itemView.apply {
-                val path = "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F"+CoachesDiscussion[position].members[0].picture+"?alt=media"
-                Glide.with(context)
-                    .load(path)
-                    .into(CoacheDiscussionPic)
-
-                CoacheDiscussionName.text = ConvoName
-                if (CoachesDiscussion[position].message.isNotEmpty()) {
-                    CoacheDiscussionLastMessage.text =
-                        CoachesDiscussion[position].message[CoachesDiscussion[position].message.size - 1].message
-
-
-                    val d = CoachesDiscussion[position].message[CoachesDiscussion[position].message.size-1].createdAt.time
-                    val now = System.currentTimeMillis()
-                    CoacheDiscussionTime.text = DateUtils.getRelativeTimeSpanString(d,now, DateUtils.SECOND_IN_MILLIS)
-
-                }else {
-                    CoacheDiscussionLastMessage.text=""
-                    CoacheDiscussionTime.text=""
-
-                }
-                if (position == CoachesDiscussion.size - 1) {
-                    SeparatorCoacheDiscussion.visibility = View.GONE
-                }
-                if (position == 0) {
-                    item_Coache_Discussion.marginTop.countLeadingZeroBits()
-                }
-            }
-            holder.itemView.setOnClickListener{
-                val intent = Intent(holder.itemView.context, ChatActivity::class.java)
-                    .apply{
-                        putExtra("name", name)
-                        putExtra("CourseName", ConvoName)
-                        putExtra("idUser", idUser)
-                        putExtra("idConversation", CoachesDiscussion[position].id)
-                    }
-                holder.itemView.context.startActivity(intent)
-            }
+            holder.itemView.visibility=View.GONE
         }
-
-
     }
 
     override fun getItemCount(): Int = CoachesDiscussion.size

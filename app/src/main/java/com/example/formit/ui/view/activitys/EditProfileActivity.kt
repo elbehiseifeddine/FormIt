@@ -163,7 +163,7 @@ class EditProfileActivity : AppCompatActivity() {
         val storageReference = FirebaseStorage.getInstance().reference.child("images/$fileName")
         storageReference.putFile(selectedImageUri!!).
         addOnSuccessListener {
-            profilePic!!.setImageURI(selectedImageUri)
+            ProfilePicture!!.setImageURI(selectedImageUri)
             if(progressDialog.isShowing)
             {
                 progressDialog.dismiss()
@@ -186,7 +186,7 @@ class EditProfileActivity : AppCompatActivity() {
         if(result.resultCode == RESULT_OK)
         {
             selectedImageUri = result.data!!.data
-            profilePic!!.setImageURI(selectedImageUri)
+            ProfilePicture!!.setImageURI(selectedImageUri)
         }
     }
     private fun openGallery() {

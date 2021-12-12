@@ -101,6 +101,8 @@ android:weightSum="2"
                     android:text="Welcome all of you ..."
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/grey"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textAlignment="textStart"
                     android:layout_weight="2"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
