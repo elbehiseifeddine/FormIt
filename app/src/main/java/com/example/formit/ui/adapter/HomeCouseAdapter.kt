@@ -15,6 +15,7 @@ import com.example.formit.data.repository.ApiInterface
 import com.example.formit.ui.view.activitys.DescriptionActivity
 import com.example.formit.ui.view.activitys.ID
 import com.example.formit.ui.view.activitys.PREF_NAME
+import com.example.formit.ui.view.activitys.apiInterface
 import kotlinx.android.synthetic.main.activity_courses.*
 import kotlinx.android.synthetic.main.activity_description.view.*
 import kotlinx.android.synthetic.main.item_course.view.*
@@ -42,7 +43,7 @@ class HomeCouseAdapter(var courses: MutableList<Course>, var participated: Boole
                 tv_CourseName.text = courses[position].courseName
                 tv_Cost.text = courses[position].price.toString() + " dt"
                 tv_Hours.text = courses[position].duration.toString() + " Hours"
-                tv_MentorName.text = courses[position].mentor
+                tv_MentorName.text = courses[position].mentor.firstname
 
 
                 btn_bookmark.visibility=View.GONE
@@ -54,7 +55,7 @@ class HomeCouseAdapter(var courses: MutableList<Course>, var participated: Boole
                     it.putExtra("NAME", courses[position].courseName)
                     it.putExtra("PRICE", courses[position].price.toString() + " dt")
                     it.putExtra("DURATION", courses[position].duration.toString() + " Hours")
-                    it.putExtra("MENTOR", courses[position].mentor)
+                    it.putExtra("MENTOR", courses[position].mentor.firstname)
                     it.putExtra("DESCRIPTION", courses[position].description)
                     it.putExtra("PREREQUISITES", courses[position].prerequisites)
                     it.putExtra("STARTDATE", courses[position].startDate)
@@ -70,7 +71,7 @@ class HomeCouseAdapter(var courses: MutableList<Course>, var participated: Boole
                 tv_CourseName.text = courses[position].courseName
                 tv_Cost.text = courses[position].price.toString() + " dt"
                 tv_Hours.text = courses[position].duration.toString() + " Hours"
-                tv_MentorName.text = courses[position].mentor
+                tv_MentorName.text = courses[position].mentor.firstname
 
 
                 btn_bookmark.setTag(R.drawable.ic_bookmark_empty)
@@ -88,7 +89,6 @@ class HomeCouseAdapter(var courses: MutableList<Course>, var participated: Boole
                         btn_bookmark.setImageResource(R.drawable.ic_bookmark)
                         btn_bookmark.setTag(R.drawable.ic_bookmark)
                     }
-                    val apiInterface = ApiInterface.create()
 
                     apiInterface.AddBookmark(mSharedPref.getString(ID, ""), courses[position].id)
                         .enqueue(object : Callback<User> {
@@ -118,7 +118,7 @@ class HomeCouseAdapter(var courses: MutableList<Course>, var participated: Boole
                     it.putExtra("NAME", courses[position].courseName)
                     it.putExtra("PRICE", courses[position].price.toString() + " dt")
                     it.putExtra("DURATION", courses[position].duration.toString() + " Hours")
-                    it.putExtra("MENTOR", courses[position].mentor)
+                    it.putExtra("MENTOR", courses[position].mentor.firstname)
                     it.putExtra("DESCRIPTION", courses[position].description)
                     it.putExtra("PREREQUISITES", courses[position].prerequisites)
                     it.putExtra("STARTDATE", courses[position].startDate)

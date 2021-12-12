@@ -17,10 +17,17 @@ import kotlinx.android.synthetic.main.item_course.view.*
 
 class DescriptionActivity : AppCompatActivity() {
     private lateinit var myToolbar: Toolbar
+    lateinit var mSharedPref: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_description)
+        mSharedPref = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
+        if (mSharedPref.getString(ROLE, "").toString() == "coache") {
+            btn_Participate.visibility=View.GONE
+        }
+        mSharedPref = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         myToolbar = findViewById (R.id.toolbar)
         btn_back.setOnClickListener {
             finish()

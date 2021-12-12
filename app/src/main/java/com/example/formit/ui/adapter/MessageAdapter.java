@@ -24,6 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,26 +44,24 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private static final int TYPE_MESSAGE_RECEIVED = 1;
     private static final int TYPE_IMAGE_SENT = 2;
     private static final int TYPE_IMAGE_RECEIVED = 3;
-    private Context context;
     String  PREF_NAME = "LOGIN_PREF";
 
     public Context conn;
-    private LayoutInflater inflater;
-    private List<Message> list;
-    private String IdUser;
+    private final LayoutInflater inflater;
+    private final List<Message> list;
+    private final String IdUser;
     private User user;
     String name ;
-    private ApiInterface api = ApiInterface.Companion.create();
+    private final ApiInterface api = ApiInterface.Companion.create();
 
-    public MessageAdapter (Context context,LayoutInflater inflater, List<Message> list,String idUser,String name) {
+    public MessageAdapter (LayoutInflater inflater, List<Message> list,String idUser,String name) {
         this.inflater = inflater;
         this.list=list;
         this.name=name;
         IdUser=idUser;
-        this.context = context;
     }
 
-    private class SentMessageHolder extends RecyclerView.ViewHolder {
+    private static class SentMessageHolder extends RecyclerView.ViewHolder {
 
         TextView messageTxt;
         ImageView image;
@@ -77,7 +76,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
 
 
-    private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
+    private static class ReceivedMessageHolder extends RecyclerView.ViewHolder {
 
         TextView messageTxt,nameTxt;
         ImageView image;
@@ -170,9 +169,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 Call<User> call = api.getUserById(msg.getAuthor());
                  call.enqueue(new Callback<User>() {
                                  @Override
-                                 public void onResponse(Call<User> call, Response<User> response) {
+                                 public void onResponse(@NotNull Call<User> call, @NotNull Response<User> response) {
                                         user= response.body();
-                                        Log.e("-------------------------user from get user by id ", user.toString());
+                                     assert user != null;
                                      messageHolder.nameTxt.setText(user.getFirstname());
 
                                      String filename2 =user.getPicture();
@@ -186,7 +185,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
                                  }
 
                                  @Override
-                                 public void onFailure(Call<User> call, Throwable t) {
+                                 public void onFailure(@NotNull Call<User> call, @NotNull Throwable t) {
                                      Log.e("failure get user message adapter","true");
                                  }
                              });
