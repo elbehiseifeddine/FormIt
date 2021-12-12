@@ -123,6 +123,7 @@ class MessagesFragment: Fragment() {
         }*/
         this.loadOwnConversation()
         this.loadOwnCoacheConversation()
+        this.loadBubleConversation()
         btn_reus_back.visibility=View.INVISIBLE
 
         /*activity?.runOnUiThread{
@@ -143,8 +144,8 @@ class MessagesFragment: Fragment() {
             Buble_Message(R.drawable.test3,"ahmedSeif",false),
 
             )
-        val adapterBuble =BubleMessageAdapter(BubleList)
-        /*bubleMessageRecycleView.adapter = adapterBuble
+        /*val adapterBuble =BubleMessageAdapter(BubleList)
+        bubleMessageRecycleView.adapter = adapterBuble
         bubleMessageRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
 */
 
@@ -261,10 +262,46 @@ class MessagesFragment: Fragment() {
 
     }
 
+
+    private fun loadBubleConversation(){
+        Log.e("User connected",mSharedPref.getString(ID, "").toString())
+        apiInterface.getOwnCoacheConversations(mSharedPref.getString(ID, "")).enqueue(object :
+            Callback<MutableList<Conversation>> {
+            override fun onResponse(
+                call: Call<MutableList<Conversation>>, response:
+                Response<MutableList<Conversation>>
+            ) {
+                val conversations = response.body()
+                if (conversations != null) {
+                    //Log.e("conversations coaches aaaaaaaaaaaaaaaaaaa",conversations.toString())
+
+
+                    val adapterBuble =BubleMessageAdapter(conversations,
+                        mSharedPref.getString(ID, "").toString(),
+                        mSharedPref.getString(FIRSTNAME, "").toString())
+                    bubleMessageRecycleView.adapter = adapterBuble
+                    bubleMessageRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+
+
+
+                } else {
+                    Log.e("Error from conversation course","true")
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<Conversation>>, t: Throwable) {
+                Log.e("failure conversation course",call.request().toString())
+                Log.e("failure conversation course",call.isExecuted.toString())
+            }
+        })
+
+    }
+
     override fun onResume() {
 
         this.loadOwnConversation()
         this.loadOwnCoacheConversation()
+        this.loadBubleConversation()
         super.onResume()
     }
 

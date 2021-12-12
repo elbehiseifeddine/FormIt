@@ -99,6 +99,8 @@
                 android:text="Welcome all of you ..."
                 android:fontFamily="@font/poppins_medium"
                 android:textColor="@color/grey"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textAlignment="textStart"
                 android:layout_weight="1"/>
 

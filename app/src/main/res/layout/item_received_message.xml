@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <androidx.cardview.widget.CardView
         android:id="@+id/CardImage"
@@ -8,21 +10,21 @@
         android:layout_height="40dp"
         android:background="@drawable/btn_circular"
         android:layout_gravity="center_vertical"
+        app:cardCornerRadius="@dimen/_50sdp"
         android:backgroundTint="@color/white"
         android:layout_alignBottom="@id/receivedTxt"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/MessageRecieveUserPic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/welcome_pic" />
+                android:src="@drawable/test1" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

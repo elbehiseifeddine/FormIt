@@ -16,6 +16,7 @@ import com.example.formit.R;
 import com.example.formit.data.model.Message;
 import com.example.formit.data.model.User;
 import com.example.formit.data.repository.ApiInterface;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
@@ -69,7 +70,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         public SentMessageHolder(@NonNull View itemView) {
             super(itemView);
 
-            image = itemView.findViewById(R.id.MessageSendUserPic);
+            //image = itemView.findViewById(R.id.MessageSendUserPic);
             messageTxt = itemView.findViewById(R.id.sentTxt);
         }
     }
@@ -150,10 +151,11 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 String filename2 =mSharedPref.getString("PICTURE", "");
                 String path = "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F"+filename2+"?alt=media";
                 Log.e("*******************************path image ",path);
+                //Picasso.get().load(path).into(messageHolder.image);
                 /*Glide.with(context)
                         .load(path)
                         .into(((SentMessageHolder) holder).image);*/
-                    messageHolder.image.setImageResource(R.drawable.backpack);
+                    //messageHolder.image.setImageResource(R.drawable.backpack);
                 //}
 
                 messageHolder.messageTxt.setText(msg.getMessage());
@@ -180,8 +182,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
                                      /*Glide.with(holder.itemView.getContext())
                                              .load(path)
                                              .into(((ReceivedMessageHolder) holder).image);*/
-
-                                     messageHolder.image.setImageResource(R.drawable.backpack);
+                                     Picasso.get().load(path).into(messageHolder.image);
+                                     //messageHolder.image.setImageResource(R.drawable.backpack);
                                  }
 
                                  @Override
