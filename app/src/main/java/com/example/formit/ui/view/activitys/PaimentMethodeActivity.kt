@@ -1,15 +1,19 @@
 package com.example.formit.ui.view.activitys
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
+import android.widget.Toast
 import com.example.formit.R
 import com.example.formit.data.model.User
 import com.example.formit.data.repository.ApiInterface
 import kotlinx.android.synthetic.main.activity_paiment_methode.*
+import kotlinx.android.synthetic.main.activity_sign_in_up.*
 import kotlinx.android.synthetic.main.description_toolbar.*
 import kotlinx.android.synthetic.main.description_toolbar.toolbar_title
 import kotlinx.android.synthetic.main.reusable_toolbar.*
@@ -45,6 +49,32 @@ class PaimentMethodeActivity : AppCompatActivity() {
                             finish()
                         }else{
                             Log.e("coursessssssssssdsgfdgfdg","participation done")
+                            apiInterface.getUserById(mSharedPref.getString(ID,"")).enqueue(object : Callback<User> {
+                                override fun onResponse(
+                                    call: Call<User>, response:
+                                    Response<User>
+                                ) {
+                                    val user = response.body()
+                                    if (user != null) {
+                                        //TODO 4 "Edit the SharedPreferences by putting all the data"
+                                        mSharedPref.edit().apply{
+                                            putBoolean(IS_REMEMBRED, true)
+                                            putString(EMAIL, user.email)
+                                            putString(FIRSTNAME, user.firstname)
+                                            putString(LASTNAME, user.lastname)
+                                            putInt(PHONENUMBER, user.phonenumber)
+                                            putString(ROLE, user.role)
+                                            putInt(XP, user.achievements)
+                                            putString(ADDRESS, user.address)
+                                            putString(PICTURE, user.picture)
+                                            putString(ID, user.id)
+                                        }.apply()
+                                    }
+                                }
+                                override fun onFailure(call: Call<User>, t: Throwable) {
+                                    Log.e("aaaaaaaaaaaaaaaaaaaaaaaa","true")
+                                }
+                            })
                             finish()
                         }
                     } else {

@@ -21,13 +21,7 @@ class FormItActivity : AppCompatActivity() {
         //TODO 2 "Initialize the var of SharedPreferences"
         mSharedPref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 
-        //TODO 3 "Test in the SharedPreferences if there's data"
-        if (mSharedPref.getBoolean(IS_REMEMBRED, false)){
-            Intent(this, HomeActivity::class.java).also {
-                startActivity(it)
-                finish()
-            }
-        }
+        //TODO 3 "Test in the SharedPreferences if there's data
 
         Welcome_SignIn.setOnClickListener {
             Intent(this, SignInUpActivity::class.java).also {

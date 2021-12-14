@@ -22,6 +22,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CoursesAdapter(var courses: MutableList<Course>, var bookmarked: Boolean) :
+
     RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder>() {
     inner class CoursesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
