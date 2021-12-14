@@ -29,14 +29,14 @@ class HomeActivity : AppCompatActivity() {
 
 
         GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this)
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener {
+            if (!it.isComplete) {
+                Log.w(TAG, "Fetching FCM registration token failed", it.exception)
                 return@OnCompleteListener
             }
 
             // Get new FCM registration token
-            val token = task.result
+            val token = it.result
             // Log and toast
             //val msg = getString(R.string.msg_token_fmt, token)
             val msg = token

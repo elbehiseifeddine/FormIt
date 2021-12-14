@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FormIt"
         android:usesCleartextTraffic="true">
+
         <activity android:name=".ui.view.activitys.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +27,7 @@
         </activity>
         <activity android:name=".ui.view.activitys.AchievementActivity" />
         <activity android:name=".ui.view.activitys.reset_password" />
+
         <activity android:name=".ui.view.activitys.forget_password" />
         <activity android:name=".ui.view.activitys.EventsActivity" />
         <activity android:name=".ui.view.activitys.DescriptionEventActivity" />
@@ -43,11 +45,34 @@
         <activity android:name=".ui.view.activitys.HomeActivity" />
         <activity android:name=".ui.view.activitys.SignUpActivity" />
         <activity android:name=".ui.view.activitys.SignInActivity" />
-        <activity android:name=".FormItActivity"/>
 
+        <activity android:name=".FormItActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <service
+            android:name=".MyFirebaseInstanceIDService"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
