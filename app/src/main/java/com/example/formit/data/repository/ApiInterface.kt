@@ -85,6 +85,8 @@ interface ApiInterface {
 
     @POST("/users/resetpassword/{email}")
     fun resetPassword(@Path("email",) email: String?, @Body map : HashMap<String, String>): Call<String>
+
+
     data class SearchResponse(
         @SerializedName("courses")
         val courses: MutableList<Course>

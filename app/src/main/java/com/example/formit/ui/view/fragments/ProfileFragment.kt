@@ -52,7 +52,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         toolbar_title.text = "Profile"
 
         button_Right.setBackgroundResource(R.drawable.ic_logout)
-
+        btn_ProfileAchievements.setOnClickListener {
+            Intent(context, AchievementActivity::class.java).also {
+                startActivity(it)
+            }
+        }
         button_Right.setOnClickListener {
             Log.e("logout pressed", "true")
 

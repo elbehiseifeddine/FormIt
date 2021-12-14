@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.item_event.view.*
 
 
 class EventsAdapter(var events: MutableList<Event>, var bookmarked: Boolean) :
+
     RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
     inner class EventsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

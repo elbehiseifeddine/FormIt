@@ -56,19 +56,17 @@ class CoursesActivity : AppCompatActivity() {
                             call: Call<ApiInterface.SearchResponse>,
                             response: Response<ApiInterface.SearchResponse>
                         ) {
+
                             courses.clear()
                             if (response.code() == 200) {
                                 response.body()!!.courses.forEach {
-
                                     courses.add(it)
                                 }
-                                Log.e("aaaaabbbbbbbbbbbb",courses.toString())
                                 val adapter= CoursesAdapter(courses,false)
                                 rv_Cour.adapter=adapter
                                 rv_Cour.setLayoutManager( LinearLayoutManager(CoursesActivity()))
                             } else {
                                 courses.clear()
-
                             }
                         }
 

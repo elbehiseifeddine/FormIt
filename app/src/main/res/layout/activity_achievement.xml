@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.view.activitys.AchievementActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_AchievementPic"
+            android:layout_width="210dp"
+            android:layout_height="197dp"
+            app:srcCompat="@drawable/ic_bronze"
+            tools:layout_editor_absoluteX="123dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <TextView
+            android:id="@+id/tv_Achievement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bangers"
+            android:text="Bronze"
+            android:textAlignment="center"
+            android:textColor="#FF8102"
+            android:textSize="58sp"
+            app:fontFamily="@font/bangers" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/Xp_Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bangers"
+                android:text="XP : "
+                app:fontFamily="@font/bangers"
+                android:textAlignment="center"
+                android:textColor="#FF8102"
+                android:textSize="58sp" />
+
+            <TextView
+                android:id="@+id/tv_AchievementXP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bangers"
+                app:fontFamily="@font/bangers"
+                android:text="0/500 "
+                android:textAlignment="center"
+                android:textColor="#FF8102"
+                android:textSize="58sp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <ProgressBar
+                android:id="@+id/pb_Achievement"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_centerInParent="true"
+                android:layout_marginHorizontal="30dp"
+                android:minWidth="150dp"
+                android:padding="8dp"
+                android:progress="10"
+                android:progressBackgroundTint="#FF8102"
+                android:progressDrawable="@drawable/progress_states"
+                android:progressTint="#FCBD01"
+                android:scaleY="1.5" />
+
+            <TextView
+                android:id="@+id/pb_AchievementText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/bangers"
+                android:paddingBottom="10dp"
+                android:text="500 "
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+            <!--        <TextView-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginTop="25dp" />-->
+
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_AchievementXPMessage"
+            android:layout_width="449dp"
+            android:layout_height="142dp"
+            app:srcCompat="@drawable/bronze_xp" />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/benefits"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bangers"
+            android:text="Benefits : None "
+            android:textColor="#FF8102"
+            android:textSize="28dp" />
+    </LinearLayout>
+</ScrollView>

@@ -28,8 +28,8 @@ const val ROLE = "ROLE"
 const val ID= "ID"
 const val FIRSTNAME= "FIRSTNAME"
 const val LASTNAME= "LASTNAME"
-const val SERVER_PATH= "http://192.168.137.1:5000"
-const val SERVER_CHAT_PATH= "ws://192.168.137.1:3000"
+const val SERVER_PATH= "http://192.168.1.33:5000"
+const val SERVER_CHAT_PATH= "ws://192.168.1.33:3000"
 const val ADDRESS= "ADDRESS"
 const val PICTURE= "PICTURE"
 const val XP= "XP"
@@ -50,13 +50,7 @@ class SignInUpActivity : AppCompatActivity() {
         mSharedPref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 
         //TODO 3 "Test in the SharedPreferences if there's data"
-        if (mSharedPref.getBoolean(IS_REMEMBRED, false)){
-            Intent(this, HomeActivity::class.java).also {
 
-                startActivity(it)
-                finish()
-            }
-        }
 
         val shader = LinearGradient(
             0f,
