@@ -1,38 +1,54 @@
 package com.example.formit.ui.view.fragments
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.formit.R
 import com.example.formit.data.model.Course
 import com.example.formit.data.model.Event
-import com.example.formit.data.repository.ApiInterface
-import com.example.formit.ui.adapter.CoursesAdapter
+import com.example.formit.data.model.User
 import com.example.formit.ui.adapter.HomeCouseAdapter
 import com.example.formit.ui.adapter.HomeEventAdapter
 import com.example.formit.ui.view.activitys.*
-import kotlinx.android.synthetic.main.activity_description.*
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
     lateinit var mSharedPref: SharedPreferences
+    lateinit var EditBirthdate: TextInputEditText
+    private var profilePic: ImageView? = null
+    private var selectedImageUri: Uri? = null
+    lateinit var storage: FirebaseStorage
+    private val formater = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
+    val now = Date()
+    val fileName: String = formater.format(now)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,15 +56,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     ): View? {
 
 
-        var rootView: View = inflater.inflate(R.layout.fragment_profile, container, false)
-
-
-
-        return rootView
+        return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        storage = Firebase.storage
         toolbar_title.text = "Profile"
 
         button_Right.setBackgroundResource(R.drawable.ic_logout)
@@ -64,7 +77,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             dialogBuilder.setMessage(R.string.logoutMessage)
                 // if the dialog is cancelable
                 .setCancelable(false)
-                .setPositiveButton("Yes", DialogInterface.OnClickListener { dialogInterface, which ->
+                .setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ ->
                     activity?.getSharedPreferences(PREF_NAME, AppCompatActivity.MODE_PRIVATE)
                         ?.edit()
                         ?.clear()?.apply()
@@ -85,12 +98,112 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         if (mSharedPref.getString(ROLE, "").toString() == "coache") {
-            Profile_Enrolled_courses.visibility=View.GONE
-            Profile_Participated_events.visibility=View.GONE
-            CourseTextLayout.visibility=View.GONE
-            EventTextLayout.visibility=View.GONE
-        }else {
+           profileStudentLayout.visibility=View.GONE
+            profileCoacheLayout.visibility=View.VISIBLE
 
+
+
+            EditBirthdate = requireActivity().findViewById(R.id.ti_EditBirthdateCoache)
+
+
+
+            CoacheProfilePicture!!.setOnClickListener {
+                openGallery()
+            }
+
+            btn_Upload_imageCoache!!.setOnClickListener {
+                uploadImage()
+            }
+
+            val birthDatePicker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select start date")
+                .build()
+            birthDatePicker.addOnPositiveButtonClickListener {
+                EditBirthdate.setText(birthDatePicker.headerText.toString())
+            }
+
+            EditBirthdate.setOnFocusChangeListener { view, hasFocus ->
+                if (hasFocus){
+                    birthDatePicker.show(requireActivity().supportFragmentManager, "START_DATE")
+                }else{
+                    birthDatePicker.dismiss()
+                }
+            }
+            if(mSharedPref.getString(PICTURE, "").toString()=="avatar default.png")
+            {
+                profilePic!!.setImageResource(R.drawable.male_student)
+            }
+            else
+            {
+                val filename2 = mSharedPref.getString(PICTURE, "").toString()
+                val path =
+                    "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F$filename2?alt=media"
+                Log.e("*******************************path image ",path)
+                Glide.with(this)
+                    .load(path)
+                    .into(CoacheProfilePicture)
+            }
+            btn_UpdateCoache.setOnClickListener {
+
+                val map: HashMap<String, String> = HashMap()
+                map["email"] = ti_EditEmailCoache.text.toString()
+                map["firstname"] = ti_EditFirstNameCoache.text.toString()
+                map["lastname"] = ti_EditLastNameCoache.text.toString()
+                map["birthdate"] = EditBirthdate.text.toString()
+                map["address"] = ti_EditAddressCoache.text.toString()
+                map["telnumber"] = ti_EditPhoneNumberCoache.text.toString()
+                if (selectedImageUri == null) {
+                    map["picture"] = mSharedPref.getString(PICTURE, "").toString()
+                }
+                else
+                    map["picture"] = fileName.toString()
+                apiInterface.UpdateCurrentUser(mSharedPref.getString(ID,"").toString(),map).enqueue(object : Callback<User> {
+                    override fun onResponse(
+                        call: Call<User>, response:
+                        Response<User>
+                    ) {
+                        val user = response.body()
+                        if (user !=null) {
+                            mSharedPref.edit().apply{
+                                putString(EMAIL, ti_EditEmailCoache.text.toString())
+                                putString(FIRSTNAME, ti_EditFirstNameCoache.text.toString())
+                                putString(LASTNAME, ti_EditLastNameCoache.text.toString())
+                                putString(ADDRESS, ti_EditAddressCoache.text.toString())
+                                putString(PICTURE, fileName.toString())
+                                putString(BIRTHDATE, EditBirthdate.text.toString())
+                                putInt(PHONENUMBER, ti_EditPhoneNumberCoache.text.toString().toInt())
+                            }.apply()
+
+
+                        } else {
+                            Log.e("Something went wrong","true")
+                            Toast.makeText(requireContext(), "Something went wrong !!", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<User>, t: Throwable) {
+                        Log.e("aaaaaaaaaaaaaaaaaaaaaaaa","true")
+                        Toast.makeText(requireContext(), "Connexion error!", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+            ti_EditEmailCoache.setText(mSharedPref.getString(EMAIL,"").toString())
+            ti_EditFirstNameCoache.setText(mSharedPref.getString(FIRSTNAME,"").toString()
+                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() })
+            ti_EditLastNameCoache.setText(mSharedPref.getString(LASTNAME,"").toString()
+                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() })
+            ti_EditAddressCoache.setText(mSharedPref.getString(ADDRESS,"").toString()
+                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() })
+            EditBirthdate.setText(mSharedPref.getString(BIRTHDATE,"").toString())
+            ti_EditPhoneNumberCoache.setText(mSharedPref.getInt(PHONENUMBER,0).toString())
+            tv_FullNameCoache.setText(mSharedPref.getString(FIRSTNAME,"").toString().capitalize()+" "+mSharedPref.getString(LASTNAME,"").toString().capitalize())
+
+
+
+        }else {
+            profileCoacheLayout.visibility=View.GONE
+            profileStudentLayout.visibility=View.VISIBLE
             /*activity?.runOnUiThread{
                 LoadUserParticipatedData()
             }*/
@@ -115,16 +228,17 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
         if(mSharedPref.getString(PICTURE, "").toString()=="avatar default.png")
         {
-            ProfilePicture!!.setImageResource(R.drawable.male_student)
+            CoacheProfilePicture!!.setImageResource(R.drawable.male_student)
         }
         else
         {
             val filename2 = mSharedPref.getString(PICTURE, "").toString()
-            val path = "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F"+filename2+"?alt=media"
+            val path =
+                "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F$filename2?alt=media"
             Log.e("*******************************path image ",path)
             Glide.with(requireActivity())
                 .load(path)
-                .into(ProfilePicture)
+                .into(CoacheProfilePicture)
         }
         tv_ProfileFullName.setText(
             mSharedPref.getString(FIRSTNAME, "").toString() + " " + mSharedPref.getString(LASTNAME,"").toString()
@@ -161,7 +275,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onResume()
     }
 
-    fun LoadUserParticipatedData(){
+    private fun LoadUserParticipatedData(){
         apiInterface.getCoursesParticipated(mSharedPref.getString(ID, "")).enqueue(object :
             Callback<MutableList<Course>> {
             override fun onResponse(
@@ -208,6 +322,50 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
         })
 
+    }
+
+
+    private fun uploadImage()
+    {
+        val progressDialog = ProgressDialog(requireContext())
+        progressDialog.setMessage("Uploading Image ...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+        val storageReference = FirebaseStorage.getInstance().reference.child("images/$fileName")
+        storageReference.putFile(selectedImageUri!!).
+        addOnSuccessListener {
+            CoacheProfilePicture!!.setImageURI(selectedImageUri)
+            if(progressDialog.isShowing)
+            {
+                progressDialog.dismiss()
+            }
+            Toast.makeText(requireContext(),"Successfuly uploaded", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener{
+            if(progressDialog.isShowing)
+            {
+                progressDialog.dismiss()
+            }
+            Toast.makeText(requireContext(),"Sorry", Toast.LENGTH_SHORT).show()
+
+        }
+
+
+    }
+
+    private val startForResultOpenGallery = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result: ActivityResult ->
+        if(result.resultCode == AppCompatActivity.RESULT_OK)
+        {
+            selectedImageUri = result.data!!.data
+            CoacheProfilePicture!!.setImageURI(selectedImageUri)
+        }
+    }
+    private fun openGallery() {
+        val intent = Intent()
+
+        intent.action = Intent.ACTION_GET_CONTENT
+        intent.type = "image/*"
+        startForResultOpenGallery.launch(intent)
     }
 
 }

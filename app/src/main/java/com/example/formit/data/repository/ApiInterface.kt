@@ -60,7 +60,7 @@ interface ApiInterface {
     fun AddBookmark(@Path("id") id: String?,@Path("idCourse") idCourse: String?): Call<User>
 
     @PATCH("/users/addParticipation/{id}/{idCourse}")
-    fun AddParticipation(@Path("id") id: String?,@Path("idCourse") idCourse: String?): Call<String>
+    fun AddParticipation(@Path("id") id: String?,@Path("idCourse") idCourse: String?,@Body map : HashMap<String, String>): Call<String>
 
     @PATCH("/users/addEventsParticipation/{id}/{idEvent}")
     fun AddEventParticipation(@Path("id") id: String?,@Path("idEvent") idEvent: String?): Call<String>

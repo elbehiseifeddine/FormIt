@@ -1,5 +1,6 @@
 package com.example.formit.ui.view.activitys
 
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -12,7 +13,11 @@ import android.widget.Toast
 import com.example.formit.R
 import com.example.formit.data.model.User
 import com.example.formit.data.repository.ApiInterface
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_paiment_methode.*
+import kotlinx.android.synthetic.main.activity_reset_password.*
 import kotlinx.android.synthetic.main.activity_sign_in_up.*
 import kotlinx.android.synthetic.main.description_toolbar.*
 import kotlinx.android.synthetic.main.description_toolbar.toolbar_title
@@ -20,6 +25,7 @@ import kotlinx.android.synthetic.main.reusable_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.HashMap
 
 class PaimentMethodeActivity : AppCompatActivity() {
     lateinit var mSharedPref: SharedPreferences
@@ -34,9 +40,30 @@ class PaimentMethodeActivity : AppCompatActivity() {
         btn_reus_back.setOnClickListener {
             finish()
         }
+        var msg=""
+        GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener {
+            if (!it.isComplete) {
+                Log.w(ContentValues.TAG, "Fetching FCM registration token failed", it.exception)
+                return@OnCompleteListener
+            }
 
+            // Get new FCM registration token
+            val token = it.result
+            // Log and toast
+            //val msg = getString(R.string.msg_token_fmt, token)
+            if (token != null) {
+                msg = token
+            }
+            Log.e(ContentValues.TAG, msg.toString())
+            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        })
         btn_payCourse.setOnClickListener {
-            apiInterface.AddParticipation(mSharedPref.getString(ID,"")as String,intent.getStringExtra("IDCOURS")).enqueue(object :
+            Log.e("CourseId",intent.getStringExtra("IDCOURS").toString())
+            Log.e("deviceId",msg.toString())
+            val map: HashMap<String, String> = HashMap()
+            map["deviceId"] = msg
+            apiInterface.AddParticipation(mSharedPref.getString(ID,"")as String,intent.getStringExtra("IDCOURS"),map).enqueue(object :
                 Callback<String> {
                 override fun onResponse(
                     call: Call<String>, response:
