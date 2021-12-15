@@ -4,9 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="75dp"
+    android:theme="@style/Theme.FormItMaterialComponents"
     android:id="@+id/Profile_fragment"
     tools:context=".ui.view.activitys.HomeActivity">
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/profileStudentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -313,5 +320,304 @@
             android:orientation="horizontal"/>
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/profileCoacheLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <include layout="@layout/reusable_toolbar" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="60dp">
+
+            <ImageView
+                android:id="@+id/CoacheProfilePicture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/male_student"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="27dp" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_18sdp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_FullNameCoache"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:gravity="center"
+                    android:text="Ahmed Ben Dahmen"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_Upload_imageCoache"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="Upload Image"
+                    android:background="@drawable/gradient_background_and_rounded"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textSize="@dimen/_11ssp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_3sdp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Email Address"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/EditEmailContainerCoache"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:helperTextTextColor="@color/red"
+                    app:hintEnabled="false"
+                    tools:layout_editor_absoluteX="32dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ti_EditEmailCoache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTint="@color/hintColor"
+                        android:fontFamily="@font/poppins_medium"
+                        android:inputType="textEmailAddress"
+                        android:text="EmailAddress@gmail.com"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins"
+                    android:text="First Name"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/EditFirstNameContainerCoache"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:helperTextTextColor="@color/red"
+                    app:hintEnabled="false"
+                    tools:layout_editor_absoluteX="32dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ti_EditFirstNameCoache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTint="@color/hintColor"
+                        android:fontFamily="@font/poppins_medium"
+                        android:inputType="text"
+                        android:text="First Name"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Last Name"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/EditLastNameContainerCoache"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:helperTextTextColor="@color/red"
+                    app:hintEnabled="false"
+                    tools:layout_editor_absoluteX="32dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ti_EditLastNameCoache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTint="@color/hintColor"
+                        android:fontFamily="@font/poppins_medium"
+                        android:inputType="text"
+                        android:text="Last Name"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins"
+                    android:text="BirthDate"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/EditBirthdateContainerCoache"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:helperTextTextColor="@color/red"
+                    app:hintEnabled="false"
+                    tools:layout_editor_absoluteX="32dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ti_EditBirthdateCoache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTint="@color/hintColor"
+                        android:fontFamily="@font/poppins_medium"
+                        android:inputType="text"
+                        android:hint="BirthDate"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Phone Number"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/EditPhoneNumberContainerCoache"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:helperTextTextColor="@color/red"
+                    app:hintEnabled="false"
+                    tools:layout_editor_absoluteX="32dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ti_EditPhoneNumberCoache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTint="@color/hintColor"
+                        android:fontFamily="@font/poppins_medium"
+                        android:inputType="number"
+                        android:text="Phone Number"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Address"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/EditAddressContainerCoache"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:helperTextTextColor="@color/red"
+                    app:hintEnabled="false"
+                    tools:layout_editor_absoluteX="32dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ti_EditAddressCoache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTint="@color/hintColor"
+                        android:fontFamily="@font/poppins_medium"
+                        android:inputType="text"
+                        android:text="Address"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+            <Button
+                android:id="@+id/btn_UpdateCoache"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Edit Profile"
+                android:background="@drawable/gradient_background_and_rounded"
+                android:textColor="@color/white"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="@dimen/_11ssp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    </LinearLayout>
 </ScrollView>

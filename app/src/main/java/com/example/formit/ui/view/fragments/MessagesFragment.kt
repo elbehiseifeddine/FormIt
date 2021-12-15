@@ -126,76 +126,9 @@ class MessagesFragment: Fragment() {
         this.loadBubleConversation()
         btn_reus_back.visibility=View.INVISIBLE
 
-        /*activity?.runOnUiThread{
-            val BubleList = mutableListOf(
-                Buble_Message(R.drawable.test1,"ahmed",true),
-                Buble_Message(R.drawable.test2,"Seif",false),
-                Buble_Message(R.drawable.test3,"ahmedSeif",false),
-
-                )
-            val adapterBuble =BubleMessageAdapter(BubleList)
-            bubleMessageRecycleView.adapter = adapterBuble
-            bubleMessageRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
-        }*/
-
-        val BubleList = mutableListOf(
-            Buble_Message(R.drawable.test1,"ahmed",true),
-            Buble_Message(R.drawable.test2,"Seif",false),
-            Buble_Message(R.drawable.test3,"ahmedSeif",false),
-
-            )
-        /*val adapterBuble =BubleMessageAdapter(BubleList)
-        bubleMessageRecycleView.adapter = adapterBuble
-        bubleMessageRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
-*/
-
+        /*activity?.runOnUiThread{}*/
 
         Log.e("id user", mSharedPref.getString(ID, "").toString())
-
-
-     /*  activity?.runOnUiThread {
-           val CoacheDiscussion = mutableListOf(
-               Coache_Discussion(
-                   R.drawable.test1,
-                   "Ahmed Ben Dahmen",
-                   "Welcome seifoun !!",
-                   "1 hour",
-                   9,
-               ),
-               Coache_Discussion(
-                   R.drawable.test4,
-                   "SeifEddine ElBehi",
-                   "Yoo bouhmid ...",
-                   "1 hour",
-                   1,
-               )
-           )
-           val adapterCoache =CoacheDiscussionAdapter(CoacheDiscussion,email)
-           CoachesDiscussionRecycleView.adapter = adapterCoache
-           CoachesDiscussionRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-
-       }*/
-
-        /*val CoacheDiscussion = mutableListOf(
-            Coache_Discussion(
-                R.drawable.test1,
-                "Ahmed Ben Dahmen",
-                "Welcome seifoun !!",
-                "1 hour",
-                9,
-            ),
-            Coache_Discussion(
-                R.drawable.test4,
-                "SeifEddine ElBehi",
-                "Yoo bouhmid ...",
-                "1 hour",
-                1,
-            )
-        )
-        val adapterCoache =CoacheDiscussionAdapter(CoacheDiscussion,email)
-        CoachesDiscussionRecycleView.adapter = adapterCoache
-        CoachesDiscussionRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-*/
     }
 
     private fun loadOwnConversation(){
