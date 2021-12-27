@@ -27,5 +27,37 @@
             android:drawableTint="@color/black"
             />
 
+
+        <TextView
+            android:id="@+id/tv_Terms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Terms &amp; conditions"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:drawableLeft="@drawable/ic_terms"
+            android:drawablePadding="12dp"
+            android:drawableTint="@color/black"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_ContactUs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Contact Us"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:drawableLeft="@drawable/ic_phone"
+            android:drawablePadding="12dp"
+            android:drawableTint="@color/black"
+            />
+
     </LinearLayout>
 </LinearLayout>

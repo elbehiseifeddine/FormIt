@@ -2,13 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.formit">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FormIt"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".ContactUsActivity"></activity>
+        <activity android:name=".TermsAndConditionsActivity" />
         <activity android:name=".ui.view.activitys.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +21,6 @@
         </activity>
         <activity android:name=".ui.view.activitys.AchievementActivity" />
         <activity android:name=".ui.view.activitys.reset_password" />
-
         <activity android:name=".ui.view.activitys.forget_password" />
         <activity android:name=".ui.view.activitys.EventsActivity" />
         <activity android:name=".ui.view.activitys.DescriptionEventActivity" />
@@ -42,10 +35,11 @@
         <activity android:name=".ui.view.activitys.CoursesActivity" />
         <activity android:name=".ui.view.activitys.DescriptionActivity" />
         <activity android:name=".ui.view.activitys.SignInUpActivity" />
-        <activity android:name=".ui.view.activitys.HomeActivity" />
+        <activity
+            android:name=".ui.view.activitys.HomeActivity"
+            android:theme="@style/Theme.FormItMaterialComponents" />
         <activity android:name=".ui.view.activitys.SignUpActivity" />
         <activity android:name=".ui.view.activitys.SignInActivity" />
-
         <activity android:name=".FormItActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,6 +47,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -65,13 +60,17 @@
             </intent-filter>
         </service>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 

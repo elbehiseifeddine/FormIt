@@ -92,6 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:helperTextTextColor="@color/red"
+                    app:boxBackgroundColor="@color/white"
                     app:hintEnabled="false"
                     tools:layout_editor_absoluteX="32dp">
 
@@ -129,6 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:helperTextTextColor="@color/red"
+                    app:boxBackgroundColor="@color/white"
                     app:hintEnabled="false"
                     tools:layout_editor_absoluteX="32dp">
 
@@ -166,6 +168,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:helperTextTextColor="@color/red"
+                    app:boxBackgroundColor="@color/white"
                     app:hintEnabled="false"
                     tools:layout_editor_absoluteX="32dp">
 
@@ -202,6 +205,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:helperTextTextColor="@color/red"
+                    app:boxBackgroundColor="@color/white"
                     app:hintEnabled="false"
                     tools:layout_editor_absoluteX="32dp">
 
@@ -238,6 +242,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:helperTextTextColor="@color/red"
+                    app:boxBackgroundColor="@color/white"
                     app:hintEnabled="false"
                     tools:layout_editor_absoluteX="32dp">
 
@@ -275,6 +280,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:helperTextTextColor="@color/red"
+                    app:boxBackgroundColor="@color/white"
                     app:hintEnabled="false"
                     tools:layout_editor_absoluteX="32dp">
 

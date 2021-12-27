@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="75dp"
+
     android:theme="@style/Theme.FormItMaterialComponents"
     android:id="@+id/Profile_fragment"
     tools:context=".ui.view.activitys.HomeActivity">
@@ -12,13 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <include layout="@layout/reusable_toolbar" />
     <LinearLayout
         android:id="@+id/profileStudentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <include
-            layout="@layout/reusable_toolbar"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -324,9 +324,10 @@
         android:id="@+id/profileCoacheLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="75dp"
         android:orientation="vertical">
 
-        <include layout="@layout/reusable_toolbar" />
+
 
         <androidx.cardview.widget.CardView
             android:layout_width="115dp"
@@ -406,6 +407,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:helperTextTextColor="@color/red"
+                    app:boxBackgroundColor="@color/white"
                     app:hintEnabled="false"
                     tools:layout_editor_absoluteX="32dp">
 
@@ -443,6 +445,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:helperTextTextColor="@color/red"
+                    app:boxBackgroundColor="@color/white"
                     app:hintEnabled="false"
                     tools:layout_editor_absoluteX="32dp">
 
@@ -480,6 +483,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:helperTextTextColor="@color/red"
+                    app:boxBackgroundColor="@color/white"
                     app:hintEnabled="false"
                     tools:layout_editor_absoluteX="32dp">
 
@@ -516,6 +520,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:helperTextTextColor="@color/red"
+                    app:boxBackgroundColor="@color/white"
                     app:hintEnabled="false"
                     tools:layout_editor_absoluteX="32dp">
 
@@ -552,6 +557,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:helperTextTextColor="@color/red"
+                    app:boxBackgroundColor="@color/white"
                     app:hintEnabled="false"
                     tools:layout_editor_absoluteX="32dp">
 
@@ -589,6 +595,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:helperTextTextColor="@color/red"
+                    app:boxBackgroundColor="@color/white"
                     app:hintEnabled="false"
                     tools:layout_editor_absoluteX="32dp">
 
