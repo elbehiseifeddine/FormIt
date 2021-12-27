@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.Toolbar
+import com.example.formit.ContactUsActivity
 import com.example.formit.R
+import com.example.formit.TermsAndConditionsActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.description_toolbar.*
 import kotlinx.android.synthetic.main.description_toolbar.toolbar_title
@@ -26,6 +28,16 @@ class SettingsActivity : AppCompatActivity() {
 
         tv_EditProfile.setOnClickListener{
             Intent(this, EditProfileActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+        tv_Terms.setOnClickListener{
+            Intent(this, TermsAndConditionsActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+        tv_ContactUs.setOnClickListener{
+            Intent(this, ContactUsActivity::class.java).also {
                 startActivity(it)
             }
         }

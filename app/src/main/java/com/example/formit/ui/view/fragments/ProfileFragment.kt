@@ -98,6 +98,37 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         if (mSharedPref.getString(ROLE, "").toString() == "coache") {
+            button_Right.setBackgroundResource(R.drawable.ic_logout)
+            btn_ProfileAchievements.setOnClickListener {
+                Intent(context, AchievementActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
+            button_Right.setOnClickListener {
+                Log.e("logout pressed", "true")
+
+                val dialogBuilder = AlertDialog.Builder(it.context)
+                dialogBuilder.setMessage(R.string.logoutMessage)
+                    // if the dialog is cancelable
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ ->
+                        activity?.getSharedPreferences(PREF_NAME, AppCompatActivity.MODE_PRIVATE)
+                            ?.edit()
+                            ?.clear()?.apply()
+                        Intent(context, SignInUpActivity::class.java).also {
+                            startActivity(it)
+                            activity?.finish()
+                        }
+                    })
+
+                dialogBuilder.setNegativeButton("No") { dialogInterface, which ->
+                    dialogInterface.dismiss()
+                }
+                dialogBuilder.create().show()
+
+
+            }
+            btn_reus_back.visibility = View.GONE
            profileStudentLayout.visibility=View.GONE
             profileCoacheLayout.visibility=View.VISIBLE
 
@@ -238,7 +269,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             Log.e("*******************************path image ",path)
             Glide.with(requireActivity())
                 .load(path)
-                .into(CoacheProfilePicture)
+                .into(ProfilePicture)
         }
         tv_ProfileFullName.setText(
             mSharedPref.getString(FIRSTNAME, "").toString() + " " + mSharedPref.getString(LASTNAME,"").toString()
