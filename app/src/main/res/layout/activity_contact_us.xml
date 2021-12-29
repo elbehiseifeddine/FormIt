@@ -23,23 +23,67 @@
             android:layout_height="match_parent"
             android:text="Don't hesitate to contact us if you have any questions."
             android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold|italic"/>
 
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:text="Via Email: formit.inc@gmail.com"
-            android:fontFamily="@font/poppins_medium"/>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="Via Email: "
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="formit.inc@gmail.com"
+                android:fontFamily="@font/poppins_medium"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Via this Address:"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:fontFamily="@font/poppins_bold"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="tunis"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:fontFamily="@font/poppins_medium"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@color/lightgrey"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Via this Address: tunis"
+            android:text="Or send quick question via this form"
             android:layout_marginTop="@dimen/_12sdp"
-            android:fontFamily="@font/poppins_medium"/>
+            android:fontFamily="@font/poppins_bold"
+            android:textStyle="bold"/>
+
+       <include
+           layout="@layout/contactus_form"/>
 
 
 </LinearLayout>

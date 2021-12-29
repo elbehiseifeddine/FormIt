@@ -83,6 +83,9 @@ interface ApiInterface {
     @POST("/users/SendMail/{mail}")
     fun sendMail(@Path("mail",) mail: String?, @Body map : HashMap<String, String>): Call<String>
 
+    @POST("/users/SendMailToFormIt/{mail}")
+    fun sendMailToFormit(@Path("mail",) mail: String?, @Body map : HashMap<String, String>): Call<String>
+
     @POST("/users/resetpassword/{email}")
     fun resetPassword(@Path("email",) email: String?, @Body map : HashMap<String, String>): Call<String>
 

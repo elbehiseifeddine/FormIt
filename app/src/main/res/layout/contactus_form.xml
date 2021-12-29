@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <!--  This is the main content -->
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_margin="15dp" android:background="@drawable/frame"
+        android:orientation="vertical" android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Subject"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/Contact_us_EditEmailSubjectContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:helperTextTextColor="@color/red"
+            app:boxBackgroundColor="@color/white"
+            app:hintEnabled="false"
+            tools:layout_editor_absoluteX="32dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ti_Contact_us_EditEmailSubject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableTint="@color/hintColor"
+                android:fontFamily="@font/poppins_medium"
+                android:inputType="text"
+                android:hint="Subject"
+                android:textColorHint="@color/hintColor"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Body"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/Contact_us_EditEmailBodyContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:helperTextTextColor="@color/red"
+                app:boxBackgroundColor="@color/white"
+                app:hintEnabled="false"
+                tools:layout_editor_absoluteX="32dp">
+
+                <EditText
+                    android:id="@+id/ti_Contact_us_EditEmailBody"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="7dp"
+                    android:gravity="top|left"
+                    android:hint="insert your question here"
+                    android:inputType="textMultiLine"
+                    android:lines="4"
+                    android:scrollHorizontally="false"
+                    android:scrollbarStyle="insideInset"
+                    android:scrollbars="vertical"/>
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_Contact_us_Send_Mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="Send mail"
+            android:background="@drawable/gradient_background_and_rounded"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_gravity="bottom"
+            android:textSize="@dimen/_11ssp"/>
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progBarContactUs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_Contact_us_Send_Mail" />
+    </LinearLayout>
+
+    <!--  This is the title label -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:text="Contact Us"
+        android:layout_marginStart="30dp"
+        android:textColor="@android:color/black" />
+
+</FrameLayout>

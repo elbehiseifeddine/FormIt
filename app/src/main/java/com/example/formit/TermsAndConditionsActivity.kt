@@ -10,7 +10,7 @@ class TermsAndConditionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_terms_and_conditions)
 
-        toolbar_title.text="Edit Profile"
+        toolbar_title.text="Term & conditions"
         button_Right.visibility= View.GONE
 
 
