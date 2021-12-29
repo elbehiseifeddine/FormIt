@@ -19,6 +19,7 @@
     <color name="bulleDiscussionGreen">#06BC24</color>
     <color name="grey">#7E7E7E</color>
     <color name="lightgrey">#CCCCCC</color>
+    <color name="verylightgrey">#E4E4E4</color>
     <color name="tansparentColor">#00FFFFFF</color>
     <color name="colorAccent">#fb8c00</color>
 </resources>
