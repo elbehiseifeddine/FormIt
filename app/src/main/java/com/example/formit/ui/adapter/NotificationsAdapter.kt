@@ -2,6 +2,7 @@ package com.example.formit.ui.adapter
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.formit.R
 import com.example.formit.data.model.Notification
 import com.example.formit.ui.view.activitys.PREF_NAME
+import kotlinx.android.synthetic.main.item_course_discussion.view.*
 import kotlinx.android.synthetic.main.item_notification.view.*
 
 
@@ -31,6 +33,10 @@ class NotificationsAdapter(var notifications: MutableList<Notification>) :
             AnimationUtils.loadAnimation(holder.itemView.context, R.anim.animation_from_right)
         holder.itemView.startAnimation(animation)
         holder.itemView.apply {
+
+            val d = notifications[position].createdAt.time
+            val now = System.currentTimeMillis()
+            tv_Notification_Time.text= DateUtils.getRelativeTimeSpanString(d,now, DateUtils.SECOND_IN_MILLIS)
             tv_Notification_Object.text = notifications[position].notificationTitle
             tv_Notification_Description.text = notifications[position].notificationDescription
         }
