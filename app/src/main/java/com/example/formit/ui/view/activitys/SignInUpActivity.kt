@@ -30,8 +30,8 @@ const val FIRSTNAME= "FIRSTNAME"
 const val LASTNAME= "LASTNAME"
 
 
-const val SERVER_PATH= "http://192.168.1.155:3000"
-const val SERVER_CHAT_PATH= "ws://192.168.1.155:3000"
+const val SERVER_PATH= "http://192.168.1.132:3000"
+const val SERVER_CHAT_PATH= "ws://192.168.1.132:3000"
 
 const val ADDRESS= "ADDRESS"
 const val PICTURE= "PICTURE"

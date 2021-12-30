@@ -71,7 +71,7 @@ class home_coachesFragment : Fragment(R.layout.fragment_home_coaches) {
                     Response<MutableList<Course>>
                 ) {
                     val courses = response.body()
-                    if (courses != null) {
+                    if (courses != null && courses.isNotEmpty()) {
 
                         Log.e("courses", courses.toString())
                         val adapter = CoursesCoachAdapter(courses)
