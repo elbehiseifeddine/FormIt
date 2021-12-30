@@ -42,7 +42,7 @@ class BookmarkFragment : Fragment(R.layout.fragment_bookmark) {
                 Response<MutableList<Course>>
             ) {
                 val courses = response.body()
-                if (courses != null) {
+                if (courses != null && courses.isNotEmpty()) {
                     Log.e("courses", courses.toString())
                     val adapter = CoursesAdapter(courses,true)
                     rv_courses.adapter = adapter

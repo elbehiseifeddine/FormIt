@@ -81,7 +81,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         Response<MutableList<Course>>
                     ) {
                         val courses = response.body()
-                        if (courses != null) {
+                        if (courses != null && courses.isNotEmpty()) {
 
                             Log.e("aaaacourses", courses.toString())
                             val adapter = HomeCouseAdapter(courses, false)
@@ -107,7 +107,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         Response<MutableList<Event>>
                     ) {
                         val event = response.body()
-                        if (event != null) {
+                        if (event != null && event.isNotEmpty()) {
                             Log.e("courses", event.toString())
                             val adapter = HomeEventAdapter(event, false)
                             rv_events.adapter = adapter

@@ -89,6 +89,9 @@ interface ApiInterface {
     @POST("/users/resetpassword/{email}")
     fun resetPassword(@Path("email",) email: String?, @Body map : HashMap<String, String>): Call<String>
 
+    @GET("/users/DeleteNotification/{idUser}/{idNotification}")
+    fun deleteNotification(@Path("idUser") idUser: String?,@Path("idNotification") idNotification: String?): Call<String>
+
 
     data class SearchResponse(
         @SerializedName("courses")

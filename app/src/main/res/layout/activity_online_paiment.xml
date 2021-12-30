@@ -48,7 +48,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_4sdp"
-                    android:="@dimen/_4sdp"
                     android:fontFamily="@font/poppins_bold"
                     android:text="Commande"
                     android:textColor="@color/black"

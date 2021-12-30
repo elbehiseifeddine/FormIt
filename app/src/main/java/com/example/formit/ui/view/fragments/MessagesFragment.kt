@@ -171,7 +171,7 @@ class MessagesFragment: Fragment() {
                 Response<MutableList<Conversation>>
             ) {
                 val conversations = response.body()
-                if (conversations != null) {
+                if (conversations != null && conversations.isNotEmpty()) {
                     Log.e("conversations coaches aaaaaaaaaaaaaaaaaaa",conversations.toString())
                     val adapterCoache =CoacheDiscussionAdapter(conversations,
                         mSharedPref.getString(ID, "").toString(),
@@ -205,7 +205,7 @@ class MessagesFragment: Fragment() {
                 Response<MutableList<Conversation>>
             ) {
                 val conversations = response.body()
-                if (conversations != null) {
+                if (conversations != null && conversations.isNotEmpty()) {
                     //Log.e("conversations coaches aaaaaaaaaaaaaaaaaaa",conversations.toString())
 
 

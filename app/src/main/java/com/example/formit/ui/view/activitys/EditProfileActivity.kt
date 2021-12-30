@@ -81,7 +81,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
         if(mSharedPref.getString(PICTURE, "").toString()=="avatar default.png")
         {
-            profilePic!!.setImageResource(R.drawable.male_student)
+            ProfilePicture.setImageResource(R.drawable.male_student)
         }
         else
         {
