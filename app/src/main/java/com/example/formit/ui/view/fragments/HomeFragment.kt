@@ -18,6 +18,7 @@ import com.example.formit.data.model.Event
 import com.example.formit.ui.adapter.HomeCouseAdapter
 import com.example.formit.ui.adapter.HomeEventAdapter
 import com.example.formit.ui.view.activitys.*
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -98,13 +99,22 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                             pulltorefresh.isRefreshing = false
                         } else {
                             Log.e("Username or Password wrong", "true")
+                            rv_courses.visibility=View.GONE
+                            tv_NoAvailableCourses.visibility=View.VISIBLE
                         }
+
                         progBarFragHome.visibility = View.GONE
 
                     }
 
                     override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
                         Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
+                        progBarFragHome.visibility = View.GONE
+                        pulltorefresh.isRefreshing = false
+
+                        Snackbar.make(view as View, "Connection Error", Snackbar.LENGTH_LONG).setAction("Retry") {
+                            getCoursesNotParticipated()
+                        }.show()
                     }
                 })
             Log.e("***************id user ", mSharedPref.getString(ID, "").toString())
@@ -115,6 +125,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         call: Call<MutableList<Event>>, response:
                         Response<MutableList<Event>>
                     ) {
+
                         val event = response.body()
                         if (event != null && event.isNotEmpty()) {
                             Log.e("courses", event.toString())
@@ -124,8 +135,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                         } else {
                             Log.e("Username or Password wrong", "true")
+                            rv_events.visibility=View.GONE
+                            tv_NoAvailableEvents.visibility=View.VISIBLE
                         }
-
+                        scroll_view.visibility=View.VISIBLE
+                        iv_no_connection.visibility=View.GONE
                         progBarFragHome.visibility = View.GONE
                         requireActivity().window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
@@ -133,6 +147,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
                     override fun onFailure(call: Call<MutableList<Event>>, t: Throwable) {
                         Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
+                        pulltorefresh.isRefreshing = false
+                        scroll_view.visibility=View.GONE
+                        iv_no_connection.visibility=View.VISIBLE
+                        progBarFragHome.visibility = View.GONE
+                        requireActivity().window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                     }
                 }
                 )
@@ -146,5 +165,3 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onResume()
     }
 }
-
-

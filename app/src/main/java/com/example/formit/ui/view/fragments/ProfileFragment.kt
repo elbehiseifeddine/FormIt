@@ -298,8 +298,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
 
+        pulltorefresh.setOnRefreshListener {LoadUserParticipatedData()}
 
-        LoadUserParticipatedData()
     }
 
     override fun onResume() {
@@ -307,8 +307,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             mSharedPref.getString(FIRSTNAME, "").toString() + " " + mSharedPref.getString(LASTNAME,"")
         )
         tv_ProfileEmail.setText(mSharedPref.getString(EMAIL, "").toString())
-
-
+        LoadUserParticipatedData()
         super.onResume()
     }
 
@@ -327,7 +326,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
 
                 val courses = response.body()
-                if (courses != null) {
+                if (courses != null&& courses.isNotEmpty()) {
                     Log.e("coursessssssssssssssssssssss     ", courses.toString())
                     val adapter = HomeCouseAdapter(courses, true)
                     Profile_Enrolled_courses.adapter = adapter
@@ -335,6 +334,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 } else {
                     Log.e("Username or Password wrong", "true")
+                    Profile_Enrolled_courses.visibility=View.GONE
+                    tv_NoEnrolledCourses.visibility=View.VISIBLE
                 }
 
                 progBarFragProfile.visibility = View.GONE
@@ -353,7 +354,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 Response<MutableList<Event>>
             ) {
                 val events = response.body()
-                if (events != null) {
+                if (events != null&& events.isNotEmpty()) {
                     Log.e("coursessssssssssssssssssssss     ", events.toString())
                     val adapter = HomeEventAdapter(events, true)
                     Profile_Participated_events.adapter = adapter
@@ -361,8 +362,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 } else {
                     Log.e("Username or Password wrong", "true")
+                    Profile_Participated_events.visibility=View.GONE
+                    tv_NoParticipatedEvents.visibility=View.VISIBLE
                 }
-
+                pulltorefresh.isRefreshing = false
+                scroll_view.visibility=View.VISIBLE
+                iv_no_connection.visibility=View.GONE
                 progBarFragProfile.visibility = View.GONE
                 requireActivity().window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
@@ -370,6 +375,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
             override fun onFailure(call: Call<MutableList<Event>>, t: Throwable) {
                 Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
+                pulltorefresh.isRefreshing = false
+                scroll_view.visibility=View.GONE
+                iv_no_connection.visibility=View.VISIBLE
+                progBarFragProfile.visibility = View.GONE
+                requireActivity().window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             }
         })
 

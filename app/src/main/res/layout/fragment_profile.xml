@@ -1,622 +1,677 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Profile_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:orientation="vertical"
     android:theme="@style/Theme.FormItMaterialComponents"
-    android:id="@+id/Profile_fragment"
     tools:context=".ui.view.activitys.HomeActivity">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <include layout="@layout/reusable_toolbar" />
-    <LinearLayout
-        android:id="@+id/profileStudentLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
+
+    <include layout="@layout/reusable_toolbar" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/pulltorefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                android:layout_gravity="center">
-
-
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
-                        android:layout_gravity="fill"
-                        android:background="@color/white"
-                        android:backgroundTint="@color/white"
-                        app:cardCornerRadius="80dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                    <LinearLayout
+                        android:id="@+id/profileStudentLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_10sdp">
 
-                            <ImageView
-                                android:id="@+id/ProfilePicture"
+                            <androidx.constraintlayout.widget.ConstraintLayout
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:layout_gravity="center">
+
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="110dp"
+                                    android:layout_height="110dp"
+                                    android:layout_gravity="fill"
+                                    android:background="@color/white"
+                                    android:backgroundTint="@color/white"
+                                    app:cardCornerRadius="80dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+
+                                    <ImageView
+                                        android:id="@+id/ProfilePicture"
+                                        android:layout_width="match_parent"
+
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/male_student" />
+
+
+                                </androidx.cardview.widget.CardView>
+
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/ProfileUserConnected"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/btn_circular"
+                                    android:backgroundTint="@color/white"
+                                    app:cardCornerRadius="40dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="0.9"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintVertical_bias="0.9">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        android:background="@color/white"
+                                        android:backgroundTint="@color/white"
+                                        app:cardCornerRadius="40dp"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:elevation="10dp"
+                                            android:scaleType="centerCrop"
+                                            android:src="@color/bulleDiscussionGreen"
+                                            app:layout_constraintBottom_toBottomOf="parent"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+                                    </androidx.cardview.widget.CardView>
+                                </androidx.cardview.widget.CardView>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <TextView
+                                android:id="@+id/tv_ProfileFullName"
                                 android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:fontFamily="@font/poppins_bold"
+                                android:gravity="center"
+                                android:text="Ahmed Ben Dahmen"
+                                android:textColor="@color/black"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
 
-                                android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/male_student" />
+                            <TextView
+                                android:id="@+id/tv_ProfileEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:gravity="center"
+                                android:text="ahmed.bendahmen@esprit.tn"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/Profile_options"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
 
 
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/btn_ProfileAchievements"
+                                android:layout_width="@dimen/_85sdp"
+                                android:layout_height="@dimen/_85sdp"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/_20sdp"
+                                android:layout_weight="1"
+                                android:elevation="10dp"
+                                app:cardCornerRadius="@dimen/_16sdp">
 
-                    </androidx.cardview.widget.CardView>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="@dimen/_40sdp"
+                                        android:layout_height="@dimen/_40sdp"
+                                        android:background="@drawable/icon_container_achievements"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:id="@+id/iv_AchievmentId"
+                                            android:layout_width="@dimen/_20sdp"
+                                            android:layout_height="@dimen/_20sdp"
+                                            android:src="@drawable/ic_sliver" />
 
 
+                                    </LinearLayout>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/ProfileUserConnected"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    app:cardCornerRadius="40dp"
-                    android:background="@drawable/btn_circular"
-                    android:backgroundTint="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.9"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.9">
+                                    <TextView
+                                        android:id="@+id/tv_Achievement"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/_4sdp"
+                                        android:fontFamily="@font/poppins_semibold"
+                                        android:gravity="center"
+                                        android:text="Bronze"
+                                        android:textColor="#2E363E"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        app:cardCornerRadius="40dp"
-                        android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:backgroundTint="@color/white"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
 
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:elevation="10dp"
-                            android:scaleType="centerCrop"
-                            android:src="@color/bulleDiscussionGreen"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/ProfileSettings"
+                                android:layout_width="@dimen/_85sdp"
+                                android:layout_height="@dimen/_85sdp"
+                                android:layout_gravity="center"
+                                android:layout_margin="@dimen/_20sdp"
+                                android:layout_weight="1"
+                                android:elevation="10dp"
+                                app:cardCornerRadius="@dimen/_16sdp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="@dimen/_40sdp"
+                                        android:layout_height="@dimen/_40sdp"
+                                        android:background="@drawable/icon_container_settings"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="@dimen/_20sdp"
+                                            android:layout_height="@dimen/_20sdp"
+                                            android:src="@drawable/ic_settings" />
+
+
+                                    </LinearLayout>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/_4sdp"
+                                        android:fontFamily="@font/poppins_semibold"
+                                        android:gravity="center"
+                                        android:text="Settings"
+                                        android:textColor="#2E363E"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+                        </LinearLayout>
+
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/progBarFragProfile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:indeterminate="true"
+                            android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.cardview.widget.CardView>
-                </androidx.cardview.widget.CardView>
+                            app:layout_constraintTop_toBottomOf="@id/Profile_options" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        <LinearLayout
+                            android:id="@+id/CourseTextLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_ProfileFullName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:fontFamily="@font/poppins_bold"
-                android:gravity="center"
-                android:text="Ahmed Ben Dahmen"
-                android:textColor="@color/black"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="Enrolled Courses"
+                                android:textColor="#2E363E"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_ProfileEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ahmed.bendahmen@esprit.tn"
-                android:fontFamily="@font/poppins"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:gravity="center"/>
-        </LinearLayout>
+                            <TextView
+                                android:id="@+id/Profile_CourseSeeAll"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="20dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="See all"
+                                android:textAlignment="viewEnd"
+                                android:textColor="#87C2FF"
+                                android:textSize="@dimen/_10ssp"
+                                android:textStyle="bold" />
 
-        <LinearLayout
-            android:id="@+id/Profile_options"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal">
+                        </LinearLayout>
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/Profile_Enrolled_courses"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" />
+                        <TextView
+                            android:id="@+id/tv_NoEnrolledCourses"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginVertical="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="No Enrolled Courses Available"
+                            android:textColor="#2E363E"
+                            android:visibility="gone"
+                            android:textSize="16sp"
+                            />
 
+                        <LinearLayout
+                            android:id="@+id/EventTextLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/btn_ProfileAchievements"
-                android:layout_width="@dimen/_85sdp"
-                android:layout_height="@dimen/_85sdp"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:elevation="10dp"
-                app:cardCornerRadius="@dimen/_16sdp"
-                android:layout_weight="1">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="Participated Events"
+                                android:textColor="#2E363E"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/Profile_EventsSeeAll"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="20dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="See all"
+                                android:textAlignment="viewEnd"
+                                android:textColor="#87C2FF"
+                                android:textSize="@dimen/_10ssp"
+                                android:textStyle="bold" />
 
-                    <LinearLayout
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:background="@drawable/icon_container_achievements"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/iv_AchievmentId"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/ic_sliver" />
-
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tv_Achievement"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:gravity="center"
-                        android:text="Bronze"
-                        android:textColor="#2E363E"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:id="@+id/ProfileSettings"
-                android:layout_width="@dimen/_85sdp"
-                android:layout_height="@dimen/_85sdp"
-                android:layout_gravity="center"
-                android:elevation="10dp"
-                android:layout_margin="@dimen/_20sdp"
-                app:cardCornerRadius="@dimen/_16sdp"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:background="@drawable/icon_container_settings"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/ic_settings" />
-
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/Profile_Participated_events"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" />
+                        <TextView
+                            android:id="@+id/tv_NoParticipatedEvents"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginVertical="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="No Participated Events Available"
+                            android:textColor="#2E363E"
+                            android:visibility="gone"
+                            android:textSize="16sp"
+                            />
 
                     </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/profileCoacheLayout"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:gravity="center"
-                        android:text="Settings"
-                        android:textColor="#2E363E"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:layout_marginBottom="75dp"
+                        android:orientation="vertical">
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="115dp"
+                            android:layout_height="115dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:background="@color/white"
+                            android:backgroundTint="@color/white"
+                            app:cardCornerRadius="60dp">
+
+                            <ImageView
+                                android:id="@+id/CoacheProfilePicture"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/male_student"
+                                tools:layout_editor_absoluteX="16dp"
+                                tools:layout_editor_absoluteY="27dp" />
+
+                        </androidx.cardview.widget.CardView>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_18sdp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/_18sdp"
+                                android:layout_marginBottom="@dimen/_20sdp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_FullNameCoache"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:gravity="center"
+                                    android:text="Ahmed Ben Dahmen"
+                                    android:textColor="@color/black"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <Button
+                                    android:id="@+id/btn_Upload_imageCoache"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_20sdp"
+                                    android:background="@drawable/gradient_background_and_rounded"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:text="Upload Image"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_11ssp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="@dimen/_3sdp"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Email Address"
+                                    android:textColor="@color/grey"
+                                    android:textSize="14sp" />
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/EditEmailContainerCoache"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:boxBackgroundColor="@color/white"
+                                    app:helperTextTextColor="@color/red"
+                                    app:hintEnabled="false"
+                                    tools:layout_editor_absoluteX="32dp">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/ti_EditEmailCoache"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:drawableTint="@color/hintColor"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:inputType="textEmailAddress"
+                                        android:text="EmailAddress@gmail.com"
+                                        android:textColorHint="@color/hintColor"
+                                        android:textSize="14sp" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="@dimen/_3sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="First Name"
+                                    android:textColor="@color/grey"
+                                    android:textSize="14sp" />
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/EditFirstNameContainerCoache"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:boxBackgroundColor="@color/white"
+                                    app:helperTextTextColor="@color/red"
+                                    app:hintEnabled="false"
+                                    tools:layout_editor_absoluteX="32dp">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/ti_EditFirstNameCoache"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:drawableTint="@color/hintColor"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:inputType="text"
+                                        android:text="First Name"
+                                        android:textColorHint="@color/hintColor"
+                                        android:textSize="14sp" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="@dimen/_3sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Last Name"
+                                    android:textColor="@color/grey"
+                                    android:textSize="14sp" />
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/EditLastNameContainerCoache"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:boxBackgroundColor="@color/white"
+                                    app:helperTextTextColor="@color/red"
+                                    app:hintEnabled="false"
+                                    tools:layout_editor_absoluteX="32dp">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/ti_EditLastNameCoache"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:drawableTint="@color/hintColor"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:inputType="text"
+                                        android:text="Last Name"
+                                        android:textColorHint="@color/hintColor"
+                                        android:textSize="14sp" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="@dimen/_3sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="BirthDate"
+                                    android:textColor="@color/grey"
+                                    android:textSize="14sp" />
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/EditBirthdateContainerCoache"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:boxBackgroundColor="@color/white"
+                                    app:helperTextTextColor="@color/red"
+                                    app:hintEnabled="false"
+                                    tools:layout_editor_absoluteX="32dp">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/ti_EditBirthdateCoache"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:drawableTint="@color/hintColor"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:hint="BirthDate"
+                                        android:inputType="text"
+                                        android:textColorHint="@color/hintColor"
+                                        android:textSize="14sp" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="@dimen/_3sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Phone Number"
+                                    android:textColor="@color/grey"
+                                    android:textSize="14sp" />
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/EditPhoneNumberContainerCoache"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:boxBackgroundColor="@color/white"
+                                    app:helperTextTextColor="@color/red"
+                                    app:hintEnabled="false"
+                                    tools:layout_editor_absoluteX="32dp">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/ti_EditPhoneNumberCoache"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:drawableTint="@color/hintColor"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:inputType="number"
+                                        android:text="Phone Number"
+                                        android:textColorHint="@color/hintColor"
+                                        android:textSize="14sp" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="@dimen/_3sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Address"
+                                    android:textColor="@color/grey"
+                                    android:textSize="14sp" />
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/EditAddressContainerCoache"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:boxBackgroundColor="@color/white"
+                                    app:helperTextTextColor="@color/red"
+                                    app:hintEnabled="false"
+                                    tools:layout_editor_absoluteX="32dp">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/ti_EditAddressCoache"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:drawableTint="@color/hintColor"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:inputType="text"
+                                        android:text="Address"
+                                        android:textColorHint="@color/hintColor"
+                                        android:textSize="14sp" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+
+                            <Button
+                                android:id="@+id/btn_UpdateCoache"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_20sdp"
+                                android:background="@drawable/gradient_background_and_rounded"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="Edit Profile"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_11ssp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/progBarFragProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Profile_options" />
-        <LinearLayout
-            android:id="@+id/CourseTextLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_semibold"
-                android:layout_marginLeft="20dp"
-                android:text="Enrolled Courses"
-                android:textColor="#2E363E"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/Profile_CourseSeeAll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_medium"
-                android:layout_marginRight="20dp"
-                android:text="See all"
-                android:textAlignment="viewEnd"
-                android:textColor="#87C2FF"
-                android:textSize="@dimen/_10ssp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Profile_Enrolled_courses"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
-
-        <LinearLayout
-            android:id="@+id/EventTextLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_semibold"
-                android:layout_marginLeft="20dp"
-                android:text="Participated Events"
-                android:textColor="#2E363E"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/Profile_EventsSeeAll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_medium"
-                android:layout_marginRight="20dp"
-                android:text="See all"
-                android:textAlignment="viewEnd"
-                android:textColor="#87C2FF"
-                android:textSize="@dimen/_10ssp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Profile_Participated_events"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/profileCoacheLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="75dp"
-        android:orientation="vertical">
-
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="115dp"
-            android:layout_height="115dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
-            app:cardCornerRadius="60dp">
+            </androidx.core.widget.NestedScrollView>
 
             <ImageView
-                android:id="@+id/CoacheProfilePicture"
+                android:id="@+id/iv_no_connection"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/male_student"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="27dp" />
-
-        </androidx.cardview.widget.CardView>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_18sdp"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_18sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_FullNameCoache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:gravity="center"
-                    android:text="Ahmed Ben Dahmen"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/btn_Upload_imageCoache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:text="Upload Image"
-                    android:background="@drawable/gradient_background_and_rounded"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textSize="@dimen/_11ssp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_3sdp"
-                    android:fontFamily="@font/poppins"
-                    android:text="Email Address"
-                    android:textColor="@color/grey"
-                    android:textSize="14sp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/EditEmailContainerCoache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:helperTextTextColor="@color/red"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintEnabled="false"
-                    tools:layout_editor_absoluteX="32dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ti_EditEmailCoache"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableTint="@color/hintColor"
-                        android:fontFamily="@font/poppins_medium"
-                        android:inputType="textEmailAddress"
-                        android:text="EmailAddress@gmail.com"
-                        android:textColorHint="@color/hintColor"
-                        android:textSize="14sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins"
-                    android:text="First Name"
-                    android:textColor="@color/grey"
-                    android:textSize="14sp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/EditFirstNameContainerCoache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:helperTextTextColor="@color/red"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintEnabled="false"
-                    tools:layout_editor_absoluteX="32dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ti_EditFirstNameCoache"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableTint="@color/hintColor"
-                        android:fontFamily="@font/poppins_medium"
-                        android:inputType="text"
-                        android:text="First Name"
-                        android:textColorHint="@color/hintColor"
-                        android:textSize="14sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins"
-                    android:text="Last Name"
-                    android:textColor="@color/grey"
-                    android:textSize="14sp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/EditLastNameContainerCoache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:helperTextTextColor="@color/red"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintEnabled="false"
-                    tools:layout_editor_absoluteX="32dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ti_EditLastNameCoache"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableTint="@color/hintColor"
-                        android:fontFamily="@font/poppins_medium"
-                        android:inputType="text"
-                        android:text="Last Name"
-                        android:textColorHint="@color/hintColor"
-                        android:textSize="14sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins"
-                    android:text="BirthDate"
-                    android:textColor="@color/grey"
-                    android:textSize="14sp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/EditBirthdateContainerCoache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:helperTextTextColor="@color/red"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintEnabled="false"
-                    tools:layout_editor_absoluteX="32dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ti_EditBirthdateCoache"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableTint="@color/hintColor"
-                        android:fontFamily="@font/poppins_medium"
-                        android:inputType="text"
-                        android:hint="BirthDate"
-                        android:textColorHint="@color/hintColor"
-                        android:textSize="14sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins"
-                    android:text="Phone Number"
-                    android:textColor="@color/grey"
-                    android:textSize="14sp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/EditPhoneNumberContainerCoache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:helperTextTextColor="@color/red"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintEnabled="false"
-                    tools:layout_editor_absoluteX="32dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ti_EditPhoneNumberCoache"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableTint="@color/hintColor"
-                        android:fontFamily="@font/poppins_medium"
-                        android:inputType="number"
-                        android:text="Phone Number"
-                        android:textColorHint="@color/hintColor"
-                        android:textSize="14sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins"
-                    android:text="Address"
-                    android:textColor="@color/grey"
-                    android:textSize="14sp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/EditAddressContainerCoache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:helperTextTextColor="@color/red"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintEnabled="false"
-                    tools:layout_editor_absoluteX="32dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ti_EditAddressCoache"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableTint="@color/hintColor"
-                        android:fontFamily="@font/poppins_medium"
-                        android:inputType="text"
-                        android:text="Address"
-                        android:textColorHint="@color/hintColor"
-                        android:textSize="14sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <Button
-                android:id="@+id/btn_UpdateCoache"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:text="Edit Profile"
-                android:background="@drawable/gradient_background_and_rounded"
-                android:textColor="@color/white"
-                android:fontFamily="@font/poppins_bold"
-                android:textSize="@dimen/_11ssp"/>
-
+                android:src="@drawable/no_connection"
+                android:visibility="gone" />
         </LinearLayout>
-    </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>
