@@ -17,6 +17,8 @@ import com.example.formit.ui.view.activitys.ID
 import com.example.formit.ui.view.activitys.PREF_NAME
 import com.example.formit.ui.view.activitys.apiInterface
 import kotlinx.android.synthetic.main.fragment_bookmark.*
+import kotlinx.android.synthetic.main.fragment_bookmark.pulltorefresh
+import kotlinx.android.synthetic.main.fragment_bookmark.rv_courses
 import kotlinx.android.synthetic.main.reusable_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,11 +34,12 @@ class BookmarkFragment : Fragment(R.layout.fragment_bookmark) {
         val rootView: View = inflater.inflate(R.layout.fragment_bookmark, container, false)
         return rootView
     }
+
     lateinit var mSharedPref: SharedPreferences
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mSharedPref = requireActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        toolbar_title.text="My BookMark"
-        button_Right.visibility= View.GONE
+        toolbar_title.text = "My BookMark"
+        button_Right.visibility = View.GONE
         progBarFragBookmark.visibility = View.VISIBLE
         requireActivity().window.setFlags(
             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
@@ -44,35 +47,86 @@ class BookmarkFragment : Fragment(R.layout.fragment_bookmark) {
         )
 
 
+        pulltorefresh.setOnRefreshListener {
 
-        apiInterface.getCoursesBookmarked(mSharedPref.getString(ID,"")).enqueue(object : Callback<MutableList<Course>> {
-            override fun onResponse(
-                call: Call<MutableList<Course>>, response:
-                Response<MutableList<Course>>
-            ) {
+            apiInterface.getCoursesBookmarked(mSharedPref.getString(ID, ""))
+                .enqueue(object : Callback<MutableList<Course>> {
+                    override fun onResponse(
+                        call: Call<MutableList<Course>>, response:
+                        Response<MutableList<Course>>
+                    ) {
 
 
+                        val courses = response.body()
+                        if (courses != null && courses.isNotEmpty()) {
+                            Log.e("courses", courses.toString())
+                            val adapter = CoursesAdapter(courses, true)
+                            rv_courses.adapter = adapter
+                            rv_courses.layoutManager =
+                                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                            pulltorefresh.isRefreshing = false
+                        } else {
+                            Log.e("Username or Password wrong", "true")
+                            rv_courses.visibility=View.GONE
+                            tv_NoBookmarksYet.visibility=View.VISIBLE
+                        }
+                        scroll_view.visibility=View.VISIBLE
+                        iv_no_connection.visibility=View.GONE
+                        progBarFragBookmark.visibility = View.GONE
+                        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
 
-                val courses = response.body()
-                if (courses != null && courses.isNotEmpty()) {
-                    Log.e("courses", courses.toString())
-                    val adapter = CoursesAdapter(courses,true)
-                    rv_courses.adapter = adapter
-                    rv_courses.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                } else {
-                    Log.e("Username or Password wrong", "true")
+                    }
+
+                    override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
+                        Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
+                        pulltorefresh.isRefreshing = false
+                        scroll_view.visibility=View.GONE
+                        iv_no_connection.visibility=View.VISIBLE
+                        progBarFragBookmark.visibility = View.GONE
+                        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                    }
                 }
-                progBarFragBookmark.visibility = View.GONE
-                requireActivity().window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                )
+        }
+    }
+    override fun onResume() {
+
+        apiInterface.getCoursesBookmarked(mSharedPref.getString(ID, ""))
+            .enqueue(object : Callback<MutableList<Course>> {
+                override fun onResponse(
+                    call: Call<MutableList<Course>>, response:
+                    Response<MutableList<Course>>
+                ) {
 
 
+                    val courses = response.body()
+                    if (courses != null && courses.isNotEmpty()) {
+                        Log.e("courses", courses.toString())
+                        val adapter = CoursesAdapter(courses, true)
+                        rv_courses.adapter = adapter
+                        rv_courses.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                        pulltorefresh.isRefreshing = false
+                    } else {
+                        Log.e("Username or Password wrong", "true")
+                    }
+                    progBarFragBookmark.visibility = View.GONE
+                    requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
+
+                }
+
+                override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
+                    Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
+                    pulltorefresh.isRefreshing = false
+                    scroll_view.visibility=View.GONE
+                    iv_no_connection.visibility=View.VISIBLE
+                    progBarFragBookmark.visibility = View.GONE
+                    requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                }
             }
-
-            override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
-                Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
-            }
-        })
+            )
+        super.onResume()
     }
 }
