@@ -96,11 +96,7 @@ class ChatActivity : AppCompatActivity(), TextWatcher {
         override fun onOpen(webSocket: WebSocket, response: Response) {
             super.onOpen(webSocket, response)
             runOnUiThread {
-                Toast.makeText(
-                    this@ChatActivity,
-                    "Socket Connection Successful!",
-                    Toast.LENGTH_SHORT
-                ).show()
+                //Toast.makeText(this@ChatActivity, "Socket Connection Successful!",Toast.LENGTH_SHORT).show()
                 Log.e("-", "-------------------------------------------")
                 Log.e("before intialized", "true")
                 Log.e("-", "-------------------------------------------")

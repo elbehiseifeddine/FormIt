@@ -56,7 +56,7 @@ class PaimentMethodeActivity : AppCompatActivity() {
                 msg = token
             }
             Log.e(ContentValues.TAG, msg.toString())
-            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
         btn_payCourse.setOnClickListener {
             Log.e("CourseId",intent.getStringExtra("IDCOURS").toString())
