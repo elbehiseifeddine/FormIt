@@ -1,6 +1,5 @@
 package com.example.formit.ui.view.fragments
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -8,26 +7,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.formit.R
-import com.example.formit.data.model.*
-import com.example.formit.data.repository.ApiInterface
+import com.example.formit.data.model.Conversation
 import com.example.formit.ui.adapter.BubleMessageAdapter
 import com.example.formit.ui.adapter.CoacheDiscussionAdapter
 import com.example.formit.ui.adapter.CourseDiscussionAdapter
-import com.example.formit.ui.adapter.HomeCouseAdapter
 import com.example.formit.ui.view.activitys.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_messages.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.WebSocket
-import okhttp3.WebSocketListener
-import org.json.JSONException
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -110,6 +100,15 @@ class MessagesFragment: Fragment() {
     }*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        button_Right.visibility= View.GONE
+
+        progBarFragMessage.visibility = View.VISIBLE
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+
+
         mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         if (mSharedPref.getString(ROLE,"").equals("coache")){
             updateTextWithRole.text="My Students"
@@ -139,6 +138,7 @@ class MessagesFragment: Fragment() {
                 call: Call<MutableList<Conversation>>, response:
                 Response<MutableList<Conversation>>
             ) {
+
                 val conversations = response.body()
                 if (conversations != null) {
                     Log.e("conversations",conversations.toString())
@@ -152,6 +152,9 @@ class MessagesFragment: Fragment() {
                 } else {
                     Log.e("Error from conversation course","true")
                 }
+
+                progBarFragMessage.visibility = View.GONE
+
             }
 
             override fun onFailure(call: Call<MutableList<Conversation>>, t: Throwable) {
@@ -170,6 +173,8 @@ class MessagesFragment: Fragment() {
                 call: Call<MutableList<Conversation>>, response:
                 Response<MutableList<Conversation>>
             ) {
+
+
                 val conversations = response.body()
                 if (conversations != null && conversations.isNotEmpty()) {
                     Log.e("conversations coaches aaaaaaaaaaaaaaaaaaa",conversations.toString())
@@ -185,12 +190,14 @@ class MessagesFragment: Fragment() {
                 } else {
                     Log.e("Error from conversation course","true")
                 }
+                progBarFragMessage.visibility = View.GONE
             }
 
             override fun onFailure(call: Call<MutableList<Conversation>>, t: Throwable) {
                 Log.e("failure conversation course",call.request().toString())
                 Log.e("failure conversation course",call.isExecuted.toString())
             }
+
         })
 
     }
@@ -204,6 +211,7 @@ class MessagesFragment: Fragment() {
                 call: Call<MutableList<Conversation>>, response:
                 Response<MutableList<Conversation>>
             ) {
+
                 val conversations = response.body()
                 if (conversations != null && conversations.isNotEmpty()) {
                     //Log.e("conversations coaches aaaaaaaaaaaaaaaaaaa",conversations.toString())
@@ -220,6 +228,9 @@ class MessagesFragment: Fragment() {
                 } else {
                     Log.e("Error from conversation course","true")
                 }
+                progBarFragMessage.visibility = View.GONE
+                requireActivity().window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
             }
 
             override fun onFailure(call: Call<MutableList<Conversation>>, t: Throwable) {

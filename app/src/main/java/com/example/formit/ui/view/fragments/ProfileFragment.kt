@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -238,7 +239,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             /*activity?.runOnUiThread{
                 LoadUserParticipatedData()
             }*/
-            LoadUserParticipatedData()
+
+
 
             Profile_CourseSeeAll.setOnClickListener {
                 Intent(activity, CoursesActivity::class.java).also {
@@ -294,6 +296,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             iv_AchievmentId.setImageResource(R.drawable.ic_gold)
             tv_Achievement.text="Gold"
         }
+
+
+
+        LoadUserParticipatedData()
     }
 
     override fun onResume() {
@@ -307,12 +313,19 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun LoadUserParticipatedData(){
+        progBarFragProfile.visibility = View.VISIBLE
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
         apiInterface.getCoursesParticipated(mSharedPref.getString(ID, "")).enqueue(object :
             Callback<MutableList<Course>> {
             override fun onResponse(
                 call: Call<MutableList<Course>>, response:
                 Response<MutableList<Course>>
             ) {
+
+
                 val courses = response.body()
                 if (courses != null) {
                     Log.e("coursessssssssssssssssssssss     ", courses.toString())
@@ -323,6 +336,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 } else {
                     Log.e("Username or Password wrong", "true")
                 }
+
+                progBarFragProfile.visibility = View.GONE
+
             }
 
             override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
@@ -346,6 +362,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 } else {
                     Log.e("Username or Password wrong", "true")
                 }
+
+                progBarFragProfile.visibility = View.GONE
+                requireActivity().window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
             }
 
             override fun onFailure(call: Call<MutableList<Event>>, t: Throwable) {

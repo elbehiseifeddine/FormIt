@@ -1,23 +1,19 @@
 package com.example.formit.ui.view.fragments
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.formit.R
 import com.example.formit.data.model.Course
-import com.example.formit.data.model.Event
-import com.example.formit.data.repository.ApiInterface
 import com.example.formit.ui.adapter.CoursesCoachAdapter
-import com.example.formit.ui.adapter.HomeCouseAdapter
-import com.example.formit.ui.adapter.HomeEventAdapter
 import com.example.formit.ui.view.activitys.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.pulltorefresh
@@ -63,7 +59,11 @@ class home_coachesFragment : Fragment(R.layout.fragment_home_coaches) {
     }
 
     private fun getOwnCourses() {
-
+        progBarFragHome_Coache.visibility = View.VISIBLE
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
         apiInterface.getOwnCourse(mSharedPref.getString(ID, ""))
             .enqueue(object : Callback<MutableList<Course>> {
                 override fun onResponse(
@@ -82,6 +82,9 @@ class home_coachesFragment : Fragment(R.layout.fragment_home_coaches) {
                     } else {
                         Log.e("Username or ----Password wrong", "true")
                     }
+                    progBarFragHome_Coache.visibility = View.GONE
+                    requireActivity().window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
                 }
 
                 override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {

@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -23,6 +24,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_edit_profile.*
+import kotlinx.android.synthetic.main.activity_sign_in_up.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,13 +42,21 @@ class EditProfileActivity : AppCompatActivity() {
     val now = Date()
     val fileName = formater.format(now)
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit_profile)
+
 
         storage = Firebase.storage
+
         profilePic = findViewById(R.id.ProfilePicture)
 
 
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_profile)
+        progBarEditProfile.visibility = View.GONE
+        btn_Update.visibility = View.VISIBLE
+
+        window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
+
         mSharedPref = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         toolbar_title.text="Edit Profile"
         button_Right.visibility= View.GONE
@@ -86,14 +96,21 @@ class EditProfileActivity : AppCompatActivity() {
         else
         {
             val filename2 = mSharedPref.getString(PICTURE, "").toString()
-            val path = "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F"+filename2+"?alt=media"
+            val path =
+                "https://firebasestorage.googleapis.com/v0/b/formit-f214c.appspot.com/o/images%2F$filename2?alt=media"
             Log.e("*******************************path image ",path)
             Glide.with(this)
                 .load(path)
                 .into(ProfilePicture)
         }
         btn_Update.setOnClickListener {
+            progBarEditProfile.visibility = View.VISIBLE
+            btn_Update.visibility = View.GONE
 
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
             val map: HashMap<String, String> = HashMap()
             map["email"] = ti_EditEmail.text.toString()
             map["firstname"] = ti_EditFirstName.text.toString()

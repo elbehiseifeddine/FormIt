@@ -1,24 +1,23 @@
 package com.example.formit.ui.view.fragments
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.formit.R
 import com.example.formit.data.model.Course
-import com.example.formit.data.repository.ApiInterface
 import com.example.formit.ui.adapter.CoursesAdapter
-import com.example.formit.ui.view.activitys.CoursesActivity
 import com.example.formit.ui.view.activitys.ID
 import com.example.formit.ui.view.activitys.PREF_NAME
 import com.example.formit.ui.view.activitys.apiInterface
 import kotlinx.android.synthetic.main.fragment_bookmark.*
+import kotlinx.android.synthetic.main.reusable_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,11 +35,25 @@ class BookmarkFragment : Fragment(R.layout.fragment_bookmark) {
     lateinit var mSharedPref: SharedPreferences
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mSharedPref = requireActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        toolbar_title.text="My BookMark"
+        button_Right.visibility= View.GONE
+        progBarFragBookmark.visibility = View.VISIBLE
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+
+
+
         apiInterface.getCoursesBookmarked(mSharedPref.getString(ID,"")).enqueue(object : Callback<MutableList<Course>> {
             override fun onResponse(
                 call: Call<MutableList<Course>>, response:
                 Response<MutableList<Course>>
             ) {
+
+
+
+
                 val courses = response.body()
                 if (courses != null && courses.isNotEmpty()) {
                     Log.e("courses", courses.toString())
@@ -51,6 +64,10 @@ class BookmarkFragment : Fragment(R.layout.fragment_bookmark) {
                 } else {
                     Log.e("Username or Password wrong", "true")
                 }
+                progBarFragBookmark.visibility = View.GONE
+                requireActivity().window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
+
             }
 
             override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {

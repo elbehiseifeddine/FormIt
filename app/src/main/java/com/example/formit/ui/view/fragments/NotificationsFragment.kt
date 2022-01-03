@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -23,7 +24,9 @@ import com.example.formit.ui.adapter.NotificationsAdapter
 import com.example.formit.ui.view.activitys.ID
 import com.example.formit.ui.view.activitys.PREF_NAME
 import com.example.formit.ui.view.activitys.apiInterface
+import kotlinx.android.synthetic.main.fragment_messages.*
 import kotlinx.android.synthetic.main.fragment_notifications.*
+import kotlinx.android.synthetic.main.reusable_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,6 +55,13 @@ class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
         /*activity?.runOnUiThread {
             LoadNotificationData()
         }*/
+        toolbar_title.text="My Notifications"
+        button_Right.visibility= View.GONE
+        progBarFragNotification.visibility = View.VISIBLE
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
         LoadNotificationData()
 
 
@@ -73,6 +83,8 @@ class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
                 call: Call<MutableList<Notification>>, response:
                 Response<MutableList<Notification>>
             ) {
+
+
                 val notifications = response.body()
 
 
@@ -152,6 +164,10 @@ class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
                 } else {
                     Log.e("********notifications******** wrong", "true")
                 }
+
+                progBarFragNotification.visibility = View.GONE
+                requireActivity().window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
             }
 
             override fun onFailure(call: Call<MutableList<Notification>>, t: Throwable) {

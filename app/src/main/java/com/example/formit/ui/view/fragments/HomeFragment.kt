@@ -8,13 +8,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.formit.R
 import com.example.formit.data.model.Course
 import com.example.formit.data.model.Event
-import com.example.formit.data.repository.ApiInterface
 import com.example.formit.ui.adapter.HomeCouseAdapter
 import com.example.formit.ui.adapter.HomeEventAdapter
 import com.example.formit.ui.view.activitys.*
@@ -46,6 +46,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         /*activity?.runOnUiThread {
             getCoursesNotParticipated()
         }*/
+        progBarFragHome.visibility = View.VISIBLE
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+
         pulltorefresh.setOnRefreshListener {getCoursesNotParticipated()}
         if (mSharedPref.getString(PICTURE, "").toString() == "avatar default.png") {
             profile_pic!!.setImageResource(R.drawable.male_student)
@@ -80,6 +86,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         call: Call<MutableList<Course>>, response:
                         Response<MutableList<Course>>
                     ) {
+
                         val courses = response.body()
                         if (courses != null && courses.isNotEmpty()) {
 
@@ -92,6 +99,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         } else {
                             Log.e("Username or Password wrong", "true")
                         }
+                        progBarFragHome.visibility = View.GONE
+
                     }
 
                     override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
@@ -116,6 +125,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         } else {
                             Log.e("Username or Password wrong", "true")
                         }
+
+                        progBarFragHome.visibility = View.GONE
+                        requireActivity().window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
                     }
 
                     override fun onFailure(call: Call<MutableList<Event>>, t: Throwable) {
