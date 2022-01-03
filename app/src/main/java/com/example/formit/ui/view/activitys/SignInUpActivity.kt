@@ -33,6 +33,7 @@ const val LASTNAME= "LASTNAME"
 const val SERVER_PATH= "https://formeit.herokuapp.com"
 const val SERVER_CHAT_PATH= "https://formeit.herokuapp.com"
 
+
 const val ADDRESS= "ADDRESS"
 const val PICTURE= "PICTURE"
 const val XP= "XP"
