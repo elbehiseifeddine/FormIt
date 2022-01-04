@@ -36,16 +36,12 @@ class HomeCouseAdapter(var courses: MutableList<Course>, var participated: Boole
     lateinit var mSharedPref: SharedPreferences
     override fun onBindViewHolder(holder: HomeCoursesViewHolder, position: Int) {
         mSharedPref = holder.itemView.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        if (mSharedPref.getInt(XP, 0) >= 500) {
-            price = (courses[position].price * 0.9).toInt()
-        } else {
-            price = courses[position].price
-        }
+
         if (participated) {
 
             holder.itemView.apply {
                 tv_CourseName.text = courses[position].courseName
-                tv_Cost.text = price.toString() + " dt"
+                tv_Cost.text = courses[position].price.toString() + " dt"
                 tv_Hours.text = courses[position].duration.toString() + " Hours"
                 tv_MentorName.text = courses[position].mentor.firstname
 
@@ -58,7 +54,7 @@ class HomeCouseAdapter(var courses: MutableList<Course>, var participated: Boole
                 val intent = Intent(holder.itemView.context, DescriptionActivity::class.java).also {
                     it.putExtra("ID", courses[position].id)
                     it.putExtra("NAME", courses[position].courseName)
-                    it.putExtra("PRICE", price.toString() + " dt")
+                    it.putExtra("PRICE", courses[position].price.toString() + " dt")
                     it.putExtra("DURATION", courses[position].duration.toString() + " Hours")
                     it.putExtra("MENTOR", courses[position].mentor.firstname)
                     it.putExtra("DESCRIPTION", courses[position].description)
@@ -72,6 +68,11 @@ class HomeCouseAdapter(var courses: MutableList<Course>, var participated: Boole
         }
 
         if (!participated) {
+            if (mSharedPref.getInt(XP, 0) >= 500) {
+                price = (courses[position].price * 0.9).toInt()
+            } else {
+                price = courses[position].price
+            }
             holder.itemView.apply {
                 tv_CourseName.text = courses[position].courseName
                 tv_Cost.text = price.toString() + " dt"
