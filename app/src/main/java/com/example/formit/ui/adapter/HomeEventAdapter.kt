@@ -63,6 +63,9 @@ class HomeEventAdapter (var events: MutableList<Event>, var bookmarked: Boolean)
     }
 
     override fun getItemCount(): Int {
+        if(events.size>3){
+            return 3
+        }
         return events.size
     }
 }
