@@ -58,6 +58,25 @@ class PaimentMethodeActivity : AppCompatActivity() {
             Log.e(ContentValues.TAG, msg.toString())
             //Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
+
+        CardView_PayCash.setOnClickListener {
+            rb_cash.isChecked=true
+            rb_credit.isChecked=false
+            rb_paypal.isChecked=false
+        }
+        CardView_Credit.setOnClickListener {
+            rb_cash.isChecked=false
+            rb_credit.isChecked=true
+            rb_paypal.isChecked=false
+        }
+        CardView_Paypal.setOnClickListener {
+            rb_cash.isChecked=false
+            rb_credit.isChecked=false
+            rb_paypal.isChecked=true
+        }
+
+
+
         btn_payCourse.setOnClickListener {
             Log.e("CourseId",intent.getStringExtra("IDCOURS").toString())
             Log.e("deviceId",msg.toString())
