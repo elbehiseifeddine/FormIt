@@ -56,10 +56,6 @@ class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
         toolbar_title.text = "My Notifications"
         button_Right.visibility = View.GONE
         progBarFragNotification.visibility = View.VISIBLE
-        requireActivity().window.setFlags(
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-        )
         pulltorefreshNotif.setOnRefreshListener {
             Log.e("********notificationsssssssssssssssssssssss********", "avvvvvvvvvvvvvvv")
             LoadNotificationData() }
@@ -79,152 +75,155 @@ class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
 
                 val notifications = response.body()
 
+                if(isAdded()) {
+                    if (notifications != null && notifications.isNotEmpty()) {
+                        Log.e("********notifications********", notifications.toString())
+                        val adapter = NotificationsAdapter(notifications, idUser)
+                        rv_notification.adapter = adapter
+                        rv_notification.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-                if (notifications != null && notifications.isNotEmpty()) {
-                    Log.e("********notifications********", notifications.toString())
-                    val adapter = NotificationsAdapter(notifications, idUser)
-                    rv_notification.adapter = adapter
-                    rv_notification.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
-                    pulltorefreshNotif.isRefreshing = false
-                    colorDrawableBackground = ColorDrawable(Color.parseColor("#ff0000"))
-                    deleteIcon =
-                        AppCompatResources.getDrawable(requireContext(), R.drawable.ic_delete)!!
-                    rv_notification.apply {
-                        //setHasFixedSize(true)
-                        //adapter.notifyDataSetChanged()
-                        //adapter = viewAdapter
-                        //layoutManager = viewManager
-                        addItemDecoration(
-                            DividerItemDecoration(
-                                this.context,
-                                DividerItemDecoration.VERTICAL
+                        pulltorefreshNotif.isRefreshing = false
+                        colorDrawableBackground = ColorDrawable(Color.parseColor("#ff0000"))
+                        deleteIcon =
+                            AppCompatResources.getDrawable(requireContext(), R.drawable.ic_delete)!!
+                        rv_notification.apply {
+                            //setHasFixedSize(true)
+                            //adapter.notifyDataSetChanged()
+                            //adapter = viewAdapter
+                            //layoutManager = viewManager
+                            addItemDecoration(
+                                DividerItemDecoration(
+                                    this.context,
+                                    DividerItemDecoration.VERTICAL
+                                )
                             )
-                        )
-                        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-                            0,
-                            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-                        ) {
-                            override fun onMove(
-                                recyclerView: RecyclerView,
-                                viewHolder: RecyclerView.ViewHolder,
-                                viewHolder2: RecyclerView.ViewHolder
-                            ): Boolean {
-                                return false
-                            }
-
-                            override fun onSwiped(
-                                viewHolder: RecyclerView.ViewHolder,
-                                swipeDirection: Int
+                            val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+                                0,
+                                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
                             ) {
-                                (adapter as NotificationsAdapter).removeItem(
-                                    viewHolder.adapterPosition,
-                                    viewHolder as NotificationsAdapter.NotificationViewHolder
-                                )
-                            }
-
-                            override fun onChildDraw(
-                                c: Canvas,
-                                recyclerView: RecyclerView,
-                                viewHolder: RecyclerView.ViewHolder,
-                                dX: Float,
-                                dY: Float,
-                                actionState: Int,
-                                isCurrentlyActive: Boolean
-                            ) {
-                                val itemView = viewHolder.itemView
-                                val iconMarginVertical =
-                                    (viewHolder.itemView.height - deleteIcon.intrinsicHeight) / 2
-                                if (dX > 0) {
-                                    colorDrawableBackground.setBounds(
-                                        itemView.left,
-                                        itemView.top,
-                                        dX.toInt(),
-                                        itemView.bottom
-                                    )
-                                    deleteIcon.setBounds(
-                                        itemView.left + iconMarginVertical,
-                                        itemView.top + iconMarginVertical,
-                                        itemView.left + iconMarginVertical + deleteIcon.intrinsicWidth,
-                                        itemView.bottom - iconMarginVertical
-                                    )
-                                } else {
-                                    colorDrawableBackground.setBounds(
-                                        itemView.right + dX.toInt(),
-                                        itemView.top,
-                                        itemView.right,
-                                        itemView.bottom
-                                    )
-                                    deleteIcon.setBounds(
-                                        itemView.right - iconMarginVertical - deleteIcon.intrinsicWidth,
-                                        itemView.top + iconMarginVertical,
-                                        itemView.right - iconMarginVertical,
-                                        itemView.bottom - iconMarginVertical
-                                    )
-                                    deleteIcon.level = 0
+                                override fun onMove(
+                                    recyclerView: RecyclerView,
+                                    viewHolder: RecyclerView.ViewHolder,
+                                    viewHolder2: RecyclerView.ViewHolder
+                                ): Boolean {
+                                    return false
                                 }
-                                colorDrawableBackground.draw(c)
-                                c.save()
-                                if (dX > 0)
-                                    c.clipRect(
-                                        itemView.left,
-                                        itemView.top,
-                                        dX.toInt(),
-                                        itemView.bottom
+
+                                override fun onSwiped(
+                                    viewHolder: RecyclerView.ViewHolder,
+                                    swipeDirection: Int
+                                ) {
+                                    (adapter as NotificationsAdapter).removeItem(
+                                        viewHolder.adapterPosition,
+                                        viewHolder as NotificationsAdapter.NotificationViewHolder
                                     )
-                                else
-                                    c.clipRect(
-                                        itemView.right + dX.toInt(),
-                                        itemView.top,
-                                        itemView.right,
-                                        itemView.bottom
+                                }
+
+                                override fun onChildDraw(
+                                    c: Canvas,
+                                    recyclerView: RecyclerView,
+                                    viewHolder: RecyclerView.ViewHolder,
+                                    dX: Float,
+                                    dY: Float,
+                                    actionState: Int,
+                                    isCurrentlyActive: Boolean
+                                ) {
+                                    val itemView = viewHolder.itemView
+                                    val iconMarginVertical =
+                                        (viewHolder.itemView.height - deleteIcon.intrinsicHeight) / 2
+                                    if (dX > 0) {
+                                        colorDrawableBackground.setBounds(
+                                            itemView.left,
+                                            itemView.top,
+                                            dX.toInt(),
+                                            itemView.bottom
+                                        )
+                                        deleteIcon.setBounds(
+                                            itemView.left + iconMarginVertical,
+                                            itemView.top + iconMarginVertical,
+                                            itemView.left + iconMarginVertical + deleteIcon.intrinsicWidth,
+                                            itemView.bottom - iconMarginVertical
+                                        )
+                                    } else {
+                                        colorDrawableBackground.setBounds(
+                                            itemView.right + dX.toInt(),
+                                            itemView.top,
+                                            itemView.right,
+                                            itemView.bottom
+                                        )
+                                        deleteIcon.setBounds(
+                                            itemView.right - iconMarginVertical - deleteIcon.intrinsicWidth,
+                                            itemView.top + iconMarginVertical,
+                                            itemView.right - iconMarginVertical,
+                                            itemView.bottom - iconMarginVertical
+                                        )
+                                        deleteIcon.level = 0
+                                    }
+                                    colorDrawableBackground.draw(c)
+                                    c.save()
+                                    if (dX > 0)
+                                        c.clipRect(
+                                            itemView.left,
+                                            itemView.top,
+                                            dX.toInt(),
+                                            itemView.bottom
+                                        )
+                                    else
+                                        c.clipRect(
+                                            itemView.right + dX.toInt(),
+                                            itemView.top,
+                                            itemView.right,
+                                            itemView.bottom
+                                        )
+                                    deleteIcon.draw(c)
+                                    c.restore()
+                                    super.onChildDraw(
+                                        c,
+                                        recyclerView,
+                                        viewHolder,
+                                        dX,
+                                        dY,
+                                        actionState,
+                                        isCurrentlyActive
                                     )
-                                deleteIcon.draw(c)
-                                c.restore()
-                                super.onChildDraw(
-                                    c,
-                                    recyclerView,
-                                    viewHolder,
-                                    dX,
-                                    dY,
-                                    actionState,
-                                    isCurrentlyActive
-                                )
+                                }
                             }
+                            val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+                            itemTouchHelper.attachToRecyclerView(rv_notification)
+                            adapter.notifyDataSetChanged()
                         }
-                        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-                        itemTouchHelper.attachToRecyclerView(rv_notification)
-                        adapter.notifyDataSetChanged()
+
+
+                    } else {
+                        Log.e("********notifications******** wrong", "true")
+                        rv_notification.visibility = View.GONE
+                        tv_NoNotificationYet.visibility = View.VISIBLE
                     }
-
-
-                } else {
-                    Log.e("********notifications******** wrong", "true")
-                    rv_notification.visibility=View.GONE
-                    tv_NoNotificationYet.visibility=View.VISIBLE
+                    scroll_view.visibility = View.VISIBLE
+                    iv_no_connection.visibility = View.GONE
+                    progBarFragNotification.visibility = View.GONE
                 }
-                scroll_view.visibility=View.VISIBLE
-                iv_no_connection.visibility=View.GONE
-                progBarFragNotification.visibility = View.GONE
-                requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
             }
 
             override fun onFailure(call: Call<MutableList<Notification>>, t: Throwable) {
                 Log.e("notifaaaaaaaaaaaaaaaaaaaaaaaa", "true")
-                pulltorefreshNotif.isRefreshing = false
-                scroll_view.visibility=View.GONE
-                iv_no_connection.visibility=View.VISIBLE
-                progBarFragNotification.visibility = View.GONE
-                requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                if(isAdded()) {
+                    pulltorefreshNotif.isRefreshing = false
+                    scroll_view.visibility = View.GONE
+                    iv_no_connection.visibility = View.VISIBLE
+                    progBarFragNotification.visibility = View.GONE
+                }
 
             }
         })
     }
     override fun onResume() {
-
-        LoadNotificationData()
+        if(isAdded()) {
+            progBarFragNotification.visibility = View.VISIBLE
+            LoadNotificationData()
+        }
         super.onResume()
     }
 }

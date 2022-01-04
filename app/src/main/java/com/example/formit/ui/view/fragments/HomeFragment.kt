@@ -47,13 +47,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         /*activity?.runOnUiThread {
             getCoursesNotParticipated()
         }*/
-        progBarFragHome.visibility = View.VISIBLE
-        requireActivity().window.setFlags(
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-        )
 
-        pulltorefresh.setOnRefreshListener {getCoursesNotParticipated()}
+        progBarFragHome.visibility = View.VISIBLE
+        if(isAdded()){
+            pulltorefresh.setOnRefreshListener {getCoursesNotParticipated()}
+        }
         if (mSharedPref.getString(PICTURE, "").toString() == "avatar default.png") {
             profile_pic!!.setImageResource(R.drawable.male_student)
         } else {
@@ -89,32 +87,41 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     ) {
 
                         val courses = response.body()
-                        if (courses != null && courses.isNotEmpty()) {
+                        if(isAdded()) {
+                            if (courses != null && courses.isNotEmpty()) {
 
-                            Log.e("aaaacourses", courses.toString())
-                            val adapter = HomeCouseAdapter(courses, false)
-                            rv_courses.adapter = adapter
-                            rv_courses.layoutManager =
-                                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                            pulltorefresh.isRefreshing = false
-                        } else {
-                            Log.e("Username or Password wrong", "true")
-                            rv_courses.visibility=View.GONE
-                            tv_NoAvailableCourses.visibility=View.VISIBLE
+                                Log.e("aaaacourses", courses.toString())
+                                val adapter = HomeCouseAdapter(courses, false)
+                                rv_courses.adapter = adapter
+                                rv_courses.layoutManager =
+                                    LinearLayoutManager(
+                                        context,
+                                        LinearLayoutManager.HORIZONTAL,
+                                        false
+                                    )
+                                pulltorefresh.isRefreshing = false
+                            } else {
+                                Log.e("Username or Password wrong", "true")
+                                rv_courses.visibility = View.GONE
+                                tv_NoAvailableCourses.visibility = View.VISIBLE
+                            }
+
+                            progBarFragHome.visibility = View.GONE
                         }
-
-                        progBarFragHome.visibility = View.GONE
 
                     }
 
                     override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
                         Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
-                        progBarFragHome.visibility = View.GONE
-                        pulltorefresh.isRefreshing = false
+                        if(isAdded()) {
+                            progBarFragHome.visibility = View.GONE
+                            pulltorefresh.isRefreshing = false
 
-                        Snackbar.make(view as View, "Connection Error", Snackbar.LENGTH_LONG).setAction("Retry") {
-                            getCoursesNotParticipated()
-                        }.show()
+                            Snackbar.make(view as View, "Connection Error", Snackbar.LENGTH_LONG)
+                                .setAction("Retry") {
+                                    getCoursesNotParticipated()
+                                }.show()
+                        }
                     }
                 })
             Log.e("***************id user ", mSharedPref.getString(ID, "").toString())
@@ -127,32 +134,40 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     ) {
 
                         val event = response.body()
-                        if (event != null && event.isNotEmpty()) {
-                            Log.e("courses", event.toString())
-                            val adapter = HomeEventAdapter(event, false)
-                            rv_events.adapter = adapter
-                            rv_events.layoutManager =
-                                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        } else {
-                            Log.e("Username or Password wrong", "true")
-                            rv_events.visibility=View.GONE
-                            tv_NoAvailableEvents.visibility=View.VISIBLE
-                        }
-                        scroll_view.visibility=View.VISIBLE
-                        iv_no_connection.visibility=View.GONE
-                        progBarFragHome.visibility = View.GONE
-                        requireActivity().window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                        if(isAdded()) {
+                            if (event != null && event.isNotEmpty()) {
+                                Log.e("courses", event.toString())
 
+                                val adapter = HomeEventAdapter(event, false)
+                                rv_events.adapter = adapter
+                                rv_events.layoutManager =
+                                    LinearLayoutManager(
+                                        context,
+                                        LinearLayoutManager.HORIZONTAL,
+                                        false
+                                    )
+
+                            } else {
+                                Log.e("Username or Password wrong", "true")
+                                rv_events.visibility = View.GONE
+                                tv_NoAvailableEvents.visibility = View.VISIBLE
+                            }
+                            pulltorefresh.isRefreshing = false
+                            scroll_view.visibility = View.VISIBLE
+                            iv_no_connection.visibility = View.GONE
+                            progBarFragHome.visibility = View.GONE
+                        }
                     }
 
                     override fun onFailure(call: Call<MutableList<Event>>, t: Throwable) {
                         Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
-                        pulltorefresh.isRefreshing = false
-                        scroll_view.visibility=View.GONE
-                        iv_no_connection.visibility=View.VISIBLE
-                        progBarFragHome.visibility = View.GONE
-                        requireActivity().window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                    }
+                        if(isAdded()) {
+                            pulltorefresh.isRefreshing = false
+                            scroll_view.visibility = View.GONE
+                            iv_no_connection.visibility = View.VISIBLE
+                            progBarFragHome.visibility = View.GONE
+                        }
+                        }
                 }
                 )
 
@@ -161,7 +176,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onResume() {
 
-        getCoursesNotParticipated()
+        if(isAdded()){
+            progBarFragHome.visibility = View.VISIBLE
+
+            getCoursesNotParticipated()
+        }
+
         super.onResume()
     }
 }
