@@ -101,12 +101,6 @@ class MessagesFragment : Fragment() {
         button_Right.visibility = View.GONE
 
         progBarFragMessage.visibility = View.VISIBLE
-        requireActivity().window.setFlags(
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-        )
-
-
         mSharedPref = view.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         if (mSharedPref.getString(ROLE, "").equals("coache")) {
             updateTextWithRole.text = "My Students"
@@ -117,10 +111,12 @@ class MessagesFragment : Fragment() {
         /*activity?.runOnUiThread{
             this.loadOwnConversation()
         }*/
+        if(isAdded()){
         pulltorefresh.setOnRefreshListener {
             this.loadOwnConversation()
             this.loadOwnCoacheConversation()
             this.loadBubleConversation()
+        }
         }
         btn_reus_back.visibility = View.INVISIBLE
 
@@ -139,23 +135,24 @@ class MessagesFragment : Fragment() {
             ) {
 
                 val conversations = response.body()
-                if (conversations != null) {
-                    Log.e("conversations", conversations.toString())
-                    val adapterCourse = CourseDiscussionAdapter(
-                        conversations,
-                        mSharedPref.getString(ID, "").toString(),
-                        mSharedPref.getString(FIRSTNAME, "").toString()
-                    )
+                if(isAdded()) {
+                    if (conversations != null) {
+                        Log.e("conversations", conversations.toString())
+                        val adapterCourse = CourseDiscussionAdapter(
+                            conversations,
+                            mSharedPref.getString(ID, "").toString(),
+                            mSharedPref.getString(FIRSTNAME, "").toString()
+                        )
 
-                    CoursesDiscussionRecycleView.adapter = adapterCourse
-                    CoursesDiscussionRecycleView.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                        CoursesDiscussionRecycleView.adapter = adapterCourse
+                        CoursesDiscussionRecycleView.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-                } else {
-                    Log.e("Error from conversation course", "true")
+                    } else {
+                        Log.e("Error from conversation course", "true")
+                    }
+                    progBarFragMessage.visibility = View.GONE
                 }
-                progBarFragMessage.visibility = View.GONE
-
             }
 
             override fun onFailure(call: Call<MutableList<Conversation>>, t: Throwable) {
@@ -178,24 +175,26 @@ class MessagesFragment : Fragment() {
 
 
                 val conversations = response.body()
-                if (conversations != null && conversations.isNotEmpty()) {
-                    Log.e("conversations coaches aaaaaaaaaaaaaaaaaaa", conversations.toString())
-                    val adapterCoache = CoacheDiscussionAdapter(
-                        conversations,
-                        mSharedPref.getString(ID, "").toString(),
-                        mSharedPref.getString(FIRSTNAME, "").toString()
-                    )
+                if(isAdded()) {
+                    if (conversations != null && conversations.isNotEmpty()) {
+                        Log.e("conversations coaches aaaaaaaaaaaaaaaaaaa", conversations.toString())
+                        val adapterCoache = CoacheDiscussionAdapter(
+                            conversations,
+                            mSharedPref.getString(ID, "").toString(),
+                            mSharedPref.getString(FIRSTNAME, "").toString()
+                        )
 
 
 
-                    CoachesDiscussionRecycleView.adapter = adapterCoache
-                    CoachesDiscussionRecycleView.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                        CoachesDiscussionRecycleView.adapter = adapterCoache
+                        CoachesDiscussionRecycleView.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-                } else {
-                    Log.e("Error from conversation course", "true")
+                    } else {
+                        Log.e("Error from conversation course", "true")
+                    }
+                    progBarFragMessage.visibility = View.GONE
                 }
-                progBarFragMessage.visibility = View.GONE
             }
 
             override fun onFailure(call: Call<MutableList<Conversation>>, t: Throwable) {
@@ -218,38 +217,40 @@ class MessagesFragment : Fragment() {
             ) {
 
                 val conversations = response.body()
-                if (conversations != null && conversations.isNotEmpty()) {
-                    //Log.e("conversations coaches aaaaaaaaaaaaaaaaaaa",conversations.toString())
+                if(isAdded()) {
+                    if (conversations != null && conversations.isNotEmpty()) {
+                        //Log.e("conversations coaches aaaaaaaaaaaaaaaaaaa",conversations.toString())
 
 
-                    val adapterBuble = BubleMessageAdapter(
-                        conversations,
-                        mSharedPref.getString(ID, "").toString(),
-                        mSharedPref.getString(FIRSTNAME, "").toString()
-                    )
-                    bubleMessageRecycleView.adapter = adapterBuble
-                    bubleMessageRecycleView.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        val adapterBuble = BubleMessageAdapter(
+                            conversations,
+                            mSharedPref.getString(ID, "").toString(),
+                            mSharedPref.getString(FIRSTNAME, "").toString()
+                        )
+                        bubleMessageRecycleView.adapter = adapterBuble
+                        bubleMessageRecycleView.layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
 
-                } else {
-                    Log.e("Error from conversation course", "true")
+                    } else {
+                        Log.e("Error from conversation course", "true")
+                    }
+                    pulltorefresh.isRefreshing = false
+                    scroll_view.visibility = View.VISIBLE
+                    iv_no_connection.visibility = View.GONE
+                    progBarFragMessage.visibility = View.GONE
                 }
-                pulltorefresh.isRefreshing = false
-                scroll_view.visibility=View.VISIBLE
-                iv_no_connection.visibility=View.GONE
-                progBarFragMessage.visibility = View.GONE
-                requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             }
 
             override fun onFailure(call: Call<MutableList<Conversation>>, t: Throwable) {
                 Log.e("failure conversation course", call.request().toString())
                 Log.e("failure conversation course", call.isExecuted.toString())
-                pulltorefresh.isRefreshing = false
-                scroll_view.visibility=View.GONE
-                iv_no_connection.visibility=View.VISIBLE
-                progBarFragMessage.visibility = View.GONE
-                requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                if(isAdded()) {
+                    pulltorefresh.isRefreshing = false
+                    scroll_view.visibility = View.GONE
+                    iv_no_connection.visibility = View.VISIBLE
+                    progBarFragMessage.visibility = View.GONE
+                }
 
             }
         })
@@ -257,10 +258,11 @@ class MessagesFragment : Fragment() {
     }
 
     override fun onResume() {
-
-        this.loadOwnConversation()
-        this.loadOwnCoacheConversation()
-        this.loadBubleConversation()
+        if(isAdded()) {
+            this.loadOwnConversation()
+            this.loadOwnCoacheConversation()
+            this.loadBubleConversation()
+        }
         super.onResume()
     }
 

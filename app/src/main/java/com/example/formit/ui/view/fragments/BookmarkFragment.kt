@@ -17,8 +17,11 @@ import com.example.formit.ui.view.activitys.ID
 import com.example.formit.ui.view.activitys.PREF_NAME
 import com.example.formit.ui.view.activitys.apiInterface
 import kotlinx.android.synthetic.main.fragment_bookmark.*
+import kotlinx.android.synthetic.main.fragment_bookmark.iv_no_connection
 import kotlinx.android.synthetic.main.fragment_bookmark.pulltorefresh
 import kotlinx.android.synthetic.main.fragment_bookmark.rv_courses
+import kotlinx.android.synthetic.main.fragment_bookmark.scroll_view
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,10 +44,6 @@ class BookmarkFragment : Fragment(R.layout.fragment_bookmark) {
         toolbar_title.text = "My BookMark"
         button_Right.visibility = View.GONE
         progBarFragBookmark.visibility = View.VISIBLE
-        requireActivity().window.setFlags(
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-        )
 
 
         pulltorefresh.setOnRefreshListener {
@@ -64,16 +63,16 @@ class BookmarkFragment : Fragment(R.layout.fragment_bookmark) {
                             rv_courses.adapter = adapter
                             rv_courses.layoutManager =
                                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                            pulltorefresh.isRefreshing = false
+
                         } else {
                             Log.e("Username or Password wrong", "true")
                             rv_courses.visibility=View.GONE
                             tv_NoBookmarksYet.visibility=View.VISIBLE
                         }
+                        pulltorefresh.isRefreshing = false
                         scroll_view.visibility=View.VISIBLE
                         iv_no_connection.visibility=View.GONE
                         progBarFragBookmark.visibility = View.GONE
-                        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
 
                     }
@@ -84,15 +83,17 @@ class BookmarkFragment : Fragment(R.layout.fragment_bookmark) {
                         scroll_view.visibility=View.GONE
                         iv_no_connection.visibility=View.VISIBLE
                         progBarFragBookmark.visibility = View.GONE
-                        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                     }
                 }
                 )
         }
     }
     override fun onResume() {
+        if(isAdded()){
+            progBarFragBookmark.visibility = View.VISIBLE
 
-        apiInterface.getCoursesBookmarked(mSharedPref.getString(ID, ""))
+
+            apiInterface.getCoursesBookmarked(mSharedPref.getString(ID, ""))
             .enqueue(object : Callback<MutableList<Course>> {
                 override fun onResponse(
                     call: Call<MutableList<Course>>, response:
@@ -101,32 +102,33 @@ class BookmarkFragment : Fragment(R.layout.fragment_bookmark) {
 
 
                     val courses = response.body()
-                    if (courses != null && courses.isNotEmpty()) {
-                        Log.e("courses", courses.toString())
-                        val adapter = CoursesAdapter(courses, true)
-                        rv_courses.adapter = adapter
-                        rv_courses.layoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                        pulltorefresh.isRefreshing = false
-                    } else {
-                        Log.e("Username or Password wrong", "true")
+                    if(isAdded()) {
+                        if (courses != null && courses.isNotEmpty()) {
+                            Log.e("courses", courses.toString())
+                            val adapter = CoursesAdapter(courses, true)
+                            rv_courses.adapter = adapter
+                            rv_courses.layoutManager =
+                                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                            pulltorefresh.isRefreshing = false
+                        } else {
+                            Log.e("Username or Password wrong", "true")
+                        }
+                        progBarFragBookmark.visibility = View.GONE
                     }
-                    progBarFragBookmark.visibility = View.GONE
-                    requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-
 
                 }
 
                 override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
                     Log.e("aaaaaaaaaaaaaaaaaaaaaaaa", "true")
-                    pulltorefresh.isRefreshing = false
-                    scroll_view.visibility=View.GONE
-                    iv_no_connection.visibility=View.VISIBLE
-                    progBarFragBookmark.visibility = View.GONE
-                    requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                }
+                    if(isAdded()) {
+                        pulltorefresh.isRefreshing = false
+                        scroll_view.visibility = View.GONE
+                        iv_no_connection.visibility = View.VISIBLE
+                        progBarFragBookmark.visibility = View.GONE
+                    }
+                    }
             }
-            )
+            )}
         super.onResume()
     }
 }
