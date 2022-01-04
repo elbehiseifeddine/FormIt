@@ -15,8 +15,6 @@ import com.example.formit.R
 import com.example.formit.data.model.Course
 import com.example.formit.ui.adapter.CoursesCoachAdapter
 import com.example.formit.ui.view.activitys.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.pulltorefresh
 import kotlinx.android.synthetic.main.fragment_home_coaches.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,7 +40,7 @@ class home_coachesFragment : Fragment(R.layout.fragment_home_coaches) {
 
         pulltorefresh.setOnRefreshListener {getOwnCourses()}
         if (mSharedPref.getString(PICTURE, "").toString() == "avatar default.png") {
-            profile_pic!!.setImageResource(R.drawable.male_student)
+            coache_profile_pic!!.setImageResource(R.drawable.male_student)
         } else {
             val filename2 = mSharedPref.getString(PICTURE, "").toString()
             val path =
@@ -60,10 +58,7 @@ class home_coachesFragment : Fragment(R.layout.fragment_home_coaches) {
 
     private fun getOwnCourses() {
         progBarFragHome_Coache.visibility = View.VISIBLE
-        requireActivity().window.setFlags(
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-        )
+
         apiInterface.getOwnCourse(mSharedPref.getString(ID, ""))
             .enqueue(object : Callback<MutableList<Course>> {
                 override fun onResponse(
@@ -71,24 +66,31 @@ class home_coachesFragment : Fragment(R.layout.fragment_home_coaches) {
                     Response<MutableList<Course>>
                 ) {
                     val courses = response.body()
-                    if (courses != null && courses.isNotEmpty()) {
+                    if(isAdded()) {
+                        if (courses != null && courses.isNotEmpty()) {
 
-                        Log.e("courses", courses.toString())
-                        val adapter = CoursesCoachAdapter(courses)
-                        rv_coache_courses.adapter = adapter
-                        rv_coache_courses.layoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                        pulltorefresh.isRefreshing = false
-                    } else {
-                        Log.e("Username or ----Password wrong", "true")
+                            Log.e("courses", courses.toString())
+                            val adapter = CoursesCoachAdapter(courses)
+                            rv_coache_courses.adapter = adapter
+                            rv_coache_courses.layoutManager =
+                                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                            pulltorefresh.isRefreshing = false
+                        } else {
+                            Log.e("Username or ----Password wrong", "true")
+                        }
+                        progBarFragHome_Coache.visibility = View.GONE
                     }
-                    progBarFragHome_Coache.visibility = View.GONE
-                    requireActivity().window.clearFlags( WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-
                 }
 
                 override fun onFailure(call: Call<MutableList<Course>>, t: Throwable) {
                     Log.e("aaaaa", "true")
+                    if(isAdded()) {
+                        pulltorefresh.isRefreshing = false
+                        scroll_view.visibility = View.GONE
+                        iv_no_connection.visibility = View.VISIBLE
+                        progBarFragHome_Coache.visibility = View.GONE
+
+                    }
                 }
             })
         Log.e("***************id user ", mSharedPref.getString(ID, "").toString())
@@ -98,8 +100,9 @@ class home_coachesFragment : Fragment(R.layout.fragment_home_coaches) {
     }
 
     override fun onResume() {
-
-        getOwnCourses()
+        if(isAdded()) {
+            getOwnCourses()
+        }
         super.onResume()
     }
 

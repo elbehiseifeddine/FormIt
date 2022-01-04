@@ -118,7 +118,8 @@
                 android:background="@color/fragbackground"
                 android:orientation="vertical">
 
-                <ScrollView
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/scroll_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -143,8 +144,6 @@
                                 android:textSize="@dimen/_12ssp"
                                 android:textStyle="bold" />
 
-
-
                         </LinearLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -155,7 +154,13 @@
 
 
                     </LinearLayout>
-                </ScrollView>
+                </androidx.core.widget.NestedScrollView>
+                <ImageView
+                    android:id="@+id/iv_no_connection"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/no_connection"
+                    android:visibility="gone" />
             </LinearLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>

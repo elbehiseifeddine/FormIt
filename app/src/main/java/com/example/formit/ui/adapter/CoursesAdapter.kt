@@ -75,25 +75,49 @@ class CoursesAdapter(var courses: MutableList<Course>, var bookmarked: Boolean) 
                     }
                 }
                 Log.e("placesssssssssssssssssssssssssssssss", courses[position].places.toString())
-                setOnClickListener {
-                    val intent =
-                        Intent(holder.itemView.context, DescriptionActivity::class.java).also {
-                            it.putExtra("ID", courses[position].id)
-                            it.putExtra("NAME", courses[position].courseName)
-                            it.putExtra("PRICE", courses[position].price.toString() + " dt")
-                            it.putExtra(
-                                "DURATION",
-                                courses[position].duration.toString() + " Hours"
-                            )
-                            it.putExtra("MENTOR", courses[position].mentor.firstname)
-                            it.putExtra("DESCRIPTION", courses[position].description)
-                            it.putExtra("PREREQUISITES", courses[position].prerequisites)
-                            it.putExtra("STARTDATE", courses[position].startDate)
-                            it.putExtra("PLACES", courses[position].places.toString() + " Places")
-                            it.putExtra("PARTICIPATED", test)
-                        }
-                    holder.itemView.context.startActivity(intent)
+                if(courses[position].participatedMembers.contains(mSharedPref.getString(ID, "")) ){
+                    setOnClickListener {
+                        val intent =
+                            Intent(holder.itemView.context, DescriptionActivity::class.java).also {
+                                it.putExtra("ID", courses[position].id)
+                                it.putExtra("NAME", courses[position].courseName)
+                                it.putExtra("PRICE", courses[position].price.toString() + " dt")
+                                it.putExtra(
+                                    "DURATION",
+                                    courses[position].duration.toString() + " Hours"
+                                )
+                                it.putExtra("SUBSCRIBED", true)
+                                it.putExtra("MENTOR", courses[position].mentor.firstname)
+                                it.putExtra("DESCRIPTION", courses[position].description)
+                                it.putExtra("PREREQUISITES", courses[position].prerequisites)
+                                it.putExtra("STARTDATE", courses[position].startDate)
+                                it.putExtra("PLACES", courses[position].places.toString() + " Places")
+                                it.putExtra("PARTICIPATED", test)
+                            }
+                        holder.itemView.context.startActivity(intent)
+                    }
+                }else{
+                    setOnClickListener {
+                        val intent =
+                            Intent(holder.itemView.context, DescriptionActivity::class.java).also {
+                                it.putExtra("ID", courses[position].id)
+                                it.putExtra("NAME", courses[position].courseName)
+                                it.putExtra("PRICE", courses[position].price.toString() + " dt")
+                                it.putExtra(
+                                    "DURATION",
+                                    courses[position].duration.toString() + " Hours"
+                                )
+                                it.putExtra("MENTOR", courses[position].mentor.firstname)
+                                it.putExtra("DESCRIPTION", courses[position].description)
+                                it.putExtra("PREREQUISITES", courses[position].prerequisites)
+                                it.putExtra("STARTDATE", courses[position].startDate)
+                                it.putExtra("PLACES", courses[position].places.toString() + " Places")
+                                it.putExtra("PARTICIPATED", test)
+                            }
+                        holder.itemView.context.startActivity(intent)
+                    }
                 }
+
 
             }
 
