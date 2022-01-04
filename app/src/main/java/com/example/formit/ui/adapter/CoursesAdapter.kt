@@ -12,10 +12,7 @@ import com.example.formit.R
 import com.example.formit.data.model.Course
 import com.example.formit.data.model.User
 import com.example.formit.data.repository.ApiInterface
-import com.example.formit.ui.view.activitys.DescriptionActivity
-import com.example.formit.ui.view.activitys.ID
-import com.example.formit.ui.view.activitys.PREF_NAME
-import com.example.formit.ui.view.activitys.apiInterface
+import com.example.formit.ui.view.activitys.*
 import kotlinx.android.synthetic.main.item_course.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,15 +28,20 @@ class CoursesAdapter(var courses: MutableList<Course>, var bookmarked: Boolean) 
             LayoutInflater.from(parent.context).inflate(R.layout.item_course_big, parent, false)
         return CoursesViewHolder(view)
     }
-
+    var price: Int = 0
     lateinit var mSharedPref: SharedPreferences
     override fun onBindViewHolder(holder: CoursesViewHolder, position: Int) {
         mSharedPref = holder.itemView.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        if (mSharedPref.getInt(XP, 0) >= 500) {
+            price = (courses[position].price * 0.9).toInt()
+        } else {
+            price = courses[position].price
+        }
         if (bookmarked) {
             holder.itemView.apply {
                 btn_bookmark.setImageResource(R.drawable.ic_bookmark)
                 tv_CourseName.text = courses[position].courseName
-                tv_Cost.text = courses[position].price.toString() + " dt"
+                tv_Cost.text = price.toString() + " dt"
                 tv_Hours.text = courses[position].duration.toString() + " Hours"
                 tv_MentorName.text = courses[position].mentor.firstname
 
@@ -81,7 +83,7 @@ class CoursesAdapter(var courses: MutableList<Course>, var bookmarked: Boolean) 
                             Intent(holder.itemView.context, DescriptionActivity::class.java).also {
                                 it.putExtra("ID", courses[position].id)
                                 it.putExtra("NAME", courses[position].courseName)
-                                it.putExtra("PRICE", courses[position].price.toString() + " dt")
+                                it.putExtra("PRICE", price.toString() + " dt")
                                 it.putExtra(
                                     "DURATION",
                                     courses[position].duration.toString() + " Hours"
@@ -102,7 +104,7 @@ class CoursesAdapter(var courses: MutableList<Course>, var bookmarked: Boolean) 
                             Intent(holder.itemView.context, DescriptionActivity::class.java).also {
                                 it.putExtra("ID", courses[position].id)
                                 it.putExtra("NAME", courses[position].courseName)
-                                it.putExtra("PRICE", courses[position].price.toString() + " dt")
+                                it.putExtra("PRICE", price.toString() + " dt")
                                 it.putExtra(
                                     "DURATION",
                                     courses[position].duration.toString() + " Hours"
@@ -124,7 +126,7 @@ class CoursesAdapter(var courses: MutableList<Course>, var bookmarked: Boolean) 
         } else {
             holder.itemView.apply {
                 tv_CourseName.text = courses[position].courseName
-                tv_Cost.text = courses[position].price.toString() + " dt"
+                tv_Cost.text = price.toString() + " dt"
                 tv_Hours.text = courses[position].duration.toString() + " Hours"
                 tv_MentorName.text = courses[position].mentor.firstname
                 for (n in courses[position].usersbookmarked) {
@@ -167,7 +169,7 @@ class CoursesAdapter(var courses: MutableList<Course>, var bookmarked: Boolean) 
                 val intent = Intent(holder.itemView.context, DescriptionActivity::class.java).also {
                     it.putExtra("ID", courses[position].id)
                     it.putExtra("NAME", courses[position].courseName)
-                    it.putExtra("PRICE", courses[position].price.toString() + " dt")
+                    it.putExtra("PRICE", price.toString() + " dt")
                     it.putExtra("DURATION", courses[position].duration.toString() + " Hours")
                     it.putExtra("MENTOR", courses[position].mentor.firstname)
                     it.putExtra("DESCRIPTION", courses[position].description)

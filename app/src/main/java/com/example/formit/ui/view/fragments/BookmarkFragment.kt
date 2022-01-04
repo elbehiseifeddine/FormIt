@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_bookmark.pulltorefresh
 import kotlinx.android.synthetic.main.fragment_bookmark.rv_courses
 import kotlinx.android.synthetic.main.fragment_bookmark.scroll_view
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_notifications.*
 import kotlinx.android.synthetic.main.reusable_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -113,6 +114,8 @@ class BookmarkFragment : Fragment(R.layout.fragment_bookmark) {
                             pulltorefresh.isRefreshing = false
                         } else {
                             Log.e("Username or Password wrong", "true")
+                            rv_courses.visibility=View.GONE
+                            tv_NoBookmarksYet.visibility = View.VISIBLE
                         }
                         progBarFragBookmark.visibility = View.GONE
                     }

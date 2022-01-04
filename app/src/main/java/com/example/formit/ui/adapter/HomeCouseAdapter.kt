@@ -12,10 +12,7 @@ import com.example.formit.R
 import com.example.formit.data.model.Course
 import com.example.formit.data.model.User
 import com.example.formit.data.repository.ApiInterface
-import com.example.formit.ui.view.activitys.DescriptionActivity
-import com.example.formit.ui.view.activitys.ID
-import com.example.formit.ui.view.activitys.PREF_NAME
-import com.example.formit.ui.view.activitys.apiInterface
+import com.example.formit.ui.view.activitys.*
 import kotlinx.android.synthetic.main.activity_courses.*
 import kotlinx.android.synthetic.main.activity_description.view.*
 import kotlinx.android.synthetic.main.item_course.view.*
@@ -35,10 +32,13 @@ class HomeCouseAdapter(var courses: MutableList<Course>, var participated: Boole
         return HomeCoursesViewHolder(view)
     }
 
+    var price: Int = 0
     lateinit var mSharedPref: SharedPreferences
     override fun onBindViewHolder(holder: HomeCoursesViewHolder, position: Int) {
         mSharedPref = holder.itemView.context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        if(participated){
+
+        if (participated) {
+
             holder.itemView.apply {
                 tv_CourseName.text = courses[position].courseName
                 tv_Cost.text = courses[position].price.toString() + " dt"
@@ -46,8 +46,9 @@ class HomeCouseAdapter(var courses: MutableList<Course>, var participated: Boole
                 tv_MentorName.text = courses[position].mentor.firstname
 
 
-                btn_bookmark.visibility=View.GONE
+                btn_bookmark.visibility = View.GONE
             }
+
 
             holder.itemView.setOnClickListener {
                 val intent = Intent(holder.itemView.context, DescriptionActivity::class.java).also {
@@ -67,9 +68,14 @@ class HomeCouseAdapter(var courses: MutableList<Course>, var participated: Boole
         }
 
         if (!participated) {
+            if (mSharedPref.getInt(XP, 0) >= 500) {
+                price = (courses[position].price * 0.9).toInt()
+            } else {
+                price = courses[position].price
+            }
             holder.itemView.apply {
                 tv_CourseName.text = courses[position].courseName
-                tv_Cost.text = courses[position].price.toString() + " dt"
+                tv_Cost.text = price.toString() + " dt"
                 tv_Hours.text = courses[position].duration.toString() + " Hours"
                 tv_MentorName.text = courses[position].mentor.firstname
 
@@ -116,7 +122,7 @@ class HomeCouseAdapter(var courses: MutableList<Course>, var participated: Boole
                 val intent = Intent(holder.itemView.context, DescriptionActivity::class.java).also {
                     it.putExtra("ID", courses[position].id)
                     it.putExtra("NAME", courses[position].courseName)
-                    it.putExtra("PRICE", courses[position].price.toString() + " dt")
+                    it.putExtra("PRICE", price.toString() + " dt")
                     it.putExtra("DURATION", courses[position].duration.toString() + " Hours")
                     it.putExtra("MENTOR", courses[position].mentor.firstname)
                     it.putExtra("DESCRIPTION", courses[position].description)
@@ -132,9 +138,9 @@ class HomeCouseAdapter(var courses: MutableList<Course>, var participated: Boole
     }
 
     override fun getItemCount(): Int {
-//        if(courses.size>2){
-//            return 6
-//        }
+        if (courses.size > 3) {
+            return 3
+        }
         return courses.size
     }
 }
