@@ -43,6 +43,7 @@ class BookmarkFragment : Fragment(R.layout.fragment_bookmark) {
         mSharedPref = requireActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         toolbar_title.text = "My BookMark"
         button_Right.visibility = View.GONE
+        btn_reus_back.visibility = View.INVISIBLE
         progBarFragBookmark.visibility = View.VISIBLE
 
 

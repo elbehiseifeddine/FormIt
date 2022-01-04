@@ -55,6 +55,7 @@ class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
         }*/
         toolbar_title.text = "My Notifications"
         button_Right.visibility = View.GONE
+        btn_reus_back.visibility = View.INVISIBLE
         progBarFragNotification.visibility = View.VISIBLE
         pulltorefreshNotif.setOnRefreshListener {
             Log.e("********notificationsssssssssssssssssssssss********", "avvvvvvvvvvvvvvv")
