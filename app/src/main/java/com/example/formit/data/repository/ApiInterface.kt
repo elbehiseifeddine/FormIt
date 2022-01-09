@@ -99,8 +99,8 @@ interface ApiInterface {
     )
     data class SearchBody(val text: String,val idUser: String)
 
-    @POST("/courses/searchCourse")
-    fun search(@Body text: SearchBody): Call<SearchResponse>
+    @POST("/courses/searchCourse/{idUser}")
+    fun search(@Path("idUser") idUser: String?,@Body text: SearchBody): Call<SearchResponse>
 
 
     companion object {
