@@ -50,15 +50,19 @@ class CoursesActivity : AppCompatActivity() {
 
         sv_Search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
-                apiInterface.search(ApiInterface.SearchBody(newText,mSharedPref.getString(ID, "").toString())).enqueue(
+                Log.e("-------------id----------------",mSharedPref.getString(ID, "").toString())
+                Log.e("-------------text----------------",newText)
+                var idUser = mSharedPref.getString(ID, "").toString()
+                apiInterface.search(idUser,ApiInterface.SearchBody(newText,idUser)).enqueue(
                     object : Callback<ApiInterface.SearchResponse> {
                         override fun onResponse(
                             call: Call<ApiInterface.SearchResponse>,
                             response: Response<ApiInterface.SearchResponse>
-                        ) {
-
+                        ) {Log.e("--------------status---------------",response.code().toString())
+                            Log.e("-------------body----------------", response.body().toString())
                             courses.clear()
                             if (response.code() == 200) {
+                                Log.e("-----------------------------","aaaaaaaaaaaaaaa")
                                 response.body()!!.courses.forEach {
                                     courses.add(it)
                                 }
